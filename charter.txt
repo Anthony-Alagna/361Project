@@ -2,11 +2,15 @@
 
 
 Availability for meeting expectations
+    The expectation of availability should be a short Microsoft Teams chat to discuss what has been accomplished and what needs to be done.
 Response time to communication expectations
+    The expectation of response time can vary, but each member should be able to respond within 24 hours.
 Definition of done: when is a task complete? (hint: "I'm done with that but I didn't check it in to github" is not done.)
 Scrum meeting format/frequency and distribution of documentation tasks (meeting minutes, updating task board)
 Procedure for adopting policies (e.g. code style, code check-in steps, documentation updates)
-if you adopt such a policy during the initial meeting, put it here
+  if you adopt such a policy during the initial meeting, put it here
 Procedure for handling a member who is not meeting expectations
+    Discuss among the members the amount that this member hasn't been meeting expectations and whether it should be brought to the attention of the TA.
 must include at least 3 actions before involving the instructor
-Signatures: each member must sign their name by typing their name at the bottom of the document.
+Signatures:
+    Matthew Adas Jr
