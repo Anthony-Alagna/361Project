@@ -25,4 +25,4 @@ Signatures:
     Matthew Adas Jr
     Anthony Alagna
     Omar Abu-Rmaileh
-main
+    Kayla Maule
