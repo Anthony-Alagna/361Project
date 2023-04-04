@@ -24,3 +24,5 @@ must include at least 3 actions before involving the instructor
 Signatures:
     Matthew Adas Jr
     Anthony Alagna
+    Omar Abu-Rmaileh
+main
