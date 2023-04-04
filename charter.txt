@@ -3,14 +3,24 @@
 
 Availability for meeting expectations
     The expectation of availability should be a short Microsoft Teams chat to discuss what has been accomplished and what needs to be done.
+
+    
 Response time to communication expectations
     The expectation of response time can vary, but each member should be able to respond within 24 hours.
+    
 Definition of done: when is a task complete? (hint: "I'm done with that but I didn't check it in to github" is not done.)
+    a task is complete once all acceptance criteria have been met, unit testing has been implemented, and any integration/acceptance testing is working, as well as all this code being pushed to 
+    
 Scrum meeting format/frequency and distribution of documentation tasks (meeting minutes, updating task board)
+        avalability to meet daily, or every other day during weekdays for standup, and once a sprint for sprint planning, as well as once a sprint for sprint retro,       standup should take no longer than 15 minutes. Sprint Retro and Sprint planning should take no longer than an hour. Documentation tasks will be decided on in sprint planning, and adjusted as need in standup.
+        
 Procedure for adopting policies (e.g. code style, code check-in steps, documentation updates)
   if you adopt such a policy during the initial meeting, put it here
+  
 Procedure for handling a member who is not meeting expectations
     Discuss among the members the amount that this member hasn't been meeting expectations and whether it should be brought to the attention of the TA.
+    
 must include at least 3 actions before involving the instructor
 Signatures:
     Matthew Adas Jr
+    Anthony Alagna
