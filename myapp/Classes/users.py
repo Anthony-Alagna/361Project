@@ -132,7 +132,8 @@ class User:
             raise TypeError("username input cannot be blank")
         self.isgrader = is_grader
 
-    def course_to_User(self):
+    def course_to_User(self, course, section):
+        course = myapp.models.courseToUser(Course_Name=course)
 
 
 
