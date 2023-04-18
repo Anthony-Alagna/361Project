@@ -1,57 +1,66 @@
+import myapp.models
+from myapp.models import Section,Course, courseToUser
+
+
+
+
 class User:
-    User_Id = None
-    Email = None
-    Type = None
-    Name = None
-    Phone = None
-    Address = None
-    ZipCode = None
-    City = None
-    UserName = None
-    isGrader = False
+    user_id = None
+    email = None
+    type = None
+    name = None
+    phone= None
+    address = None
+    zipcode = None
+    city = None
+    username = None
+    isgrader = False
 
     def __Init__(self, user_id="", email="", type="", name="", phone="", address="", zipCode="",
                  city="", username="", isgrader=""):
-        self.User_Id = user_id
-        self.Email = email
-        self.Type = type
-        self.Name = name
-        self.Phone = phone
-        self.Address = address
-        self.ZipCode = zipCode
-        self.City = city
-        self.UserName = username
-        self.isGrader = isgrader
+        self.user_id = user_id
+        self.email = email
+        self.type = type
+        self.name = name
+        self.phone = phone
+        self.address = address
+        self.zipcode= zipCode
+        self.city= city
+        self.username = username
+        self.isgrader = isgrader
 
     def get_user_id(self):
-        if self.User_Id == "":
+        if self.user_id == "":
             raise TypeError("ID cannot be blank")
-        return self.User_Id
+        return self.user_id
 
     def set_user_id(self, user_id):
         if user_id == "":
             raise TypeError(" user ID cannot be blank")
-        self.User_Id = user_id
+        self.user_id = user_id
 
     def get_email(self):
-        if self.Email == "":
+        if self.email == "":
             raise TypeError("Email cannot be blank")
-        return self.Email
+        return self.email
 
     def set_email(self, email):
         if email == "":
             raise TypeError("email you inputed  cannot be blank")
-        self.Email = email
+        user_email = myapp.objects.get(User_Email=email)
+        user_email=email
+        self.email = email
 
     def get_type(self):
-        if self.Type == "":
+        if self.type == "":
             raise TypeError("type cannot be blank")
-        return self.Type
+        return self.type
 
     def set_type(self, type):
         if type == "":
             raise TypeError("type input cannot be blank")
-        self.Type = type
+
+        self.type = type
 
     def get_name(self):
         if self.get_name() == "":
@@ -61,27 +70,27 @@ class User:
     def set_name(self, name):
         if name == "":
             raise TypeError("name input cannot be blank")
-        self.Name = name
+        self.name = name
 
     def get_phone(self):
-        if self.set_phone() == "":
+        if self.phone == "":
             raise TypeError("phone cannot be blank")
-        return self.Phone
+        return self.phone
 
     def set_phone(self, phone):
         if phone == "":
             raise TypeError("phone input cannot be blank")
-        self.Phone = phone
+        self.phone = phone
 
     def get_address(self):
-        if self.Address == "":
+        if self.address == "":
             raise TypeError("address input cannot be blank")
-        return self.Address
+        return self.address
 
     def set_address(self, address):
         if address == "":
             raise TypeError("address input cannot be blank")
-        self.Address = address
+        self.address = address
 
     def get_zipcode(self):
         if self.ZipCode == "":
@@ -91,34 +100,40 @@ class User:
     def set_zipcode(self, zipcode):
         if zipcode== "":
             raise TypeError("ZipCode input cannot be blank")
-        self.ZipCode = zipcode
+        self.zipcode = zipcode
 
     def get_city(self):
-        if self.City == "":
+        if self.city == "":
             raise TypeError("City cannot be blank")
-        return self.City
+        return self.city
 
     def set_city(self, city):
         if city == "":
             raise TypeError("City input cannot be blank")
-        self.City = city
+        self.city = city
 
     def get_username(self):
-        if self.UserName == "":
+        if self.username == "":
             raise TypeError("user cannot be blank")
-        return self.UserName
+        return self.username
 
     def set_username(self, username):
         if username == "":
             raise TypeError("username input cannot be blank")
-        self.UserName = username
+        self.username = username
 
     def is_grader(self):
-        if self.isGrader == "":
+        if self.isgrader == "":
             raise TypeError("username input cannot be blank")
-        return self.isGrader
+        return self.isgrader
 
     def set_grader(self, is_grader):
         if is_grader == "":
             raise TypeError("username input cannot be blank")
-        self.isGrader = is_grader
+        self.isgrader = is_grader
+
+    def course_to_User(self):
+
+
+
+
