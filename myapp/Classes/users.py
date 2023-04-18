@@ -50,7 +50,7 @@ class User:
 
     def set_type(self, type):
         if type == "":
-            raise TypeError("type cannot be blank")
+            raise TypeError("type input cannot be blank")
         self.Type = type
 
     def get_name(self):
@@ -60,7 +60,7 @@ class User:
 
     def set_name(self, name):
         if name == "":
-            raise TypeError("name cannot be blank")
+            raise TypeError("name input cannot be blank")
         self.Name = name
 
     def get_phone(self):
@@ -70,17 +70,17 @@ class User:
 
     def set_phone(self, phone):
         if phone == "":
-            raise TypeError("phone cannot be blank")
+            raise TypeError("phone input cannot be blank")
         self.Phone = phone
 
     def get_address(self):
         if self.Address == "":
-            raise TypeError("address cannot be blank")
+            raise TypeError("address input cannot be blank")
         return self.Address
 
     def set_address(self, address):
         if address == "":
-            raise TypeError("address cannot be blank")
+            raise TypeError("address input cannot be blank")
         self.Address = address
 
     def get_zipcode(self):
@@ -90,7 +90,7 @@ class User:
 
     def set_zipcode(self, zipcode):
         if zipcode== "":
-            raise TypeError("ZipCode cannot be blank")
+            raise TypeError("ZipCode input cannot be blank")
         self.ZipCode = zipcode
 
     def get_city(self):
@@ -100,17 +100,25 @@ class User:
 
     def set_city(self, city):
         if city == "":
-            raise TypeError("City cannot be blank")
+            raise TypeError("City input cannot be blank")
         self.City = city
 
     def get_username(self):
+        if self.UserName == "":
+            raise TypeError("user cannot be blank")
         return self.UserName
 
     def set_username(self, username):
+        if username == "":
+            raise TypeError("username input cannot be blank")
         self.UserName = username
 
     def is_grader(self):
+        if self.isGrader == "":
+            raise TypeError("username input cannot be blank")
         return self.isGrader
 
     def set_grader(self, is_grader):
+        if is_grader == "":
+            raise TypeError("username input cannot be blank")
         self.isGrader = is_grader
