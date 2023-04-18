@@ -1,6 +1,6 @@
 from django.db import models
 
-
+#this is just the start
 # we have to redesign this I just started the models class so we can redesign what needs ot be done
 class User(models.Model):
     User_ID = models.CharField(max_Length=200)
