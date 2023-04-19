@@ -19,6 +19,7 @@ class User(models.Model):
     User_isGrader = models.CharField(max_length=3)
     User_SecAssigned = models.ManyToManyField(
         'Course', through='CourseToUser', related_name='users')
+
     # need courses foreign key
 
     User_begin = models.DateTimeField(auto_now_add=True)
