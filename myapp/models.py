@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 
 # this is just the start
@@ -6,7 +7,8 @@ from django.db import models
 
 
 class User(models.Model):
-    User_ID = models.CharField(max_length=200, primary_key=True)
+    id = models.AutoField(("user_id"), primary_key=True,
+                          unique=True, default=0)
     User_Name = models.CharField(max_length=200)
     User_Email = models.CharField(max_length=200)
     User_Type = models.CharField(max_length=200)
@@ -19,32 +21,35 @@ class User(models.Model):
         'Course', through='CourseToUser', related_name='users')
     # need courses foreign key
 
-    User_begin = models.DateTimeField("date published")
-    User_Updated = models.DateTimeField("date published")
+    User_begin = models.DateTimeField(auto_now_add=True)
+    User_Updated = models.DateTimeField(auto_now=True)
 
 
 class Course(models.Model):
     # how do we get the different views for each user?
-    Course_ID = models.CharField(max_length=50, primary_key=True)
+    id = models.AutoField(("course_id"), primary_key=True,
+                          unique=True, default=0)
     Course_Name = models.CharField(max_length=50)
     Course_Code = models.CharField(max_length=50)
     Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
     Course_isOnline = models.CharField(max_length=6)
     Course_Location = models.CharField(max_length=50)
-    Course_begin = models.DateTimeField("date published")
-    Course_Updated = models.DateTimeField("date published")
+    Course_begin = models.DateTimeField(
+        auto_now_add=True)
+    Course_Updated = models.DateTimeField(auto_now=True)
 
 
 class Section(models.Model):
-    Sec_ID = models.CharField(max_length=200, primary_key=True)
+    id = models.AutoField(("section_id"), primary_key=True,
+                          unique=True, default=0)
     Sec_Name = models.CharField(max_length=200)
     Sec_Location = models.CharField(max_length=200)
     # foreign key for user, is there only one instructor per section/course?
     Sec_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
     Sec_Course = models.ForeignKey(Course, on_delete=models.CASCADE)
     Sec_isOnline = models.CharField(max_length=7)
-    Sec_begin = models.DateTimeField("date published")
-    Sec_Updated = models.DateTimeField("date published")
+    Sec_begin = models.DateTimeField(auto_now_add=True)
+    Sec_Updated = models.DateTimeField(auto_now=True)
 
 
 # this represents many to many
@@ -52,4 +57,3 @@ class Section(models.Model):
 class CourseToUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, primary_key=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    section = models.ForeignKey(Section, on_delete=models.CASCADE)
