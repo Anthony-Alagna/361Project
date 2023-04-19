@@ -13,10 +13,14 @@ jobs:
       max-parallel: 4
       matrix:
 <<<<<<< HEAD
+<<<<<<< HEAD
         python-version: [3.11]
 =======
         python-version: [3.7, 3.8, 3.9]
 >>>>>>> origin/HEAD
+=======
+        python-version: [3.7, 3.8, 3.9]
+>>>>>>> bd588dac47f7f77a7d1c4576d720eea5602b4f2a
 
     steps:
       - uses: actions/checkout@v3
