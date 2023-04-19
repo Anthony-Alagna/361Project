@@ -15,7 +15,7 @@ class LoginTest(TestCase):
                 User_LogPass=str(i),
             )
 
-    def test_login(self):
+    def test_login_accessible(self):
         """_summary_ tests that the login page is accessible
         """
         response = self.client.get('/login/')
