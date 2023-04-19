@@ -9,11 +9,11 @@ from myapp.models import User
 class TestSearchUser(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(User_ID='1', User_Name='Cricket', User_Email='user1@example.com',
-                                         User_Type='student', User_Phone='1234567890', User_Address='123 Main St',
+                                         User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
         self.user2 = User.objects.create(User_ID='2', User_Name='Noodle', User_Email='user2@example.com',
-                                         User_Type='student', User_Phone='0987654321', User_Address='456 Elm St',
+                                         User_Type='TA', User_Phone='0987654321', User_Address='456 Elm St',
                                          User_LogName='user2', User_LogPass='password1', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
 
@@ -47,11 +47,11 @@ class TestSearchUser(TestCase):
 class TestFilterUser(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(User_ID='1', User_Name='Cricket', User_Email='user1@example.com',
-                                         User_Type='Student', User_Phone='1234567890', User_Address='123 Main St',
+                                         User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
         self.user2 = User.objects.create(User_ID='2', User_Name='Noodle', User_Email='user2@example.com',
-                                         User_Type='Student', User_Phone='0987654321', User_Address='456 Elm St',
+                                         User_Type='TA', User_Phone='0987654321', User_Address='456 Elm St',
                                          User_LogName='user2', User_LogPass='password1', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
         self.user3 = User.objects.create(User_ID='3', User_Name='Toby', User_Email='user3@example.com',
@@ -59,18 +59,30 @@ class TestFilterUser(TestCase):
                                          User_LogName='user3', User_LogPass='password2', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
 
-    def test_filter_user(self):
-        usertype = "Student"
+    def test_filter_user_TA(self):
+        usertype = "TA"
         result = User.filterUser(usertype)
         self.assertEqual(result, [self.user1, self.user2],
-                         "filterUser didn't return all of the users matching the type parameter")
+                         "filterUser didn't return all of the TA users")
+
+    def test_filter_user_Professor(self):
+        usertype = "Professor"
+        result = User.filterUser(usertype)
+        self.assertEqual(result, [self.user3],
+                         "filterUser didn't return all of the Professor users")
+
+    def test_filter_all_user(self):
+        usertype = "All Roles"
+        result = User.filterUser(usertype)
+        self.assertEqual(result, [self.user1, self.user2, self.user3],
+                         "filterUser didn't return all the users")
 
 
 # Account.deleteUser(username: str)
 class TestDeleteUser(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(User_ID='1', User_Name='Cricket', User_Email='user1@example.com',
-                                         User_Type='student', User_Phone='1234567890', User_Address='123 Main St',
+                                         User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
 
@@ -87,7 +99,7 @@ class TestButtons(TestCase):
     def setUp(self):
         self.client = Client()
         self.user1 = User.objects.create(User_ID='1', User_Name='Cricket', User_Email='user1@example.com',
-                                         User_Type='student', User_Phone='1234567890', User_Address='123 Main St',
+                                         User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
 
