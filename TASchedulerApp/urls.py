@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from myapp.views import AccountBase
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accountbase/', AccountBase.as_view(), name='accountbase')
 ]

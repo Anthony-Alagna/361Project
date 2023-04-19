@@ -17,3 +17,8 @@ class login(View):
             return redirect('index')
         else:
             return redirect('login')
+
+
+class AccountBase(View):
+    def get(self, request):
+        return render(request, 'accountbase.html')
