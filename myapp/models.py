@@ -8,7 +8,7 @@ from datetime import datetime
 
 class User(models.Model):
     id = models.AutoField(("user_id"), primary_key=True,
-                          unique=True, default=0)
+                          unique=True)
     User_Name = models.CharField(max_length=200)
     User_Email = models.CharField(max_length=200)
     User_Type = models.CharField(max_length=200)
@@ -29,7 +29,7 @@ class User(models.Model):
 class Course(models.Model):
     # how do we get the different views for each user?
     id = models.AutoField(("course_id"), primary_key=True,
-                          unique=True, default=0)
+                          unique=True)
     Course_Name = models.CharField(max_length=50)
     Course_Code = models.CharField(max_length=50)
     Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -42,7 +42,7 @@ class Course(models.Model):
 
 class Section(models.Model):
     id = models.AutoField(("section_id"), primary_key=True,
-                          unique=True, default=0)
+                          unique=True)
     Sec_Name = models.CharField(max_length=200)
     Sec_Location = models.CharField(max_length=200)
     # foreign key for user, is there only one instructor per section/course?
