@@ -4,7 +4,7 @@ from django.views import View
 # Create your views here.
 
 
-class login(View):
+class Login(View):
     def get(self, request):
         return render(request, 'login.html')
 
