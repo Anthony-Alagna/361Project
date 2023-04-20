@@ -5,8 +5,6 @@ from myapp.models import User, Course
 # M: As a supervisor I would like to assign instructors to courses so that they are able to manage their course
 
 
-
-
 class TestInstructorsInCourse(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(id='1', User_Name='Cricket', User_Email='user1@example.com',
