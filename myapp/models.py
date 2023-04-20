@@ -40,8 +40,8 @@ class Course(models.Model):
     Course_begin = models.DateTimeField(
         auto_now_add=True)
     Course_Updated = models.DateTimeField(auto_now=True)
-    start = models.DateTimeField("start")
-    end = models.DateTimeField("end", help_text="The end time must be later than the start time.")
+    Course_start = models.DateTimeField("start")
+    Course_end = models.DateTimeField("end", help_text="The end time must be later than the start time.")
 
 
 class Section(models.Model):
