@@ -90,7 +90,7 @@ class TestDeleteUser(TestCase):
     def test_delete_user(self):
         username = "user1"
 
-        User.deleteUser(username)
+        AccountBase.deleteUser(username)
 
         self.assertFalse(User.objects.filter(User_LogName="user1").exists(), "User exists but they were deleted")
 
