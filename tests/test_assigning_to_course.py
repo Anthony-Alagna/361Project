@@ -67,13 +67,10 @@ class TestInstructorsInCourse(TestCase):
         )
 
     def test_user_teaches_course(self):
-        teacher = "user1"
+        testIns= Course.objects.get(Course_ID='c1')
         instructor = User.getInstructor(self.course1)
-        self.assertEqual(teacher, instructor)
+        self.assertEqual(testIns.Course_Instructor, instructor, "instructor is properly located by the getInstructor function")
 
-    def test_user_teaches_course(self):
-        teacher = "user1"
-        self.assertEqual(teacher, self.course1.Course_Instructor)
 
 
 # test the instructor  a class with no instructor, and instructor with
@@ -85,7 +82,7 @@ class AddInstructorsToCourse(TestCase):
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
         self.user2 = User.objects.create(id='2', User_Name='taco', User_Email='user2@example.com',
-                                         User_Type='Insturctor', User_Phone='0987654321', User_Address='456 Elm St',
+                                         User_Type='insturctor', User_Phone='0987654321', User_Address='456 Elm St',
                                          User_LogName='user2', User_LogPass='password2', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
         self.user3 = User.objects.create(id='3', User_Name='Noodle', User_Email='user3@example.com',
@@ -144,5 +141,14 @@ class AddInstructorsToCourse(TestCase):
 
         self.assertEqual(init_length, len(course.Course_Instructor), "nothing to remove already blank")
 
-#    def test_replace_instructor(self):
+    def test_replace_instructor(self):
+        course1 = Course.objects.get(Course_ID='c1')
+        course2 = Course.objects.get(Course_ID='c2')
+        inst1=course1.Course_Instructor
+        inst2=course2.Course_Instructor
+        User.removeInstructor(self.course3.Course_Code, self.course2.id)
+        User.removeInstructor(self.course3.Course_Code, self.course1.id)
+        self.assertEqual(inst1, course2.Course_Instructor, "the course 1 instructor should not have been added to course 2")
+
+
 
