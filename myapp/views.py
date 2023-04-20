@@ -22,3 +22,12 @@ class Login(View):
 class AccountBase(View):
     def get(self, request):
         return render(request, 'accountbase.html')
+
+    def searchUser(self):
+        pass
+
+    def filterUser(self):
+        pass
+
+    def deleteUser(self):
+        pass

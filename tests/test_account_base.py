@@ -20,26 +20,26 @@ class TestSearchUser(TestCase):
     # tests if it returns the correct user
     def test_search_existing_user(self):
         username = "user1"
-        result = User.searchUser(username)
+        result = AccountBase.searchUser(username)
         self.assertEqual(result, self.user1, "searchUser has returned the incorrect user")
 
     # tests if it returns None for a non-existent user
     def test_search_non_existing_user(self):
         username = "uuser1"
-        result = User.searchUser(username)
+        result = AccountBase.searchUser(username)
         self.assertIsNone(result, "searchUser should have returned None")
 
     # tests if it is not case-sensitive
     def test_search_is_case_insensitive(self):
         username = "USER1"
-        result = User.searchUser(username)
+        result = AccountBase.searchUser(username)
         self.assertEqual(result, self.user1,
                          "searchUser should have returned the username that matches the uppercase parameter")
 
     # tests if it can handle whitespace
     def test_search_handles_whitespace(self):
         username = "  user1  "
-        result = User.searchUser(username)
+        result = AccountBase.searchUser(username)
         self.assertEqual(result, self.user1, "searchUser should have returned the username that matches the parameter")
 
 
@@ -61,19 +61,19 @@ class TestFilterUser(TestCase):
 
     def test_filter_user_TA(self):
         usertype = "TA"
-        result = User.filterUser(usertype)
+        result = AccountBase.filterUser(usertype)
         self.assertEqual(result, [self.user1, self.user2],
                          "filterUser didn't return all of the TA users")
 
     def test_filter_user_Professor(self):
         usertype = "Professor"
-        result = User.filterUser(usertype)
+        result = AccountBase.filterUser(usertype)
         self.assertEqual(result, [self.user3],
                          "filterUser didn't return all of the Professor users")
 
     def test_filter_all_user(self):
         usertype = "All Roles"
-        result = User.filterUser(usertype)
+        result = AccountBase.filterUser(usertype)
         self.assertEqual(result, [self.user1, self.user2, self.user3],
                          "filterUser didn't return all the users")
 
