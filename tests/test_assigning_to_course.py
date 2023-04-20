@@ -1,4 +1,3 @@
-
 from django.test import TestCase, Client
 from myapp.models import User, Course
 
@@ -35,14 +34,14 @@ class TestSearchCourse(TestCase):
         course_name = "Lion King analysis"
         result = User.searchCourse(course_name)
         self.assertEqual(result, self.course1.Course_Name)
+
     def test_course_name_with_incorrect_typing(self):
         course_name = "Lion King analysis"
         result = User.searchCourse(course_name)
         self.assertEqual(result, self.course1.Course_Name)
 
 
-
-class TestInstructorsinCourses(TestCase):
+class TestInstructorsInCourse(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(id='1', User_Name='Cricket', User_Email='user1@example.com',
                                          User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
@@ -66,22 +65,15 @@ class TestInstructorsinCourses(TestCase):
             Course_Location='Online',
             User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00'
         )
+
     def test_user_teaches_course(self):
-        teacher= "user1"
-        instructor = Course.getInstructor(self.course1)
-        self.assertEqual(teacher, instructor)
-    def test_user_teaches_course(self):
-        teacher= "user1"
+        teacher = "user1"
         instructor = Course.getInstructor(self.course1)
         self.assertEqual(teacher, instructor)
 
-
-
-
-
-
-
-
+    def test_user_teaches_course(self):
+        teacher = "user1"
+        self.assertEqual(teacher, self.course1.Course_Instructor)
 
 
 # test the instructor  a class with no instructor, and instructor with
@@ -98,4 +90,3 @@ class TestAssignUser(TestCase):
                                          User_Type='TA', User_Phone='0987654321', User_Address='456 Elm St',
                                          User_LogName='user2', User_LogPass='password1', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
-
