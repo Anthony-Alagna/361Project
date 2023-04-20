@@ -117,8 +117,17 @@ class AddInstructorsToCourse(TestCase):
         User.assignInstructors(self.course3.Course_Code, self.user3)
         course = Course.objects.get(Course_ID='3')
         self.assertEqual("", course.Course_Instructor,
-                         "teacher should be added because a TA was inapporpriatly added to the Instructor position"
+                         "teacher should be added because a TA was inapporpriatly added to the Instructor position")
 
-    def
+    def add_blank_user_to_course(self):
+        User.assignInstructors(self.course3.Course_Code, "")
+        course = Course.objects.get(Course_ID='3')
+        self.assertEqual("", course.Course_Instructor,
+                         "cannot add a blank instructor to course")
+
+    def add_multiple_instructors(self):
+        User.assignInstructors(self.course3.Course_Code, self.user2)
+        course = Course.objects.get(Course_ID='2')
+        self.assertEqual('1', course.objects.filter(Course_ID='2').count(), "there should only be on isntructor that can be assigned toa  course" )
 
 
