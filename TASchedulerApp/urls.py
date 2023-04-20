@@ -19,5 +19,6 @@ from myapp.views import AccountBase, Login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',Home.as_view(),name='home'),
     path('login/', Login.as_view(), name='login'),
     path('accountbase/', AccountBase.as_view(), name='accountbase')]

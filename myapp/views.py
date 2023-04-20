@@ -31,3 +31,7 @@ class AccountBase(View):
 
     def deleteUser(self):
         pass
+
+class Home(View):
+    def get(self,request):
+        return render(request,'home.html')
