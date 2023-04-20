@@ -10,3 +10,5 @@ class CreateAccountTest(TestCase):
     def test_create_account_accessible(self):
         response = self.client.get('/accountbase/createaccount/')
         self.assertEqual(response.status_code, 200)
+
+# Creator.createAccounts(username: str, password: str, account_type: str, fName, lName, address, phone, )

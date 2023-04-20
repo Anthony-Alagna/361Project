@@ -18,6 +18,9 @@ class Login(View):
         else:
             return redirect('login')
 
+class Home(View):
+    def get(self,request):
+        return render(request,'home.html')
 
 class AccountBase(View):
     def get(self, request):
@@ -31,10 +34,6 @@ class AccountBase(View):
 
     def deleteUser(self):
         pass
-
-class Home(View):
-    def get(self,request):
-        return render(request,'home.html')
 
 class CreateAccount(View):
     def get(self, request):
