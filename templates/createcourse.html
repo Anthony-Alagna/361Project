@@ -5,6 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-
+    <h1>Create Course</h1>
+    <form action="/" method="post"{% csrf_token %}>
+        <table>
+            <tr>
+                <label>
+                    <input type="course_name" name="course_name" placeholder="Enter Course Name">
+                </label>
+            </tr>
+            <tr>
+                <label>
+                    <input type="course_code" name="course_code" placeholder="Enter Course Code">
+                </label>
+            </tr>
+        </table>
+        <input type="submit" />
+    </form>
+    {{ message }}
 </body>
 </html>
