@@ -4,7 +4,7 @@ from django.views import View
 # Create your views here.
 
 
-class login(View):
+class Login(View):
     def get(self, request):
         return render(request, 'login.html')
 
@@ -17,3 +17,21 @@ class login(View):
             return redirect('index')
         else:
             return redirect('login')
+
+
+class AccountBase(View):
+    def get(self, request):
+        return render(request, 'accountbase.html')
+
+    def searchUser(self):
+        pass
+
+    def filterUser(self):
+        pass
+
+    def deleteUser(self):
+        pass
+
+class Home(View):
+    def get(self,request):
+        return render(request,'home.html')
