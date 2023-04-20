@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from myapp.models import User
+from myapp.views import AccountBase
 
 
 # unit tests for functionality on account base page (searching for user, etc.)
