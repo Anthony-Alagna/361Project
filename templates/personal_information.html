@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Personal Information</title>
+</head>
+<body>
+	<header>
+        <button>Home</button>
+		<button>Log Out</button>
+	</header>
+	<h1>Personal Information</h1>
+	<form action="/edit" method="post">
+      <table>
+        <tr>
+          <td><label for="first-name">First Name:</label></td>
+          <td><input type="text" id="first-name" name="first_name" value="John" readonly></td>
+        </tr>
+        <tr>
+          <td><label for="last-name">Last Name:</label></td>
+          <td><input type="text" id="last-name" name="last_name" value="Doe" readonly></td>
+        </tr>
+        <tr>
+          <td><label for="address">Address:</label></td>
+          <td><input type="text" id="addressID" name="address" value="123 Blvd" readonly></td>
+        </tr>
+        <tr>
+          <td><label for="phone_number">Phone Number:</label></td>
+          <td><input type="text" id="phoneID" name="phone_number" value="123-456-7890" readonly></td>
+        </tr>
+        <tr>
+          <td colspan="2"><h1>Contact Information</h1></td>
+        </tr>
+        <tr>
+          <td><label for="email">Email:</label></td>
+          <td><input type="text" id="emailID" name="email" value="user@gmail.com" readonly></td>
+        </tr>
+        <tr>
+          <td><label for="position">Position:</label></td>
+          <td><input type="text" id="positionID" name="position" value="TA" readonly></td>
+        </tr>
+      </table>
+      <button type="submit" id="edit-button">Edit</button>
+    </form>
+</body>
+</html>

@@ -44,6 +44,7 @@ class PersonalInformationTest(unittest.TestCase):
         self.assertEqual(self.user1.fName, "Joe", "First name should have changed")
         self.assertEqual(self.user1.lName, "Smith", "Last name should not have changed")
         self.assertEqual(self.user1.address, "123 Blvd", "Address should not have changed")
+        self.assertEqual(self.user1.position, "TA", "Position should not have changed")
 
     def test_edit_account_info_change_phone(self):
         # Change the phone number
@@ -53,6 +54,7 @@ class PersonalInformationTest(unittest.TestCase):
         self.assertEqual(self.user1.fName, "Bob", "First name should not have changed")
         self.assertEqual(self.user1.lName, "Smith", "Last name should not have changed")
         self.assertEqual(self.user1.address, "123 Blvd", "Address should not have changed")
+        self.assertEqual(self.user1.position, "TA", "Position should not have changed")
 
     def test_edit_account_info_change_address(self):
         # Change the address
@@ -62,6 +64,7 @@ class PersonalInformationTest(unittest.TestCase):
         self.assertEqual(self.user1.fName, "Bob", "First name should not have changed")
         self.assertEqual(self.user1.lName, "Smith", "Last name should not have changed")
         self.assertEqual(self.user1.address, "789 Blvd", "Address should have changed")
+        self.assertEqual(self.user1.position, "TA", "Position should not have changed")
 
     def test_edit_account_info_change_position(self):
         # Change the position
