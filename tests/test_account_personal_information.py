@@ -39,9 +39,36 @@ class PersonalInformationTest(unittest.TestCase):
     def test_edit_account_info_change_fName(self):
         # Change the firstName
         self.user1.editInfo(self.user1.phone, self.user1.address, "Joe", self.user1.position)
-        self.assertEqual(self.user1.email, "test@gmail.com")
-        self.assertEqual(self.user1.phone, "1111111111")
-        self.assertEqual(self.user1.fName, "Joe")
-        self.assertEqual(self.user1.lName, "Smith")
-        self.assertEqual(self.user1.address, "123 Blvd")
+        self.assertEqual(self.user1.email, "test@gmail.com", "email should not have changed")
+        self.assertEqual(self.user1.phone, "1111111111", "Phone number should not have changed")
+        self.assertEqual(self.user1.fName, "Joe", "First name should have changed")
+        self.assertEqual(self.user1.lName, "Smith", "Last name should not have changed")
+        self.assertEqual(self.user1.address, "123 Blvd", "Address should not have changed")
 
+    def test_edit_account_info_change_phone(self):
+        # Change the phone number
+        self.user1.editInfo("3333333333", self.user1.address, self.user1.fName, self.user1.position)
+        self.assertEqual(self.user1.email, "test@gmail.com", "email should not have changed")
+        self.assertEqual(self.user1.phone, "3333333333", "Phone number should have changed")
+        self.assertEqual(self.user1.fName, "Bob", "First name should not have changed")
+        self.assertEqual(self.user1.lName, "Smith", "Last name should not have changed")
+        self.assertEqual(self.user1.address, "123 Blvd", "Address should not have changed")
+
+    def test_edit_account_info_change_address(self):
+        # Change the address
+        self.user1.editInfo(self.user1.phone, "789 Blvd", self.user1.fName, self.user1.position)
+        self.assertEqual(self.user1.email, "test@gmail.com", "email should not have changed")
+        self.assertEqual(self.user1.phone, "1111111111", "Phone number should not have changed")
+        self.assertEqual(self.user1.fName, "Bob", "First name should not have changed")
+        self.assertEqual(self.user1.lName, "Smith", "Last name should not have changed")
+        self.assertEqual(self.user1.address, "789 Blvd", "Address should have changed")
+
+    def test_edit_account_info_change_position(self):
+        # Change the position
+        self.user1.editInfo(self.user1.phone, self.user1.address, self.user1.fName, "Professor")
+        self.assertEqual(self.user1.email, "test@gmail.com", "email should not have changed")
+        self.assertEqual(self.user1.phone, "1111111111", "Phone number should not have changed")
+        self.assertEqual(self.user1.fName, "Bob", "First name should not have changed")
+        self.assertEqual(self.user1.lName, "Smith", "Last name should not have changed")
+        self.assertEqual(self.user1.address, "123 Blvd", "Address should not have changed")
+        self.assertEqual(self.user1.position, "Professor", "Position should have changed")
