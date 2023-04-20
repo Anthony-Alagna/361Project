@@ -67,10 +67,10 @@ class TestInstructorsInCourse(TestCase):
         )
 
     def test_user_teaches_course(self):
-        testIns= Course.objects.get(Course_ID='c1')
+        testIns = Course.objects.get(Course_ID='c1')
         instructor = User.getInstructor(self.course1)
-        self.assertEqual(testIns.Course_Instructor, instructor, "instructor is properly located by the getInstructor function")
-
+        self.assertEqual(testIns.Course_Instructor, instructor,
+                         "instructor is properly located by the getInstructor function")
 
 
 # test the instructor  a class with no instructor, and instructor with
@@ -144,11 +144,9 @@ class AddInstructorsToCourse(TestCase):
     def test_replace_instructor(self):
         course1 = Course.objects.get(Course_ID='c1')
         course2 = Course.objects.get(Course_ID='c2')
-        inst1=course1.Course_Instructor
-        inst2=course2.Course_Instructor
+        inst1 = course1.Course_Instructor
+        inst2 = course2.Course_Instructor
         User.removeInstructor(self.course3.Course_Code, self.course2.id)
         User.removeInstructor(self.course3.Course_Code, self.course1.id)
-        self.assertEqual(inst1, course2.Course_Instructor, "the course 1 instructor should not have been added to course 2")
-
-
-
+        self.assertEqual(inst1, course2.Course_Instructor,
+                         "the course 1 instructor should not have been added to course 2")
