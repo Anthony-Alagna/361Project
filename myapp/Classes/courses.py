@@ -1,3 +1,6 @@
+import myapp.models
+from myapp.models import Course, Section, CourseToUser
+
 class Course:
     def __init__(self, courseID, name, code, instructor, ta_list):
         self.courseID = courseID  # TODO Do we need this?
