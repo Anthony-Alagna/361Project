@@ -107,27 +107,39 @@ class AddInstructorsToCourse(TestCase):
             User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00'
         )
 
-    def add_teacher_to_class_with_no_instructor(self):
+    def test_add_teacher_to_class_with_no_instructor(self):
         teacher = self.user1
         User.assignInstructors(self.course3.Course_Code, self.user1)
         course = Course.objects.get(Course_ID='2')
         self.assertIn(teacher, course.Course_Instructor, "teacher should be added because it was blank")
 
-    def add_ta_to_instructor_position(self):
-        User.assignInstructors(self.course3.Course_Code, self.user3)
+    def test_add_ta_to_instructor_position(self):
+        User.assignInstructors(self.course3.Course_Code, self.id())
         course = Course.objects.get(Course_ID='3')
         self.assertEqual("", course.Course_Instructor,
                          "teacher should be added because a TA was inapporpriatly added to the Instructor position")
 
-    def add_blank_user_to_course(self):
+    def test_add_blank_user_to_course(self):
         User.assignInstructors(self.course3.Course_Code, "")
         course = Course.objects.get(Course_ID='3')
         self.assertEqual("", course.Course_Instructor,
                          "cannot add a blank instructor to course")
 
-    def add_multiple_instructors(self):
-        User.assignInstructors(self.course3.Course_Code, self.user2)
+    def test_add_multiple_instructors(self):
+        User.assignInstructors(self.course3.Course_Code, self.user2.id)
         course = Course.objects.get(Course_ID='2')
-        self.assertEqual('1', course.objects.filter(Course_ID='2').count(), "there should only be on isntructor that can be assigned toa  course" )
+        self.assertEqual('1', course.objects.filter(Course_ID='2').count(),
+                         "there should only be on isntructor that can be assigned toa  course")
 
+    def test_remove_instructor(self):
+        User.removeInstructor(self.course2.Course_Code, self.user2.id)
+        course = Course.objects.get(Course_ID='2')
+        self.assertEqual(0, course.objects.filter(Course_ID='2').count(),
+                         "there should only be on isntructor that can be assigned toa  course")
 
+    def test_remove_blank_instructor(self):
+        course = Course.objects.get(Course_ID='3')
+        init_length = len(course.Course_Instructor)
+        User.removeInstructor(self.course3.Course_Code, self.course3.id)
+
+        self.assertEqual(init_length, len(course.Course_Instructor), "nothing to remove already blank")
