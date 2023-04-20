@@ -1,10 +1,7 @@
 from django.db import models
 
-
-# this is just the start
+#this is just the start
 # we have to redesign this I just started the models class so we can redesign what needs ot be done
-
-
 class User(models.Model):
     User_ID = models.CharField(max_Length=200)
     User_Name = models.CharField(max_Length=200)
@@ -49,7 +46,7 @@ class Section(models.Model):
 
 # this represents many to many
 # there is also an instance called ManyToMany in django
-class CourseToUser(models.Model):
+class courseToUser(models.Model):
     id = models.ForeignKey(User, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     course = models.ForeignKey(Section, on_delete=models.CASCADE)
