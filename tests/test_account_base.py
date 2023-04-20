@@ -8,11 +8,11 @@ from myapp.models import User
 # Method: Account.searchUser(username: str)
 class TestSearchUser(TestCase):
     def setUp(self):
-        self.user1 = User.objects.create(User_ID='1', User_Name='Cricket', User_Email='user1@example.com',
+        self.user1 = User.objects.create(id='1', User_Name='Cricket', User_Email='user1@example.com',
                                          User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
-        self.user2 = User.objects.create(User_ID='2', User_Name='Noodle', User_Email='user2@example.com',
+        self.user2 = User.objects.create(id='2', User_Name='Noodle', User_Email='user2@example.com',
                                          User_Type='TA', User_Phone='0987654321', User_Address='456 Elm St',
                                          User_LogName='user2', User_LogPass='password1', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
@@ -46,15 +46,15 @@ class TestSearchUser(TestCase):
 # Account.filterUser(usertype: str)
 class TestFilterUser(TestCase):
     def setUp(self):
-        self.user1 = User.objects.create(User_ID='1', User_Name='Cricket', User_Email='user1@example.com',
+        self.user1 = User.objects.create(id='1', User_Name='Cricket', User_Email='user1@example.com',
                                          User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
-        self.user2 = User.objects.create(User_ID='2', User_Name='Noodle', User_Email='user2@example.com',
+        self.user2 = User.objects.create(id='2', User_Name='Noodle', User_Email='user2@example.com',
                                          User_Type='TA', User_Phone='0987654321', User_Address='456 Elm St',
                                          User_LogName='user2', User_LogPass='password1', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
-        self.user3 = User.objects.create(User_ID='3', User_Name='Toby', User_Email='user3@example.com',
+        self.user3 = User.objects.create(id='3', User_Name='Toby', User_Email='user3@example.com',
                                          User_Type='Professor', User_Phone='0987654322', User_Address='457 Elm St',
                                          User_LogName='user3', User_LogPass='password2', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
@@ -81,7 +81,7 @@ class TestFilterUser(TestCase):
 # Account.deleteUser(username: str)
 class TestDeleteUser(TestCase):
     def setUp(self):
-        self.user1 = User.objects.create(User_ID='1', User_Name='Cricket', User_Email='user1@example.com',
+        self.user1 = User.objects.create(id='1', User_Name='Cricket', User_Email='user1@example.com',
                                          User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
@@ -98,7 +98,7 @@ class TestDeleteUser(TestCase):
 class TestButtons(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user1 = User.objects.create(User_ID='1', User_Name='Cricket', User_Email='user1@example.com',
+        self.user1 = User.objects.create(id='1', User_Name='Cricket', User_Email='user1@example.com',
                                          User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
