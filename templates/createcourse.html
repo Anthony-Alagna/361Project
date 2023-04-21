@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>Create Course</title>
 </head>
 <body>
     <h1>Create Course</h1>
-    <form action="/" method="post"{% csrf_token %}>
+    <a href="course_base/"><button style="margin-left: 25px;">Back</button></a>
+    <form action="/" method="post"> {{ csrf_protect }}
         <table>
             <tr>
                 <label>
@@ -22,7 +23,8 @@
         <label>
             <input type="text" name="course_description" size="50" placeholder="Add Description...">
         </label>
-        <input type="submit" />
+{#        <br><a href="course_base"><button style="margin-left: 75px;">Cancel</button></a>#}
+        <input type="submit" value="Create" style="margin-left: 50px;"/>
     </form>
     {{ message }}
 </body>

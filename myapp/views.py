@@ -48,6 +48,17 @@ class EditAccount(View):
         return render(request, 'editaccount.html')
 
 
+class CourseBase(View):
+    def get(self, request):
+        return render(request, 'course_base.html')
+
+
 class CreateCourse(View):
     def get(self, request):
         return render(request, 'createcourse.html')
+
+    def post(self, request):
+        name = request.POST.get('name')
+        code = request.POST.get('code')
+        course = Course.objects.filter(
+            Course_Name=name, Course_Code=code)
