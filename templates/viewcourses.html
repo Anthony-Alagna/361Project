@@ -1,0 +1,23 @@
+{% block title %} Courses {% endblock %}
+{% for course in courses %}
+
+  <div class="course">
+    <h2>{{ course.Course_Name }}</h2>
+
+    <section>
+      <h3>What this course is about:</h3>
+      <p>{{ course.Course_Description }}</p>
+    </section>
+
+    <section>
+      <h3>Details:</h3>
+
+    </section>
+
+    <form method="post" action="{% url 'courseedit' course.id %}">
+      {% csrf_token %}
+      <input type="submit" value="Edit">
+
+    </form>
+  </div>
+{% endfor %}

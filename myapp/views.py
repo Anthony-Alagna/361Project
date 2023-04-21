@@ -20,8 +20,8 @@ class Login(View):
 
 
 class Home(View):
-    def get(self,request):
-        return render(request,'home.html')
+    def get(self, request):
+        return render(request, 'home.html')
 
 
 class AccountBase(View):
@@ -35,6 +35,22 @@ class AccountBase(View):
         pass
 
     def deleteUser(self):
+        pass
+
+
+
+class InstructorToCourse(View):
+
+    def get(self, request):
+        return render(request, 'createaccount.html')
+
+    def assignInstructors(self):
+        pass
+
+    def getInstructor(self):
+        pass
+
+    def removeInstructor(self):
         pass
 
 
