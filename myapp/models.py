@@ -14,7 +14,7 @@ class User(models.Model):
     User_Type = models.CharField(max_length=200)
     User_Phone = models.CharField(max_length=200, blank=True)
     User_Address = models.TextField(max_length=500, blank =True)
-    User_LogName = models.CharField(max_length=200, blank =True)
+    User_LogName = models.CharField(max_length=200, unique=True, blank =True)
     User_LogPass = models.CharField(max_length=200, blank =True)
     User_isGrader = models.BooleanField(default=False)
     User_SecAssigned = models.ManyToManyField(
@@ -33,6 +33,7 @@ class Course(models.Model):
     Course_Name = models.CharField(max_length=50)
     Course_Code = models.CharField(max_length=50)
     Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    Course_Description = models.CharField(max_length=100, blank=True)
     Course_isOnline = models.BooleanField(default=False)
     Course_Location = models.CharField(max_length=50)
     Course_begin = models.DateTimeField(
