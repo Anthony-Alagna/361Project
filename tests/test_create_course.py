@@ -25,3 +25,6 @@ class TestNewCourse(TestCase):
 
     def test_course_name(self):
         assert True
+
+    def test_course_code(self):
+        assert True
