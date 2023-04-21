@@ -12,11 +12,11 @@ class User(models.Model):
     User_Name = models.CharField(max_length=200)
     User_Email = models.CharField(max_length=200)
     User_Type = models.CharField(max_length=200)
-    User_Phone = models.CharField(max_length=200)
-    User_Address = models.TextField(max_length=500)
-    User_LogName = models.CharField(max_length=200)
-    User_LogPass = models.CharField(max_length=200)
-    User_isGrader = models.CharField(max_length=3)
+    User_Phone = models.CharField(max_length=200, blank=True)
+    User_Address = models.TextField(max_length=500, blank =True)
+    User_LogName = models.CharField(max_length=200, blank =True)
+    User_LogPass = models.CharField(max_length=200, blank =True)
+    User_isGrader = models.BooleanField(default=False)
     User_SecAssigned = models.ManyToManyField(
         'Course', through='CourseToUser', related_name='users')
 
@@ -33,7 +33,7 @@ class Course(models.Model):
     Course_Name = models.CharField(max_length=50)
     Course_Code = models.CharField(max_length=50)
     Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
-    Course_isOnline = models.CharField(max_length=6)
+    Course_isOnline = models.BooleanField(default=False)
     Course_Location = models.CharField(max_length=50)
     Course_begin = models.DateTimeField(
         auto_now_add=True)
@@ -48,7 +48,7 @@ class Section(models.Model):
     # foreign key for user, is there only one instructor per section/course?
     Sec_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
     Sec_Course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    Sec_isOnline = models.CharField(max_length=7)
+    Sec_isOnline = models.BooleanField(default=False)
     Sec_begin = models.DateTimeField(auto_now_add=True)
     Sec_Updated = models.DateTimeField(auto_now=True)
 
