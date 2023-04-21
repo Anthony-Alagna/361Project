@@ -1,6 +1,5 @@
 from django.test import TestCase, Client
 from myapp.models import User
-<<<<<<< HEAD
 
 """_summary_ contains unit tests for the login page
     """
@@ -21,5 +20,4 @@ class LoginTest(TestCase):
         """
         response = self.client.get('/login/')
         self.assertEqual(response.status_code, 200)
-=======
->>>>>>> b0148f0 (fix test_login naming)
+
