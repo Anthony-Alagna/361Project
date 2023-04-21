@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
 
-
 # Create your views here.
 
 
@@ -19,6 +18,9 @@ class Login(View):
         else:
             return redirect('login')
 
+class Home(View):
+    def get(self,request):
+        return render(request,'home.html')
 
 class AccountBase(View):
     def get(self, request):
@@ -33,18 +35,10 @@ class AccountBase(View):
     def deleteUser(self):
         pass
 
-
-class Home(View):
+class CreateAccount(View):
     def get(self, request):
-        return render(request, 'home.html')
+        return render(request, 'createaccount.html')
 
-
-class Usertocourse(View):
+class EditAccount(View):
     def get(self, request):
-        return render(request, 'usertocourse.html')
-
-    def searchUser(self):
-        pass
-
-    def assignUser(self):
-        pass
+        return render(request, 'editaccount.html')
