@@ -1,20 +1,26 @@
 {% block title %} Courses {% endblock %}
 {% for course in courses %}
+
   <div class="course">
     <h2>{{ course.Course_Name }}</h2>
+
     <section>
-      <h3>Description:</h3>
+      <h3>What this course is about:</h3>
       <p>{{ course.Course_Description }}</p>
     </section>
+
     <section>
-      <h3>Details:</h3>
+      <h3>OverView:</h3>
+
       <p><small>Instructor: {{ course.Course_Instructor.name }}
-        Location: {{ course.Course_Location }}
+          Location: {{ course.Course_Location }}
         | Start Date: {{ course.Course_begin }}</small></p>
     </section>
+
     <form method="post" action="{% url 'courseedit' course.id %}">
       {% csrf_token %}
       <input type="submit" value="Edit">
+
     </form>
   </div>
 {% endfor %}
