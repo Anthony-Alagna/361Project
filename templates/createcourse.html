@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Title</title>
 </head>
 <body>
@@ -10,15 +10,18 @@
         <table>
             <tr>
                 <label>
-                    <input type="course_name" name="course_name" placeholder="Enter Course Name">
+                    <input type="text" name="course_name" placeholder="Enter Course Name">
                 </label>
             </tr>
             <tr>
                 <label>
-                    <input type="course_code" name="course_code" placeholder="Enter Course Code">
+                    <input type="text" name="course_code" placeholder="Enter Course Code">
                 </label>
             </tr>
         </table>
+        <label>
+            <input type="text" name="course_description" size="50" placeholder="Add Description...">
+        </label>
         <input type="submit" />
     </form>
     {{ message }}
