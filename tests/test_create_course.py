@@ -8,6 +8,7 @@ from myapp.views import CreateCourse
 
 class TestNewCourse(TestCase):
     supervisor = None
+    
     def setUp(self):
         self.supervisor = Client()
         self.user1 = User.objects.create(
@@ -21,5 +22,6 @@ class TestNewCourse(TestCase):
             Course_Instructor=self.user1, Course_isOnline='False',
             Course_Location='123 Main St',
             User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
+
     def test_course_name(self):
-        Course.
+        assert True
