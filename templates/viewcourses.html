@@ -10,11 +10,8 @@
     </section>
 
     <section>
-      <h3>OverView:</h3>
+      <h3>Details:</h3>
 
-      <p><small>Instructor: {{ course.Course_Instructor.name }}
-          Location: {{ course.Course_Location }}
-        | Start Date: {{ course.Course_begin }}</small></p>
     </section>
 
     <form method="post" action="{% url 'courseedit' course.id %}">
