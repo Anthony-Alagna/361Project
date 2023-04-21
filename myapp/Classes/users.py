@@ -1,17 +1,17 @@
 import myapp.models
-from myapp.models import User, Section,Course, courseToUser
+from myapp.models import User, Section, Course, CourseToUser
+
 
 class User:
     user_id = None
     email = None
     type = None
     name = None
-    phone= None
+    phone = None
     address = None
     city = None
     username = None
     isgrader = False
-
 
     def __Init__(self, user_id="", email="", type="", name="", phone="", address="",
                  city="", username="", isgrader=""):
@@ -21,8 +21,7 @@ class User:
         self.name = name
         self.phone = phone
         self.address = address
-        self.zipcode= zipCode
-        self.city= city
+        self.city = city
         self.username = username
         self.isgrader = isgrader
 
@@ -35,8 +34,8 @@ class User:
         if user_id == "":
             raise TypeError(" user ID cannot be blank")
         self.user_id = user_id
-        id= User.objects.get(id=self.id)
-        id.id=user_id
+        id = User.objects.get(id=self.id)
+        id.id = user_id
         id.save()
 
     def get_email(self):
@@ -47,9 +46,9 @@ class User:
     def set_email(self, email):
         if email == "":
             raise TypeError("email you inputed  cannot be blank")
-        #is this the right way to edit the users attributes in the model
+        # is this the right way to edit the users attributes in the model
         user_email = User.objects.get(User_Email=self.email)
-        user_email.email=email
+        user_email.email = email
         self.email = email
         user_email.save()
 
@@ -63,7 +62,7 @@ class User:
             raise TypeError("type input cannot be blank")
         self.type = type
         user_type = User.objects.get(User_Email=self.type)
-        user_type.type=type
+        user_type.type = type
         user_type.save()
 
     def get_name(self):
@@ -75,8 +74,8 @@ class User:
         if name == "":
             raise TypeError("name input cannot be blank")
         self.name = name
-        nName=User.objects.get(User_Email=self.name)
-        nName.name=name
+        nName = User.objects.get(User_Email=self.name)
+        nName.name = name
         nName.save()
 
     def get_phone(self):
@@ -136,8 +135,7 @@ class User:
         nUsername.username = username
         nUsername.save()
 
-
-    #gotta fgure out how to implement functions below
+    # gotta fgure out how to implement functions below
     #
     # def getAssignment(self):
     #
@@ -146,6 +144,3 @@ class User:
     # def filterUser(self, type):
     #
     # def viewCourses(self):
-
-
-
