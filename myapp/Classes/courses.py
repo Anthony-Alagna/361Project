@@ -1,13 +1,18 @@
 import myapp.models
-from myapp.models import Course, Section, CourseToUser
+from myapp.models import Section, CourseToUser
+
 
 class Course:
-    def __init__(self, courseID, name, code, instructor, ta_list):
-        self.courseID = courseID  # TODO Do we need this?
+    course_id = None
+    name = None
+    code = None
+    instructor = None
+
+    def __init__(self, course_id, name, code, instructor):
+        self.course_id = course_id
         self.name = name
         self.code = code
         self.instructor = instructor
-        self.ta_list = ta_list
 
     def get_name(self):
         return self.name
@@ -26,10 +31,3 @@ class Course:
 
     def set_instructor(self, _instructor):
         self.instructor = _instructor
-
-    # TODO how to make a setter for a list?
-    def get_ta(self):
-        return self.ta_list
-
-    def set_ta(self, _ta_list):
-        self.ta_list = _ta_list
