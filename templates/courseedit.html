@@ -1,0 +1,26 @@
+<h1>Edit Course</h1>
+<form method="post">
+  {% csrf_token %}
+  <label for="Course_Name">Course Name:</label>
+  {{ form.Course_Name }}
+
+  <label for="course_Code">Course Code:</label>
+  {{ form.Course_Code }}
+
+  <label for="Course_Instructor">Instructor:</label>
+  {{ form.Course_Instructor }}
+
+  <label for="Course_Description">Description:</label>
+  {{ form.Course_Description }}
+
+  <label for="Course_isOnline">Online:</label>
+  {{ form.Course_isOnline }}
+
+  <label for="Course_Location">Location:</label>
+  {{ form.Course_Location }}
+
+  <label for="Course_begin">Start Date:</label>
+  {{ form.Course_begin }}
+
+  <button type="submit">Save</button>
+</form>
