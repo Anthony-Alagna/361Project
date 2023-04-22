@@ -34,16 +34,15 @@ class User(models.Model):
 
 class Course(models.Model):
     # how do we get the different views for each user?
-    id = models.AutoField(("course_id"), primary_key=True,
-                          unique=True)
+    id = models.AutoField(("course_id"), primary_key=True, unique=True)
     Course_Name = models.CharField(max_length=50)
     Course_Code = models.CharField(max_length=50)
-    Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    # Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    Course_Instructor = models.CharField(max_length=50)
     Course_Description = models.CharField(max_length=100, blank=True)
     Course_isOnline = models.BooleanField(default=False)
     Course_Location = models.CharField(max_length=50)
-    Course_begin = models.DateTimeField(
-        auto_now_add=True)
+    Course_begin = models.DateTimeField(auto_now_add=True)  # Does this need to be a DateTimeField
     Course_Updated = models.DateTimeField(auto_now=True)
 
 
