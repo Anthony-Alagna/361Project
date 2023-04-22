@@ -3,7 +3,7 @@ from myapp.models import User, Section, Course, CourseToUser
 import abc
 
 
-class User(abc.ABC):
+class Users(abc.ABC):
     user_id = None
     email = None
     Position = None
@@ -82,3 +82,8 @@ class User(abc.ABC):
         courses = CourseToUser.objects.get(user=self)
         return courses
 
+
+class UserUtility:
+    @staticmethod
+    def get_all_users():
+        return User.objects.all()

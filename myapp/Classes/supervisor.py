@@ -1,5 +1,6 @@
 from myapp.models import User
 
+
 class Supervisor(User):
     @staticmethod
     def create_account(fname, lname, email, username, password, address, city, phone, account_type):
