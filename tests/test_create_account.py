@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from myapp.models import User
+from myapp.Classes.supervisor import Supervisor
 
 
 # basic unit test for create account page
