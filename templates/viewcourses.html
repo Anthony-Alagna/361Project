@@ -11,7 +11,18 @@
 
     <section>
       <h3>Details:</h3>
-
+         <ul>
+        {% for course in courses %}
+        <li>{{ course.Course_Name }}</li>
+        <li>{{ course.Course_Code }}</li>
+        <li>{{ course.Course_Instructor.username }}</li>
+        <li>{{ course.Course_Description }}</li>
+        <li>{{ course.Course_isOnline }}</li>
+        <li>{{ course.Course_Location }}</li>
+        <li>{{ course.Course_begin }}</li>
+        <li>{{ course.Course_Updated }}</li>
+        {% endfor %}
+    </ul>
     </section>
 
     <form method="post" action="{% url 'courseedit' course.id %}">
