@@ -20,8 +20,7 @@ from myapp.views import CourseBase, CreateCourse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',Home.as_view(),name='home'),
-    path('', Home.as_view(),name='home'),
+    path('', Home.as_view(), name='home'),
     path('login/', Login.as_view(), name='login'),
     path('accountbase/', AccountBase.as_view(), name='accountbase'),
     path('accountbase/createaccount/', CreateAccount.as_view(), name='createaccount'),

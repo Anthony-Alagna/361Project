@@ -6,15 +6,23 @@
 </head>
 <body>
     <h1>Manage Courses</h1>
+    <a href="/"><button>Home</button></a><br><br>
     <table>
-        <tr>&emsp;Course Name</tr>
-        <tr>&emsp;Course Code</tr>
-    </table>
-    <ul style="list-style: none;">
-        <li>Name 1&emsp;&emsp;123</li>
-        <li>Name 2&emsp;&emsp;456</li>
-    </ul>
+        <tr>Course&emsp;</tr>
+        <tr>Name&emsp;</tr>
+        <tr>Instructor</tr><br>
+
+        {% for course in courses %}
+            <tr>{{ course.Course_Code }}&emsp;</tr>
+            <tr>{{ course.Course_Name }}&emsp;</tr>
+            {# change to instructor #}
+            <tr>{{ course.Course_Description }}&ensp;</tr>
+            {# link to edit course page #}
+            <a href=""><button>Info</button></a>
+            <a href=""><button>Edit</button></a><br>
+        {% endfor %}
+    </table><br>
     <a href="createcourse"><button>New Course</button></a>
-    <a href="/"><button>Home</button></a>
+    <br>{{ success }}
 </body>
 </html>

@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from myapp.models import User, Course, Section, CourseToUser
+from myapp.Classes.courses import CourseUtility
 
 # Create your views here.
 
@@ -66,15 +68,21 @@ class EditAccount(View):
 
 class CourseBase(View):
     def get(self, request):
-        return render(request, 'course_base.html')
+        courses = CourseUtility.get_course_list()
+        return render(request, 'course_base.html', {"courses": courses})
+
+    def post(self, request):
+        CourseUtility.create_course(request.POST.get('course_name'), request.POST.get('course_code'),
+                                    request.POST.get('course_desc'))
+        courses = CourseUtility.get_course_list()
+        return render(request, 'course_base.html', {"success": "Course created!", "courses": courses})
 
 
 class CreateCourse(View):
+    TEMPLATE = "createcourse.html"
+
     def get(self, request):
         return render(request, 'createcourse.html')
 
     def post(self, request):
-        name = request.POST.get('name')
-        code = request.POST.get('code')
-        course = Course.objects.filter(
-            Course_Name=name, Course_Code=code)
+        return render(request, 'createcourse.html', {"success": "course created"})
