@@ -16,13 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from myapp.views import AccountBase, Login, Home, CreateAccount, EditAccount
+from myapp.views import CourseBase, CreateCourse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home.as_view(), name='home'),
-    path('', Home.as_view(), name='home'),
     path('login/', Login.as_view(), name='login'),
     path('accountbase/', AccountBase.as_view(), name='accountbase'),
     path('accountbase/createaccount/', CreateAccount.as_view(), name='createaccount'),
-    path('accountbase/editaccount/', EditAccount.as_view(), name='editaccount')
+    path('accountbase/editaccount/', EditAccount.as_view(), name='editaccount'),
+    path('course_base/', CourseBase.as_view(), name='course_base'),
+    path('course_base/createcourse', CreateCourse.as_view(), name='createcourse')
 ]
