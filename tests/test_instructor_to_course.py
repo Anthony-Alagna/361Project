@@ -1,10 +1,10 @@
-from django.test import TestCase, Client
-from myapp.models import User, Course
-from myapp.views import InstructorToCourse
-
-
-# M: As a supervisor I would like to assign instructors to courses so that they are able to manage their course
-
+# from django.test import TestCase, Client
+# from myapp.models import User, Course
+# from myapp.views import InstructorToCourse
+#
+#
+#  M: As a supervisor I would like to assign instructors to courses so that they are able to manage their course
+#
 #
 # class TestInstructorsInCourse(TestCase):
 #     def setUp(self):
