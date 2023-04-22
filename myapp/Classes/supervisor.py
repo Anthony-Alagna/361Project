@@ -1,7 +1,8 @@
 from myapp.models import User
 
 class Supervisor(User):
-    def createAccount(self, fname, lname, email, username, password, address, city, phone, account_type):
+    @staticmethod
+    def create_account(fname, lname, email, username, password, address, city, phone, account_type):
         # what do the form fields come through as if they're empty? assuming it's None
         if fname is None or lname is None or email is None or username is None or password is None or address is None or city is None or phone is None or account_type is None:
             return TypeError(
