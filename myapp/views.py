@@ -40,20 +40,22 @@ class AccountBase(View):
         pass
 
 
+# want to return the same view but for a specific course
 
-class InstructorToCourse(View):
 
-    def get(self, request):
-        return render(request, 'createaccount.html')
-
-    def assignInstructors(self):
-        pass
-
-    def getInstructor(self):
-        pass
-
-    def removeInstructor(self):
-        pass
+# class InstructorToCourse(View):
+#
+#     def get(self, request):
+#         return render(request, 'createaccount.html')
+#
+#     def assignInstructors(self):
+#         pass
+#
+#     def getInstructor(self):
+#         pass
+#
+#     def removeInstructor(self):
+#         pass
 
 
 class CreateAccount(View):
