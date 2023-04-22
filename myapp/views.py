@@ -42,26 +42,20 @@ class AccountBase(View):
 
 # want to return the same view but for a specific course
 
-class GetTargetCourse(View):
-    def retrieveCourse(self, request, course_name):
-        course = Course.objects.get(Course_Name=course_name)
-        course = {'course': course_name}
-        return render(request, 'viewcourses.html', course)
 
-
-class InstructorToCourse(View):
-
-    def get(self, request):
-        return render(request, 'createaccount.html')
-
-    def assignInstructors(self):
-        pass
-
-    def getInstructor(self):
-        pass
-
-    def removeInstructor(self):
-        pass
+# class InstructorToCourse(View):
+#
+#     def get(self, request):
+#         return render(request, 'createaccount.html')
+#
+#     def assignInstructors(self):
+#         pass
+#
+#     def getInstructor(self):
+#         pass
+#
+#     def removeInstructor(self):
+#         pass
 
 
 class CreateAccount(View):
