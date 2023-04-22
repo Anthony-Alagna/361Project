@@ -17,7 +17,7 @@ class User(models.Model):
     # edited
     #user_positions = [('SA', 'Supervisor'), ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
     User_Pos = models.CharField(max_length=2)
-    User_Phone = models.Charfield(max_length=200, blank=True)
+    User_Phone = models.CharField(max_length=200, blank=True)
     User_Address = models.TextField(max_length=500, blank=True)
     User_City = models.CharField(max_length=200, blank=True)
     User_LogName = models.CharField(max_length=200, unique=True, blank=True)
