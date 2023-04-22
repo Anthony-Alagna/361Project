@@ -1,12 +1,14 @@
 # from django.test import TestCase, Client
 # from myapp.models import User, Course
 # from myapp.views import InstructorToCourse
+import unittest
 #
 #
 #  M: As a supervisor I would like to assign instructors to courses so that they are able to manage their course
 #
 #
-# class TestInstructorsInCourse(TestCase):
+class TestInstructorsInCourse(unittest.TestCase):
+    """
 #     def setUp(self):
 #         self.user1 = User.objects.create(id='1', User_Name='Cricket', User_Email='user1@example.com',
 #                                          User_Type='TA', User_Phone='1234567890', User_Address='123 Main St',
@@ -114,4 +116,4 @@
 #         User.removeInstructor(self.course3.Course_Code, self.course2.id)
 #         User.removeInstructor(self.course3.Course_Code, self.course1.id)
 #         self.assertEqual(inst1, course2.Course_Instructor,
-#                          "the course 1 instructor should not have been added to course 2")
+#                          "the course 1 instructor should not have been added to course 2")"""
