@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from myapp.models import User, Course, Section, CourseToUser
 
 
 # Create your views here.
@@ -39,19 +40,22 @@ class AccountBase(View):
         pass
 
 
-class InstructorToCourse(View):
+# want to return the same view but for a specific course
 
-    def get(self, request):
-        return render(request, 'createaccount.html')
 
-    def assignInstructors(self):
-        pass
-
-    def getInstructor(self):
-        pass
-
-    def removeInstructor(self):
-        pass
+# class InstructorToCourse(View):
+#
+#     def get(self, request):
+#         return render(request, 'createaccount.html')
+#
+#     def assignInstructors(self):
+#         pass
+#
+#     def getInstructor(self):
+#         pass
+#
+#     def removeInstructor(self):
+#         pass
 
 
 class CreateAccount(View):

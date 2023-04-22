@@ -1,26 +1,26 @@
-<h1>Edit Course</h1>
+
+{% block content %}
+
+{% block title %}Edit Course Page{% endblock %}>
+
 <form method="post">
   {% csrf_token %}
   <label for="Course_Name">Course Name:</label>
-  {{ form.Course_Name }}
+  <input type="text" id="Course_Name" name="Course_Name" value="{{ course.Course_Name }}">
 
-  <label for="course_Code">Course Code:</label>
-  {{ form.Course_Code }}
-
-  <label for="Course_Instructor">Instructor:</label>
-  {{ form.Course_Instructor }}
+  <label for="Course_Code">Course Code:</label>
+  <input type="text" id="Course_Code" name="Course_Code" value="{{ course.Course_Code }}">
 
   <label for="Course_Description">Description:</label>
-  {{ form.Course_Description }}
+  <textarea id="Course_Description" name="Course_Description">{{ course.Course_Description }}</textarea>
 
   <label for="Course_isOnline">Online:</label>
-  {{ form.Course_isOnline }}
+  <input type="checkbox" id="Course_isOnline" name="Course_isOnline" {% if course.Course_isOnline %}checked{% endif %}>
 
   <label for="Course_Location">Location:</label>
-  {{ form.Course_Location }}
-
-  <label for="Course_begin">Start Date:</label>
-  {{ form.Course_begin }}
+  <input type="text" id="Course_Location" name="Course_Location" value="{{ course.Course_Location }}">
 
   <button type="submit">Save</button>
 </form>
+
+{% endblock %}

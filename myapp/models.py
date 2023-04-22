@@ -9,13 +9,19 @@ from datetime import datetime
 class User(models.Model):
     id = models.AutoField(("user_id"), primary_key=True,
                           unique=True)
-    User_Name = models.CharField(max_length=200)
+    # edited
+    User_fName = models.CharField(max_length=200)
+    # edited
+    User_lName = models.CharField(max_length=200)
     User_Email = models.CharField(max_length=200)
-    User_Type = models.CharField(max_length=200)
+    # edited
+    #user_positions = [('SA', 'Supervisor'), ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
+    User_Pos = models.CharField(max_length=2)
     User_Phone = models.CharField(max_length=200, blank=True)
-    User_Address = models.TextField(max_length=500, blank =True)
-    User_LogName = models.CharField(max_length=200, unique=True, blank =True)
-    User_LogPass = models.CharField(max_length=200, blank =True)
+    User_Address = models.TextField(max_length=500, blank=True)
+    User_City = models.CharField(max_length=200, blank=True)
+    User_LogName = models.CharField(max_length=200, unique=True, blank=True)
+    User_LogPass = models.CharField(max_length=200, blank=True)
     User_isGrader = models.BooleanField(default=False)
     User_SecAssigned = models.ManyToManyField(
         'Course', through='CourseToUser', related_name='users')
