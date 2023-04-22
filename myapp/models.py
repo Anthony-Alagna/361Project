@@ -22,9 +22,9 @@ class User(models.Model):
     User_City = models.CharField(max_length=200, blank=True)
     User_LogName = models.CharField(max_length=200, unique=True, blank=True)
     User_LogPass = models.CharField(max_length=200, blank=True)
-    User_isGrader = models.BooleanField(default=False)
+    User_isGrader = models.BooleanField(default=False, blank=True)
     User_SecAssigned = models.ManyToManyField(
-        'Course', through='CourseToUser', related_name='users')
+        'Course', through='CourseToUser', related_name='users', blank=True)
 
     # need courses foreign key
 
