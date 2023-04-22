@@ -1,8 +1,9 @@
 import myapp.models
 from myapp.models import User, Section, Course, CourseToUser
+import abc
 
 
-class User:
+class User(abc.ABC):
     user_id = None
     email = None
     Position = None
@@ -27,11 +28,12 @@ class User:
         self.username = username
         self.isgrader = isgrader
 
-    def getAccountInfo(self, username):
-        if self.username == username and self.email:
-            return User.objects.get(User_Name=username)
+    def getAccountInfo(self, username, id):
+        if self.username == username and self.user_id== id:
+            user=User.objects.get(User_Name=username)
+            return user.User_fName, user.User_lName, user.User_LogName, user.User_Email, user.User_Pos
         else:
-            return ""
+            return Exception("user not in the database")
 
     def get_user_id(self):
         if self.user_id == "":
@@ -79,5 +81,3 @@ class User:
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
-
-
