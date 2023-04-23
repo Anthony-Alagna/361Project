@@ -20,13 +20,23 @@
 </a>
 <br>
 <br>
-
-<input type="text" placeholder="Search User">
-<select placeholder="All Roles">
-    <option>All Roles</option>
-    <option>TA</option>
-    <option>Professor</option>
-</select>
+<form action="{% url 'accountbase' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="method" value="searchUser">
+    <input type="text" placeholder="Search User By Last Name">
+    <input type="submit"/>
+</form>
+<br>
+<form action="{% url 'accountbase' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="method" value="filterUser">
+    <select placeholder="All Roles" name="position">
+        <option>All Roles</option>
+        <option>Teaching Assistant</option>
+        <option>Professor</option>
+    </select>
+    <input type="submit"/>
+</form>
 <br>
 <br>
 <table>
@@ -35,23 +45,20 @@
         <th>Role</th>
         <th>Actions</th>
     </tr>
-        {%  for user in users %}
-    <tr>
-        <td>{{user.User_fname}} {{user.User_lname}}</td>
-        <td>{{user.User_Pos}}</td>
-         {%  endfor %}
-        <td><a href="editaccount">
-            <button><span class="material-symbols-outlined">edit</span></button>
-        </a>
-            <a href="deleteaccount">
-                <button><span class="material-symbols-outlined">
-delete
-</span></button>
-            </a></td>
-    </tr>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.User_fName }} {{ user.User_lName }}</td>
+            <td>{{ user.User_Pos }}</td>
 
+            <td><a href="editaccount">
+                <button><span class="material-symbols-outlined">edit</span></button>
+            </a>
+                <a href="deleteaccount">
+                    <button><span class="material-symbols-outlined">delete</span></button>
+                </a></td>
+        </tr>
+    {% endfor %}
 </table>
-
-
+{{ success }}
 </body>
 </html>

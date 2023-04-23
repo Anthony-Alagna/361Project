@@ -68,10 +68,20 @@ class Users(abc.ABC):
             lastn.User_lName = lname
             lastn.save()
 
-    def filterUser(self, usertype):
-        if usertype != "TA" or usertype != "SA" or usertype != "IN" or usertype == "":
+    # def filterUser(self, usertype):
+    #     print("filterUser usertype", usertype)
+    #     if usertype != "Teaching Assistant" or usertype != "SA" or usertype != "Instructor" or usertype == "":
+    #         return TypeError(
+    #             "wrong user type in put, SA= supervisor, TA = teaching assistant, IN = Instructor, or you put a blank  ")
+    #     else:
+    #         user_positions = User.objects.filter(User_Pos=usertype)
+    #         return user_positions
+
+    def filterUser(slef, usertype):
+        print("filterUser usertype", usertype)
+        if usertype != "Teaching Assistant" or usertype != "SA" or usertype != "Instructor" or usertype == "":
             return TypeError(
-                "wrong user type in put, SA= supervisor, TA = teaching assitant, IN = Instructor, or you put a blank  ")
+                "wrong user type in put, SA= supervisor, TA = teaching assistant, IN = Instructor, or you put a blank  ")
         else:
             user_positions = User.objects.filter(User_Pos=usertype)
             return user_positions
@@ -81,6 +91,11 @@ class Users(abc.ABC):
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
+
+
+    def searchUser(self):
+        pass
+
 
 
 class UserUtility:
