@@ -68,14 +68,10 @@ class Users(abc.ABC):
             lastn.User_lName = lname
             lastn.save()
 
-    # def filterUser(self, usertype):
-    #     print("filterUser usertype", usertype)
-    #     if usertype != "Teaching Assistant" or usertype != "SA" or usertype != "Instructor" or usertype == "":
-    #         return TypeError(
-    #             "wrong user type in put, SA= supervisor, TA = teaching assistant, IN = Instructor, or you put a blank  ")
-    #     else:
-    #         user_positions = User.objects.filter(User_Pos=usertype)
-    #         return user_positions
+    def viewCourse(self, course_id):
+        course = Course.objects.get(Course_ID=course_id)
+        return course
+
 
     def filterUser(usertype):
         print("filterUser usertype", usertype)
@@ -89,21 +85,19 @@ class Users(abc.ABC):
             user_positions = User.objects.filter(User_Pos=usertype)
             return user_positions
 
+    # this is for later but does this ha
     def searchUser(last_name):
         print("searchUser", last_name)
         if last_name == "":
             return TypeError(
                 "you didn't select a usertype")
-        user= User.objects.filter(User_lName=last_name)
+        user = User.objects.filter(User_lName=last_name)
         return user
 
     def viewCourseAssigned(self):
-        course_for_user = []
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
-
-
 
 
 class UserUtility:
