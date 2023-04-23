@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Course Page</title>
+   {% block title %} Edit Course {% endblock %}
 </head>
 <body>
     <h1>Edit Course Page</h1>
@@ -11,27 +11,39 @@
         <table>
             <tr>
                 <td>Course Name:</td>
-                <td><input type="text" id="Course_Name" name="Course_Name" value="{{ course.Course_Name }}"></td>
+                <label>
+                    <input type="text" name="Course_Name" value="{{ course.Course_Name }}">
+                </label>
             </tr>
             <tr>
                 <td>Course Code:</td>
-                <td><input type="text" id="Course_Code" name="Course_Code" value="{{ course.Course_Code }}"></td>
+                <label>
+                    <input type="text"  name="Course_Code" value="{{ course.Course_Code }}">
+                </label>
             </tr>
             <tr>
                 <td>Description:</td>
-                <td><textarea id="Course_Description" name="Course_Description">{{ course.Course_Description }}</textarea></td>
+                <label>
+                    <textarea  name="Course_Description">{{ course.Course_Description }}</textarea>
+                </label>
             </tr>
             <tr>
                 <td>Instructor:</td>
-                <td><input type="text" id="Course_Instructor" name="Course_Instructor" {% if course.Course_isOnline %} {% endif %}></td>
+                <label>
+                    <input type="text"  name="Course_Instructor" {% if course.Course_isOnline %} {% endif %}>
+                </label>
             </tr>
             <tr>
                 <td>Online:</td>
-                <td><input type="checkbox" id="Course_isOnline" name="Course_isOnline" {% if course.Course_isOnline %} {% endif %}></td>
+                <label>
+                    <input type="text"  name="Course_isOnline" {% if course.Course_isOnline %} {% endif %}>
+                </label>
             </tr>
             <tr>
                 <td>Location:</td>
-                <td><input type="text" id="Course_Location" name="Course_Location" value="{{ course.Course_Location }}"></td>
+                <label>
+                    <input type="text"  name="Course_Location" value="{{ course.Course_Location }}">
+                </label>
             </tr>
         </table>
         <button type="submit">Save</button>
