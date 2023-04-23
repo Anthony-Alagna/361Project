@@ -23,14 +23,15 @@
 <form action="{% url 'accountbase' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="method" value="searchUser">
-    <input type="text" placeholder="Search User By Last Name">
+    <input type="text" placeholder="Search User By Last Name" name="search">
     <input type="submit"/>
 </form>
 <br>
 <form action="{% url 'accountbase' %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="method" value="filterUser">
-    <select placeholder="All Roles" name="position">
+    <select name="position">
+        <option disabled selected>Filter By Role</option>
         <option>All Roles</option>
         <option>Teaching Assistant</option>
         <option>Professor</option>

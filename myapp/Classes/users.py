@@ -77,25 +77,32 @@ class Users(abc.ABC):
     #         user_positions = User.objects.filter(User_Pos=usertype)
     #         return user_positions
 
-    def filterUser(slef, usertype):
+    def filterUser(usertype):
         print("filterUser usertype", usertype)
-        if usertype != "Teaching Assistant" or usertype != "SA" or usertype != "Instructor" or usertype == "":
+        if usertype == "":
             return TypeError(
-                "wrong user type in put, SA= supervisor, TA = teaching assistant, IN = Instructor, or you put a blank  ")
+                "you didn't select a usertype")
+        elif usertype == "All Roles":
+            user_positions = User.objects.all()
+            return user_positions
         else:
             user_positions = User.objects.filter(User_Pos=usertype)
             return user_positions
+
+    def searchUser(last_name):
+        print("searchUser", last_name)
+        if last_name == "":
+            return TypeError(
+                "you didn't select a usertype")
+
+        user= User.objects.filter(User_lName=last_name)
+        return user
 
     def viewCourseAssigned(self):
         course_for_user = []
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
-
-
-    def searchUser(self):
-        pass
-
 
 
 class UserUtility:

@@ -33,19 +33,27 @@ class AccountBase(View):
     def get(self, request):
         users = UserUtility.get_all_users()
         return render(request, 'accountbase.html', {"users": users})
+
     def post(self, request):
+
         print(request.POST)
+        # get value of method from within request.POST
         method = request.POST.get('method')
-        print(method)
+
+        # filterUser functionality
         if method == 'filterUser':
-            print("filterUser will be called")
             user = request.POST.get('position')
-            print(user)
-            users = Users.filterUser("Teaching Assistant")
+            users = Users.filterUser(user)
             return render(request, 'accountbase.html', {"users": users})
+
+        # searchUser functionality
         elif method == "searchUser":
-            print("searchUser will be called")
-            return render(request, 'accountbase.html')
+            search_name = request.POST.get('search')
+            print("searchname", search_name)
+            user = Users.searchUser(search_name)
+            return render(request, 'accountbase.html', {"users": user})
+
+        # create account functionality
         else:
             result = Supervisor.create_account(request.POST.get('firstname'), request.POST.get('lastname'),
                                   request.POST.get('email'), request.POST.get('username'), request.POST.get('password'),
