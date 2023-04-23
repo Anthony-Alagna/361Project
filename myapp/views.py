@@ -72,7 +72,7 @@ class AccountBase(View):
 
         #  the isinstance function checks if the result variable contains an instance of the TypeError class
             if isinstance(result, TypeError):
-                return redirect('createaccount')
+                return render(request, 'createaccount.html', {"message": "You forgot to fill in one of the fields - please fill out form again"})
             users = UserUtility.get_all_users()
             return render(request, 'accountbase.html', {"users": users})
 
