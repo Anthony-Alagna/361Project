@@ -5,7 +5,7 @@
     <title>Edit Course Page</title>
 </head>
 <body>
-    <h1>Edit Course Page</h1>
+    {% block title %}Edit Course Page{% endblock %}>
     <form method="post">
         {% csrf_token %}
         <table>
