@@ -94,7 +94,6 @@ class Users(abc.ABC):
         if last_name == "":
             return TypeError(
                 "you didn't select a usertype")
-
         user= User.objects.filter(User_lName=last_name)
         return user
 
@@ -103,6 +102,8 @@ class Users(abc.ABC):
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
+
+
 
 
 class UserUtility:

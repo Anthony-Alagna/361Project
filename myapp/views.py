@@ -53,6 +53,12 @@ class AccountBase(View):
             user = Users.searchUser(search_name)
             return render(request, 'accountbase.html', {"users": user})
 
+        elif method == "deleteUser":
+            username = request.POST.get('username')
+            Supervisor.deleteUser(username)
+            user = UserUtility.get_all_users()
+            return render(request, 'accountbase.html', {"users": user})
+
         # create account functionality
         else:
             result = Supervisor.create_account(request.POST.get('firstname'), request.POST.get('lastname'),
@@ -65,10 +71,8 @@ class AccountBase(View):
                 return redirect('createaccount')
 
             users = UserUtility.get_all_users()
-            return render(request, 'accountbase.html', {"success": "Account Created", "users": users})
+            return render(request, 'accountbase.html', {"users": users})
 
-    def deleteUser(self):
-        pass
 
 
 # want to return the same view but for a specific course

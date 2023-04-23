@@ -54,9 +54,13 @@
             <td><a href="editaccount">
                 <button><span class="material-symbols-outlined">edit</span></button>
             </a>
-                <a href="deleteaccount">
-                    <button><span class="material-symbols-outlined">delete</span></button>
-                </a></td>
+                <form action="{% url 'accountbase' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="method" value="deleteUser">
+                        <input type="hidden" name="username" value="{{ user.User_LogName }}">
+                        <button type="submit"><span class="material-symbols-outlined">delete</span></button>
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>

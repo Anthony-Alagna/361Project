@@ -14,3 +14,7 @@ class Supervisor(User):
                                 User_LogPass=password, User_Address=address, User_City=city, User_Phone=phone,
                                 User_Pos=account_type)
 
+    def deleteUser(username):
+        user = User.objects.filter(User_LogName=username)
+        user.delete()
+
