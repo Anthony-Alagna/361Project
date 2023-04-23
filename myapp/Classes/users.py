@@ -3,7 +3,7 @@ from myapp.models import User, Section, Course, CourseToUser
 import abc
 
 
-class User(abc.ABC):
+class Users(abc.ABC):
     user_id = None
     email = None
     Position = None
@@ -29,8 +29,8 @@ class User(abc.ABC):
         self.isgrader = isgrader
 
     def getAccountInfo(self, username, id):
-        if self.username == username and self.user_id== id:
-            user=User.objects.get(User_Name=username)
+        if self.username == username and self.user_id == id:
+            user = User.objects.get(User_Name=username)
             return user.User_fName, user.User_lName, user.User_LogName, user.User_Email, user.User_Pos
         else:
             return Exception("user not in the database")
@@ -81,3 +81,9 @@ class User(abc.ABC):
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
+
+
+class UserUtility:
+    @staticmethod
+    def get_all_users():
+        return User.objects.all()

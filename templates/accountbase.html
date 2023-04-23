@@ -3,30 +3,55 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Account</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 <body>
 <h1>User Accounts</h1>
+<br>
+<a href="/">
+    <button>Home</button>
+</a>
+<br>
+<a href="createaccount">
+    <button>Create New Account</button>
+</a>
+<br>
+<br>
+
 <input type="text" placeholder="Search User">
 <select placeholder="All Roles">
     <option>All Roles</option>
     <option>TA</option>
     <option>Professor</option>
 </select>
+<br>
+<br>
 <table>
     <tr>
         <th>Name</th>
         <th>Role</th>
-        Actions
+        <th>Actions</th>
     </tr>
+        {%  for user in users %}
+    <tr>
+        <td>{{user.User_fname}} {{user.User_lname}}</td>
+        <td>{{user.User_Pos}}</td>
+         {%  endfor %}
+        <td><a href="editaccount">
+            <button><span class="material-symbols-outlined">edit</span></button>
+        </a>
+            <a href="deleteaccount">
+                <button><span class="material-symbols-outlined">
+delete
+</span></button>
+            </a></td>
+    </tr>
+
 </table>
-<a href="createaccount/">
-    <button>Create New Account</button>
-</a>
-<a href="editaccount/">
-    <button>Edit Placeholder(Image will be added)</button>
-</a>
-<a href="/">
-    <button>Home</button>
-</a>
+
+
 </body>
 </html>

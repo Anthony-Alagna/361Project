@@ -16,15 +16,15 @@ class User(models.Model):
     User_Email = models.CharField(max_length=200)
     # edited
     #user_positions = [('SA', 'Supervisor'), ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
-    User_Pos = models.CharField(max_length=2)
+    User_Pos = models.CharField(max_length=2, blank=True)
     User_Phone = models.CharField(max_length=200, blank=True)
     User_Address = models.TextField(max_length=500, blank=True)
     User_City = models.CharField(max_length=200, blank=True)
     User_LogName = models.CharField(max_length=200, unique=True, blank=True)
     User_LogPass = models.CharField(max_length=200, blank=True)
-    User_isGrader = models.BooleanField(default=False)
+    User_isGrader = models.BooleanField(default=False, blank=True)
     User_SecAssigned = models.ManyToManyField(
-        'Course', through='CourseToUser', related_name='users')
+        'Course', through='CourseToUser', related_name='users', blank=True)
 
     # need courses foreign key
 
