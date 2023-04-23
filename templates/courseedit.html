@@ -1,26 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Course Page</title>
+</head>
+<body>
+    {% block title %}Edit Course Page{% endblock %}>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Course Name:</td>
+                <td><input type="text"  name="Course_Name" value="{{ course.Course_Name }}"></td>
+            </tr>
+            <tr>
+                <td>Course Code:</td>
+                <td><input type="text"  name="Course_Code" value="{{ course.Course_Code }}"></td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td><input type="text"  name="Course_Description" value=" {{ course.Course_Description }}"></td>
+            </tr>
+            <tr>
+                <td>Instructor:</td>
+                <td><input type="text"  name="Course_Instructor" {% if course.Course_isOnline %} {% endif %}></td>
+            </tr>
+            <tr>
+                <td>Online:</td>
+                <td><input type="text"  name="Course_isOnline" {% if course.Course_isOnline %} {% endif %}></td>
+            </tr>
+            <tr>
+                <td>Location:</td>
+                <td><input type="text" name="Course_Location" value="{{ course.Course_Location }}"></td>
+            </tr>
+        </table>
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
 
-{% block content %}
 
-{% block title %}Edit Course Page{% endblock %}>
 
-<form method="post">
-  {% csrf_token %}
-  <label for="Course_Name">Course Name:</label>
-  <input type="text" id="Course_Name" name="Course_Name" value="{{ course.Course_Name }}">
 
-  <label for="Course_Code">Course Code:</label>
-  <input type="text" id="Course_Code" name="Course_Code" value="{{ course.Course_Code }}">
 
-  <label for="Course_Description">Description:</label>
-  <textarea id="Course_Description" name="Course_Description">{{ course.Course_Description }}</textarea>
-
-  <label for="Course_isOnline">Online:</label>
-  <input type="checkbox" id="Course_isOnline" name="Course_isOnline" {% if course.Course_isOnline %}checked{% endif %}>
-
-  <label for="Course_Location">Location:</label>
-  <input type="text" id="Course_Location" name="Course_Location" value="{{ course.Course_Location }}">
-
-  <button type="submit">Save</button>
-</form>
-
-{% endblock %}

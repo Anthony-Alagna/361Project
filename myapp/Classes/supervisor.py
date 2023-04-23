@@ -1,5 +1,5 @@
+from myapp.models import User, Course
 from myapp.Classes.users import Users
-from myapp.models import User
 
 
 class Supervisor(Users):
@@ -21,6 +21,55 @@ class Supervisor(Users):
                                        User_Pos=account_type)
             return user
 
+    @staticmethod
+    def removeInstructorFromClass(instructor_name, course_code):
+        if not checkInstructorInCourse(Supervisor,instructor_name, course_code):
+            return TypeError("instructor name is blank or course id name is blank")
+        else:
+            course = Course.objects.get(Course_Code=course_code)
+            course.Course_Instructor = ""
+            course.save()
+
+    @staticmethod
+    def addInstructor(instructor_name, course_code):
+        if not checkInstructorInCourse(Supervisor,instructor_name, course_code):
+            return TypeError("error cannot add instructor")
+        else:
+            course = Course.objects.get(Course_Code=course_code)
+            course.Course_Instructor=instructor_name
+            course.save()
+
+    @staticmethod
+    def editCourse(course_name='default', course_desc='default', isonline='default', location='default',
+                   begin='default', updated='default'):
+        # what do the form fields come through as if they're empty? assuming it's None
+        if course_name == "" or course_desc == "" or isonline == "" or location == "":
+            return TypeError(
+                "cannot leave a value blank")
+        else:
+            if course_name != 'default':
+                Course.objects.update(Course_Name=course_name)
+            if course_desc != 'default':
+                Course.objects.update(Course_Description=course_desc)
+            if isonline != 'default':
+                Course.objects.update(Course_isOnline=isonline)
+            if location != 'default':
+                Course.objects.update(Course_Location=location)
+
     def deleteUser(username):
         user = User.objects.filter(User_LogName=username)
         user.delete()
+
+    def checkInstructorInCourse(self, instructor_name, course_code):
+        if instructor_name == "" or course_code == "":
+            return TypeError("instructor name is blank or course id name is blank")
+        else:
+            course = Course.objects.get(Course_Code=course_code)
+            if course is None:
+                return TypeError("the course you search does not exist")
+            elif course.Course_Instructor is not None:
+                return TypeError("you must remove instructor before you can add new one")
+            else:
+                return True
+
+

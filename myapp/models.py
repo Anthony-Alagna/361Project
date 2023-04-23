@@ -14,7 +14,7 @@ class User(models.Model):
     # edited
     User_lName = models.CharField(max_length=200)
     User_Email = models.CharField(max_length=200)
-    # edited
+    # the line below is for the future if we decidie to limit choices of selecting user_Pos
     #user_positions = [('SA', 'Supervisor'), ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
     User_Pos = models.CharField(max_length=25, blank=True)
     User_Phone = models.CharField(max_length=200, blank=True)
@@ -38,10 +38,10 @@ class Course(models.Model):
     Course_Name = models.CharField(max_length=50)
     Course_Code = models.CharField(max_length=50)
     # Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
-    Course_Instructor = models.CharField(max_length=50)
+    Course_Instructor = models.CharField(max_length=50, blank=True)
     Course_Description = models.CharField(max_length=100, blank=True)
     Course_isOnline = models.BooleanField(default=False)
-    Course_Location = models.CharField(max_length=50)
+    Course_Location = models.CharField(max_length=50, blank=True)
     Course_begin = models.DateTimeField(auto_now_add=True)  # Does this need to be a DateTimeField
     Course_Updated = models.DateTimeField(auto_now=True)
 

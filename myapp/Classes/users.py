@@ -68,6 +68,11 @@ class Users(abc.ABC):
             lastn.User_lName = lname
             lastn.save()
 
+    def viewCourse(self, course_id):
+        course = Course.objects.get(Course_ID=course_id)
+        return course
+
+
     def filterUser(usertype):
         if usertype is None:
             print(usertype)
@@ -81,7 +86,7 @@ class Users(abc.ABC):
             return user_positions
 
     def searchUser(last_name):
-        if last_name is "":
+        if last_name == "":
             return TypeError(
                 "you didn't select a usertype")
         # converts parameter to standard case and strips any whitespace before and after characters
@@ -90,7 +95,6 @@ class Users(abc.ABC):
         return user
 
     def viewCourseAssigned(self):
-        course_for_user = []
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses

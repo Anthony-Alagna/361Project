@@ -19,7 +19,7 @@
             <tr>{{ course.Course_Description }}&ensp;</tr>
             {# link to edit course page #}
             <a href=""><button>Info</button></a>
-            <a href=""><button>Edit</button></a><br>
+             <a href="{% url 'courseedit' Course_Code=course.Course_Code %}"><button>Edit</button></a><br>
         {% endfor %}
     </table><br>
     <a href="createcourse"><button>New Course</button></a>
