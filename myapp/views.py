@@ -6,6 +6,7 @@ from myapp.Classes.users import Users, UserUtility
 from myapp.models import User, Course, Section, CourseToUser
 from myapp.Classes.courses import CourseUtility
 
+
 # Create your views here.
 
 
@@ -66,16 +67,17 @@ class AccountBase(View):
         # create account functionality
         else:
             result = Supervisor.create_account(request.POST.get('firstname'), request.POST.get('lastname'),
-                                  request.POST.get('email'), request.POST.get('username'), request.POST.get('password'),
-                                  request.POST.get('address'), request.POST.get('city'),
-                                  request.POST.get('number'), request.POST.get('position'))
+                                               request.POST.get('email'), request.POST.get('username'),
+                                               request.POST.get('password'),
+                                               request.POST.get('address'), request.POST.get('city'),
+                                               request.POST.get('number'), request.POST.get('position'))
 
-        #  the isinstance function checks if the result variable contains an instance of the TypeError class
+            #  the isinstance function checks if the result variable contains an instance of the TypeError class
             if isinstance(result, TypeError):
-                return render(request, 'createaccount.html', {"message": "You forgot to fill in one of the fields - please fill out form again"})
+                return render(request, 'createaccount.html',
+                              {"message": "You forgot to fill in one of the fields - please fill out form again"})
             users = UserUtility.get_all_users()
             return render(request, 'accountbase.html', {"users": users})
-
 
 
 # want to return the same view but for a specific course
@@ -99,6 +101,7 @@ class AccountBase(View):
 class CreateAccount(View):
     def get(self, request):
         return render(request, 'createaccount.html')
+
     def post(self, request):
         return render(request, 'createaccount.html')
 

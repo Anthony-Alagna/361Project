@@ -19,7 +19,6 @@ class Supervisor(Users):
             user = User.objects.create(User_fName=fname, User_lName=lname, User_Email=email, User_LogName=username,
                                        User_LogPass=password, User_Address=address, User_City=city, User_Phone=phone,
                                        User_Pos=account_type)
-            print(user.User_LogName)
             return user
 
     def deleteUser(username):
