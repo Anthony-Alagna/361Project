@@ -76,8 +76,8 @@ class Users(abc.ABC):
             user_positions = User.objects.filter(User_Pos=usertype)
             return user_positions
 
+    #this is for later but does this ha
     def viewCourseAssigned(self):
-        course_for_user = []
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
@@ -87,3 +87,5 @@ class UserUtility:
     @staticmethod
     def get_all_users():
         return User.objects.all()
+
+
