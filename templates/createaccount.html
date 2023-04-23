@@ -7,7 +7,7 @@
 <body>
 <h1>Create Account</h1>
 
-<form action="{% url 'createaccount' %}" method="post">
+<form action="{% url 'accountbase' %}" method="post">
     {% csrf_token %}
     <table>
         <tr>
@@ -46,10 +46,20 @@
         </tr>
         <tr>
             <td>Position</td>
-            <td><input type="text" name="position"/></td>
+            <td>
+                <select placeholder="All Roles" name="position">
+                    <option>All Roles</option>
+                    <option>Teaching Assistant</option>
+                    <option>Professor</option>
+                </select>
+            </td>
+            {#            <td><input type="text" name="position"/></td>#}
         </tr>
     </table>
     <input type="submit"/>
 </form>
+<a href="/accountbase">
+    <button>Back</button>
+</a>
 </body>
 </html>
