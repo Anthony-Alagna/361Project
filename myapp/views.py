@@ -93,16 +93,21 @@ class EditCourse(View):
         actCourse=Course.objects.get(Course_Code=course_code)
         print(course_code)
         print(actCourse)
-        if actCourse.Course_Instructor is not "":
+        made_instructor = request.POST.get('Course_Instructor')
+        if made_instructor == actCourse.Course_Instructor:
+            return render(request, 'courseedit.html', {"error": "this instructor is already assigned to the course"})
+
+        elif actCourse.Course_Instructor is not "":
             print(Course.objects.get(Course_Code=course_code).Course_Instructor)
             Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'),course_code)
             return redirect('courseedit', Course_Code=course_code)
-
         else:
             Supervisor.addInstructor(request.POST.get('Course_Instructor'), course_code)
             courses = CourseUtility.get_course_list()
 
             return redirect('/course_base', {course_code})
+
+
 
 
 
