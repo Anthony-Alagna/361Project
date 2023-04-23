@@ -11,7 +11,7 @@ class Supervisor(Users):
                 return TypeError(
                     "username already exists")
 
-        if fname is "" or lname is "" or email is "" or username is "" or password is "" or address is "" or city is "" or phone is "" or account_type is "":
+        if fname == "" or lname == "" or email == "" or username == "" or password == "" or address == "" or city == "" or phone == "" or account_type == "":
             return TypeError(
                 "missing field")
 
