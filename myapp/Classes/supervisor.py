@@ -1,31 +1,25 @@
 from myapp.models import User, Course
+from myapp.Classes.users import Users
 
 
-def checkInstructorInCourse(self, instructor_name, course_code):
-    if instructor_name == "" or course_code == "":
-        return TypeError("instructor name is blank or course id name is blank")
-    else:
-        course = Course.objects.get(Course_Code=course_code)
-        if course is None:
-            return TypeError("the course you search does not exist")
-        elif course.Course_Instructor is not None:
-            return TypeError("you must remove instructor before you can add new one")
-        else:
-            return True
-
-
-class Supervisor(User):
+class Supervisor(Users):
     @staticmethod
     def create_account(fname, lname, email, username, password, address, city, phone, account_type):
-        # what do the form fields come through as if they're empty? assuming it's None
+        users = User.objects.all()
+        for user in users:
+            if user.User_LogName == username:
+                return TypeError(
+                    "username already exists")
+
         if fname == "" or lname == "" or email == "" or username == "" or password == "" or address == "" or city == "" or phone == "" or account_type == "":
             return TypeError(
                 "missing field")
 
         else:
-            User.objects.create(User_fName=fname, User_lName=lname, User_Email=email, User_LogName=username,
-                                User_LogPass=password, User_Address=address, User_City=city, User_Phone=phone,
-                                User_Pos=account_type)
+            user = User.objects.create(User_fName=fname, User_lName=lname, User_Email=email, User_LogName=username,
+                                       User_LogPass=password, User_Address=address, User_City=city, User_Phone=phone,
+                                       User_Pos=account_type)
+            return user
 
     @staticmethod
     def removeInstructorFromClass(instructor_name, course_code):
@@ -65,3 +59,17 @@ class Supervisor(User):
     def deleteUser(username):
         user = User.objects.filter(User_LogName=username)
         user.delete()
+
+    def checkInstructorInCourse(self, instructor_name, course_code):
+        if instructor_name == "" or course_code == "":
+            return TypeError("instructor name is blank or course id name is blank")
+        else:
+            course = Course.objects.get(Course_Code=course_code)
+            if course is None:
+                return TypeError("the course you search does not exist")
+            elif course.Course_Instructor is not None:
+                return TypeError("you must remove instructor before you can add new one")
+            else:
+                return True
+
+
