@@ -53,7 +53,7 @@ class AccountBase(View):
             user = Users.searchUser(search_name)
             #  the isinstance function checks if the result variable contains an instance of the TypeError class
             if isinstance(user, TypeError):
-                return render(request, 'accountbase.html', {"message": "No user with the last name"})
+                return render(request, 'accountbase.html', {"message": "No user with that last name"})
             return render(request, 'accountbase.html', {"users": user})
 
         # deleteUser functionality

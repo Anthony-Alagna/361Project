@@ -70,6 +70,7 @@ class Users(abc.ABC):
 
     def filterUser(usertype):
         if usertype is None:
+            print(usertype)
             return TypeError(
                 "you didn't select a usertype")
         elif usertype == "All Roles":
@@ -83,7 +84,9 @@ class Users(abc.ABC):
         if last_name is "":
             return TypeError(
                 "you didn't select a usertype")
-        user= User.objects.filter(User_lName=last_name)
+        # converts parameter to standard case and strips any whitespace before and after characters
+        last_name_cleaned = last_name.title().strip()
+        user = User.objects.filter(User_lName=last_name_cleaned)
         return user
 
     def viewCourseAssigned(self):
@@ -91,8 +94,6 @@ class Users(abc.ABC):
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
-
-
 
 
 class UserUtility:
