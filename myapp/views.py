@@ -96,12 +96,13 @@ class EditCourse(View):
         if actCourse.Course_Instructor is not "":
             print(Course.objects.get(Course_Code=course_code).Course_Instructor)
             Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'),course_code)
-            return render(request, 'courseedit.html', {"course": "course not edited"})
+            return redirect('courseedit', Course_Code=course_code)
+
         else:
             Supervisor.addInstructor(request.POST.get('Course_Instructor'), course_code)
             courses = CourseUtility.get_course_list()
 
-            return redirect('/course_base', {"courses": courses})
+            return redirect('/course_base', {course_code})
 
 
 
