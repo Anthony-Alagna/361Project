@@ -5,6 +5,8 @@ from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
 from myapp.models import User, Course, Section, CourseToUser
 from myapp.Classes.courses import CourseUtility
+from . import views
+
 
 # Create your views here.
 
@@ -62,11 +64,12 @@ class AccountBase(View):
         # create account functionality
         else:
             result = Supervisor.create_account(request.POST.get('firstname'), request.POST.get('lastname'),
-                                  request.POST.get('email'), request.POST.get('username'), request.POST.get('password'),
-                                  request.POST.get('address'), request.POST.get('city'),
-                                  request.POST.get('number'), request.POST.get('position'))
+                                               request.POST.get('email'), request.POST.get('username'),
+                                               request.POST.get('password'),
+                                               request.POST.get('address'), request.POST.get('city'),
+                                               request.POST.get('number'), request.POST.get('position'))
 
-        #  the isinstance function checks if the result variable contains an instance of the TypeError class
+            #  the isinstance function checks if the result variable contains an instance of the TypeError class
             if isinstance(result, TypeError):
                 return redirect('createaccount')
 
@@ -74,28 +77,38 @@ class AccountBase(View):
             return render(request, 'accountbase.html', {"users": users})
 
 
-
 # want to return the same view but for a specific course
 
 
-# class InstructorToCourse(View):
-#
-#     def get(self, request):
-#         return render(request, 'createaccount.html')
-#
-#     def assignInstructors(self):
-#         pass
-#
-#     def getInstructor(self):
-#         pass
-#
-#     def removeInstructor(self):
-#         pass
+class EditCourse(View):
+
+    def get(self, request, *args, **kwargs):
+        c_code = kwargs['Course_Code']
+        course = Course.objects.get(Course_Code=c_code)
+        return render(request, 'courseedit.html', {'course': course})
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        course_code = kwargs['Course_Code']
+        actCourse=Course.objects.get(Course_Code=course_code)
+        print(course_code)
+        print(actCourse)
+        if actCourse.Course_Instructor is not "":
+            print(Course.objects.get(Course_Code=course_code).Course_Instructor)
+            Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'),course_code)
+            return render(request, 'courseedit.html', {"course": "course not edited"})
+        else:
+            Supervisor.addInstructor(request.POST.get('Course_Instructor'), course_code)
+            courses = CourseUtility.get_course_list()
+
+            return redirect('/course_base', {"courses": courses})
+
 
 
 class CreateAccount(View):
     def get(self, request):
         return render(request, 'createaccount.html')
+
     def post(self, request):
         return render(request, 'createaccount.html')
 

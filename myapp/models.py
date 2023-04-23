@@ -41,7 +41,7 @@ class Course(models.Model):
     Course_Instructor = models.CharField(max_length=50, blank=True)
     Course_Description = models.CharField(max_length=100, blank=True)
     Course_isOnline = models.BooleanField(default=False)
-    Course_Location = models.CharField(max_length=50)
+    Course_Location = models.CharField(max_length=50, blank=True)
     Course_begin = models.DateTimeField(auto_now_add=True)  # Does this need to be a DateTimeField
     Course_Updated = models.DateTimeField(auto_now=True)
 

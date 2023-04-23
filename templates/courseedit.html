@@ -22,8 +22,12 @@
                 <td><textarea id="Course_Description" name="Course_Description">{{ course.Course_Description }}</textarea></td>
             </tr>
             <tr>
+                <td>Instructor:</td>
+                <td><input type="text" id="Course_Instructor" name="Course_Instructor" {% if course.Course_isOnline %} {% endif %}></td>
+            </tr>
+            <tr>
                 <td>Online:</td>
-                <td><input type="checkbox" id="Course_isOnline" name="Course_isOnline" {% if course.Course_isOnline %}checked{% endif %}></td>
+                <td><input type="checkbox" id="Course_isOnline" name="Course_isOnline" {% if course.Course_isOnline %} {% endif %}></td>
             </tr>
             <tr>
                 <td>Location:</td>
