@@ -69,7 +69,6 @@ class Users(abc.ABC):
             lastn.save()
 
     def filterUser(usertype):
-        print(usertype)
         if usertype is None:
             return TypeError(
                 "you didn't select a usertype")
@@ -81,8 +80,7 @@ class Users(abc.ABC):
             return user_positions
 
     def searchUser(last_name):
-        print(last_name)
-        if last_name == "":
+        if last_name is "":
             return TypeError(
                 "you didn't select a usertype")
         user= User.objects.filter(User_lName=last_name)

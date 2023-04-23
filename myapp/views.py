@@ -35,24 +35,28 @@ class AccountBase(View):
         return render(request, 'accountbase.html', {"users": users})
 
     def post(self, request):
-
-        print(request.POST)
         # get value of method from within request.POST
         method = request.POST.get('method')
 
         # filterUser functionality
         if method == 'filterUser':
-            user = request.POST.get('position')
-            users = Users.filterUser(user)
+            search_type = request.POST.get('position')
+            users = Users.filterUser(search_type)
+            #  the isinstance function checks if the result variable contains an instance of the TypeError class
+            if isinstance(users, TypeError):
+                return render(request, 'accountbase.html', {"message": "You didn't select a User Type"})
             return render(request, 'accountbase.html', {"users": users})
 
         # searchUser functionality
         elif method == "searchUser":
             search_name = request.POST.get('search')
-            print("searchname", search_name)
             user = Users.searchUser(search_name)
+            #  the isinstance function checks if the result variable contains an instance of the TypeError class
+            if isinstance(user, TypeError):
+                return render(request, 'accountbase.html', {"message": "No user with the last name"})
             return render(request, 'accountbase.html', {"users": user})
 
+        # deleteUser functionality
         elif method == "deleteUser":
             username = request.POST.get('username')
             Supervisor.deleteUser(username)
@@ -69,7 +73,6 @@ class AccountBase(View):
         #  the isinstance function checks if the result variable contains an instance of the TypeError class
             if isinstance(result, TypeError):
                 return redirect('createaccount')
-
             users = UserUtility.get_all_users()
             return render(request, 'accountbase.html', {"users": users})
 
