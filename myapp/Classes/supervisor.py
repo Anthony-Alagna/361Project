@@ -2,7 +2,7 @@ from myapp.models import User, Course
 
 
 def checkInstructorInCourse(self, instructor_name, course_code):
-    if instructor_name is "" or course_code is "":
+    if instructor_name == "" or course_code == "":
         return TypeError("instructor name is blank or course id name is blank")
     else:
         course = Course.objects.get(Course_Code=course_code)
@@ -18,7 +18,7 @@ class Supervisor(User):
     @staticmethod
     def create_account(fname, lname, email, username, password, address, city, phone, account_type):
         # what do the form fields come through as if they're empty? assuming it's None
-        if fname is "" or lname is "" or email is "" or username is "" or password is "" or address is "" or city is "" or phone is "" or account_type is "":
+        if fname == "" or lname == "" or email == "" or username == "" or password == "" or address == "" or city == "" or phone == "" or account_type == "":
             return TypeError(
                 "missing field")
 
@@ -49,7 +49,7 @@ class Supervisor(User):
     def editCourse(course_name='default', course_desc='default', isonline='default', location='default',
                    begin='default', updated='default'):
         # what do the form fields come through as if they're empty? assuming it's None
-        if course_name is "" or course_desc is "" or isonline is "" or location is "":
+        if course_name == "" or course_desc == "" or isonline == "" or location == "":
             return TypeError(
                 "cannot leave a value blank")
         else:
