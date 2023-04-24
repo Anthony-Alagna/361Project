@@ -1,6 +1,5 @@
 from myapp.models import User, Course
 from myapp.Classes.users import Users
-from myapp.Classes.courses import CourseUtility
 
 
 class Supervisor(Users):
@@ -54,15 +53,15 @@ class Supervisor(Users):
 
     @staticmethod
     def create_course(code, name, desc, inst):
-        courses = CourseUtility.get_course_list()
+        courses = Course.objects.all()
         for course in courses:
             if course.Course_Code == code:
                 return TypeError("A course with that code already exists!")
-        if code is "":
+        if code == "":
             return TypeError("Course code cannot be blank!")
-        elif name is "":
+        elif name == "":
             return TypeError("Course name cannot be blank!")
-        elif desc is "":
+        elif desc == "":
             return TypeError("Course description cannot be blank!")
         Course.objects.create(Course_Code=code, Course_Name=name, Course_Description=desc, Course_Instructor=inst)
 

@@ -4,7 +4,6 @@ from django.views import View
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
 from myapp.models import User, Course, Section, CourseToUser
-from myapp.Classes.courses import CourseUtility
 from . import views
 
 
@@ -96,11 +95,11 @@ class EditAccount(View):
 
 class CourseBase(View):
     def get(self, request):
-        courses = CourseUtility.get_course_list()
+        courses = Course.objects.all()
         return render(request, 'course_base.html', {"courses": courses})
 
     def post(self, request):
-        courses = CourseUtility.get_course_list()
+        courses = Course.objects.all()
         result = Supervisor.create_course(request.POST.get('course_code'), request.POST.get('course_name'),
                                           request.POST.get('course_desc'), request.POST.get('course_inst'))
         if isinstance(result, TypeError):
@@ -144,6 +143,6 @@ class EditCourse(View):
             return redirect('courseedit', Course_Code=course_code)
         else:
             Supervisor.addInstructor(request.POST.get('Course_Instructor'), course_code)
-            courses = CourseUtility.get_course_list()
+            courses = Course.objects.all()
 
             return redirect('/course_base', {course_code})
