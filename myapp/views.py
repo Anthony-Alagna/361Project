@@ -152,9 +152,16 @@ class CreateCourse(View):
         return render(request, 'createcourse.html', {"success": "course created"})
 
 
-class EditPersonalInformation:
+class EditPersonalInformation(View):
     def get(self, request):
         return render(request, 'personal_information.html')
 
     def post(self, request):
-        return render(request, 'personal_information.html')
+        firstname = request.POST.get('first_name')
+        lastname = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        position = request.POST.get('position')
+        Users.editInfo(firstname, lastname, email, phone, address, position)
+        return render(request, 'personal_information.html', {"success": "information updated"})

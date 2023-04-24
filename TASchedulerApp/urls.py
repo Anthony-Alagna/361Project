@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myapp.views import AccountBase, Login, Home, CreateAccount, EditAccount, CourseBase, CreateCourse, EditCourse
+from myapp.views import AccountBase, Login, Home, CreateAccount, EditAccount, CourseBase, CreateCourse, EditCourse, EditPersonalInformation
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +27,8 @@ urlpatterns = [
     path('accountbase/editaccount/', EditAccount.as_view(), name='editaccount'),
     path('course_base/', CourseBase.as_view(), name='course_base'),
     path('course_base/createcourse', CreateCourse.as_view(), name='createcourse'),
+    path('home/personal_information', EditPersonalInformation.as_view(),
+         name='personal_information'),
 
     # have embed course id into url so that it can be retrieved to my method
     path('course_base/courseedit/<str:Course_Code>',
