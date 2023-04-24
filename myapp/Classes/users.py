@@ -41,22 +41,18 @@ class Users(abc.ABC):
             raise TypeError("ID cannot be blank")
         return self.user_id
 
-    def editInfo(self, phone, address, city, fname, lname):
-        if phone != "":
-            self.phone = phone
-            nPhone = User.objects.get(User_Phone=self.phone)
-            nPhone.phone = phone
-            nPhone.save()
-        if address != "":
-            self.address = address
-            nAddress = User.objects.get(User_Address=self.address)
-            nAddress.address = address
-            nAddress.save()
-        if city != "":
-            self.city = city
-            nCity = User.objects.get(User_City=self.city)
-            nCity.city = city
-            nCity.save()
+    def editInfo(self, phone=None, address=None, city=None, fname=None, lname=None):
+        if phone:
+            self.User_Phone = phone
+        if address:
+            self.User_Address = address
+        if city:
+            self.User_City = city
+        if fname:
+            self.User_fName = fname
+        if lname:
+            self.User_lName = lname
+        self.save()
 
         if fname != "":
             self.fName = fname
