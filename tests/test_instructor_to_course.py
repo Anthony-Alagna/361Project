@@ -2,7 +2,6 @@
 from myapp.models import User, Course
 from myapp.Classes.supervisor import Supervisor
 from django.test import TestCase, Client
-import unittest
 from django.urls import reverse
 
 
@@ -122,3 +121,5 @@ class AddInstructorsToCourse(TestCase):
         User.removeInstructor(self.course3.Course_Code, self.course1.id)
         self.assertEqual(inst1, course2.Course_Instructor,
                          "the course 1 instructor should not have been added to course 2")
+
+
