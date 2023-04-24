@@ -27,9 +27,37 @@ class TestGetUsers(TestCase):
                                          User_City="Milwaukee", User_LogName='user3', User_LogPass='password2',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
 
+    def tearDown(self):
+        self.user1.delete()
+        self.user2.delete()
+        self.user3.delete()
+
 
 # Method: UserUtility.get_all_users()
 class TestGetAllUsers(TestCase):
+
+    def setUp(self):
+        self.user1 = User.objects.create(id='1', User_fName='Cricket', User_lName="Maule",
+                                         User_Email='user1@example.com',
+                                         User_Pos='Teaching Assistant', User_Phone='1234567890',
+                                         User_Address='123 Main St', User_City="Milwaukee",
+                                         User_LogName='user1', User_LogPass='password',
+                                         User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
+        self.user2 = User.objects.create(id='2', User_fName='Noodle', User_lName="Bannish",
+                                         User_Email='user2@example.com',
+                                         User_Pos='Teaching Assistant', User_Phone='0987654321',
+                                         User_Address='456 Elm St', User_City="Milwaukee",
+                                         User_LogName='user2', User_LogPass='password1',
+                                         User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
+        self.user3 = User.objects.create(id='3', User_fName='Toby', User_lName="Smith", User_Email='user3@example.com',
+                                         User_Pos='Instructor', User_Phone='0987654322', User_Address='457 Elm St',
+                                         User_City="Milwaukee", User_LogName='user3', User_LogPass='password2',
+                                         User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
+
+    def tearDown(self):
+        self.user1.delete()
+        self.user2.delete()
+        self.user3.delete()
 
     def test_get_all_users(self):
         result = UserUtility.get_all_users()
@@ -56,6 +84,11 @@ class TestSearchUser(TestCase):
                                          User_Pos='Instructor', User_Phone='0987654322', User_Address='457 Elm St',
                                          User_City="Milwaukee", User_LogName='user3', User_LogPass='password2',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
+
+    def tearDown(self):
+        self.user1.delete()
+        self.user2.delete()
+        self.user3.delete()
 
     # tests if it returns the correct user
     def test_search_existing_user(self):
@@ -114,6 +147,11 @@ class TestFilterUser(TestCase):
                                          User_City="Milwaukee", User_LogName='user3', User_LogPass='password2',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
 
+    def tearDown(self):
+        self.user1.delete()
+        self.user2.delete()
+        self.user3.delete()
+
     def test_filter_user_TA(self):
         usertype = "Teaching Assistant"
         result = Users.filterUser(usertype)
@@ -158,6 +196,11 @@ class TestDeleteUser(TestCase):
                                          User_Pos='Instructor', User_Phone='0987654322', User_Address='457 Elm St',
                                          User_City="Milwaukee", User_LogName='user3', User_LogPass='password2',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
+
+    def tearDown(self):
+        self.user1.delete()
+        self.user2.delete()
+        self.user3.delete()
 
     def test_delete_user(self):
         username = "user1"
