@@ -101,7 +101,7 @@ class TestSearchUser(TestCase):
     def test_search_non_existing_user(self):
         last_name = "Mauule"
         result = Users.searchUser(last_name)
-        self.assertEqual(isinstance(result, TypeError), True,
+        self.assertEqual(isinstance(result, ValueError), True,
                          "searchUser should have returned no users")
 
         # tests if it returns None for a non-existent user
@@ -109,7 +109,7 @@ class TestSearchUser(TestCase):
     def test_search_no_user(self):
         last_name = ""
         result = Users.searchUser(last_name)
-        self.assertEqual(isinstance(result, TypeError), True,
+        self.assertEqual(isinstance(result, ValueError), True,
                          "searchUser should have returned no users")
 
     # tests if it is not case-sensitive
@@ -173,7 +173,7 @@ class TestFilterUser(TestCase):
     def test_filter_no_user(self):
         usertype = None
         result = Users.filterUser(usertype)
-        self.assertEqual(isinstance(result, TypeError), True,
+        self.assertEqual(isinstance(result, ValueError), True,
                          "filterUser should have returned None")
 
 

@@ -8,11 +8,11 @@ class Supervisor(Users):
         users = User.objects.all()
         for user in users:
             if user.User_LogName == username:
-                return TypeError(
+                return ValueError(
                     "That username already exists - please choose another")
 
         if fname == "" or lname == "" or email == "" or username == "" or password == "" or address == "" or city == "" or phone == "" or account_type == "":
-            return TypeError(
+            return ValueError(
                 "You're missing a field - please fill in all fields")
 
         else:

@@ -47,14 +47,14 @@ class AccountBase(View):
         if method == 'filterUser':
             users = Users.filterUser(request.POST.get('position'))
             #  the isinstance function checks if the result variable contains an instance of the TypeError class
-            if isinstance(users, TypeError):
+            if isinstance(users, ValueError):
                 return render(request, 'accountbase.html', {"message": "You didn't select a User Type"})
             return render(request, 'accountbase.html', {"users": users})
 
         # searchUser functionality
         elif method == "searchUser":
             user = Users.searchUser(request.POST.get('search'))
-            if isinstance(user, TypeError):
+            if isinstance(user, ValueError):
                 return render(request, 'accountbase.html', {"message": user})
             return render(request, 'accountbase.html', {"users": user})
 
@@ -74,7 +74,7 @@ class AccountBase(View):
                                                request.POST.get(
                                                    'address'), request.POST.get('city'),
                                                request.POST.get('number'), request.POST.get('position'))
-            if isinstance(result, TypeError):
+            if isinstance(result, ValueError):
                 return render(request, 'createaccount.html',
                               {"message": result})
             users = UserUtility.get_all_users()
