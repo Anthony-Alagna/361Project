@@ -4,30 +4,6 @@ import abc
 
 
 class Users(abc.ABC):
-    user_id = None
-    email = None
-    Position = None
-    fName = None
-    lName = None
-    phone = None
-    address = None
-    city = None
-    username = None
-    isgrader = False
-
-    def __Init__(self, user_id="", email="", position="", fname="", lname="", phone="", address="",
-                 city="", username="", isgrader=""):
-        self.user_id = user_id
-        self.email = email
-        self.position = position
-        self.fName = fname
-        self.lName = lname
-        self.phone = phone
-        self.address = address
-        self.city = city
-        self.username = username
-        self.isgrader = isgrader
-
     def getAccountInfo(self, username, id):
         if self.username == username and self.user_id == id:
             user = User.objects.get(User_Name=username)
