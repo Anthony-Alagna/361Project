@@ -42,6 +42,9 @@ class Users(abc.ABC):
         return self.user_id
 
     def editInfo(self, phone=None, address=None, city=None, fname=None, lname=None, position=None, email=None):
+        if self is type(None) or type(self) is not User:
+            raise TypeError("User object is not valid")
+
         if phone:
             self.User_Phone = phone
         if address:
@@ -91,6 +94,6 @@ class Users(abc.ABC):
 
 
 class UserUtility:
-    @staticmethod
+    @ staticmethod
     def get_all_users():
         return User.objects.all()
