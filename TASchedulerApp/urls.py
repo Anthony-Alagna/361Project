@@ -25,8 +25,8 @@ urlpatterns = [
     path('home/accountbase/createaccount/',
          CreateAccount.as_view(), name='createaccount'),
     path('home/accountbase/editaccount/', EditAccount.as_view(), name='editaccount'),
-    path('course_base/', CourseBase.as_view(), name='course_base'),
-    path('course_base/createcourse', CreateCourse.as_view(), name='createcourse'),
+    path('home/course_base/', CourseBase.as_view(), name='course_base'),
+    path('home/course_base/createcourse', CreateCourse.as_view(), name='createcourse'),
     path('home/personal_information', EditPersonalInformation.as_view(),
          name='personal_information'),
 
