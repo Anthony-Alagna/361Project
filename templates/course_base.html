@@ -17,7 +17,7 @@
         {% for course in courses %}
             <tr><td>COMPSCI {{ course.Course_Code }}</td>
                 <td>{{ course.Course_Name }}</td>
-                <td>{{ course.Course_Description }}</td>
+                <td>{{ course.Course_Instructor }}</td>
                 <td><a href=""><button>Info</button></a></td>
                 <td><a href="{% url 'courseedit' Course_Code=course.Course_Code %}"><button>Edit</button></a></td>
             </tr>

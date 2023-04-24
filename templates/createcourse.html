@@ -6,14 +6,16 @@
 </head>
 <body>
     <h1>Create Course</h1>
-    <a href="/course_base"><button style="margin-left: 20px;">Back</button></a><br>
+    <a href="/course_base"><button style="margin-left: 30px; margin-right: 30px;">Back</button></a>
+    {{ message }}<br><br>
     <form action="/course_base/" method="post">{% csrf_token %}
         <table style="border-spacing: 30px 0;">
             <tr>
                 <td>
                     <input type="text" name="course_code" placeholder="Enter Course Code"
                            maxlength="3" minlength="3">
-                    <input type="text" name="course_name" placeholder="Enter Course Name">
+                    <input type="text" name="course_name" placeholder="Enter Course Name"
+                           minlength="1">
                 </td>
             </tr>
             <tr>
@@ -23,7 +25,7 @@
             </tr>
             <tr>
                 <td>
-                    <select placeholder="Professor">
+                    <select name="course_inst" placeholder="Professor">
                     {% for user in users %}
                         {% if user.User_Pos == "Professor" %}
                         <option>{{ user.User_fName }} {{ user.User_lName }}</option>
@@ -32,8 +34,8 @@
                     </select>
                 </td>
             </tr>
-        </table>
-        <input type="submit" value="Create" style="margin-left: 50px;"/>
+        </table><br>
+        <input type="submit" value="Create" style="margin-left: 30px;"/>
     </form>
 </body>
 </html>
