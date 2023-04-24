@@ -56,17 +56,6 @@ class Users(abc.ABC):
             self.User_Pos = position
         self.save()
 
-        if fname != "":
-            self.fName = fname
-            name = User.objects.get(User_fName=self.fName)
-            name.User_fName = fname
-            name.save()
-        if lname != "":
-            self.lName = lname
-            lastn = User.objects.get(User_lName=self.lName)
-            lastn.User_lName = lname
-            lastn.save()
-
     def viewCourse(self, course_id):
         course = Course.objects.get(Course_ID=course_id)
         return course

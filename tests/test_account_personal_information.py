@@ -84,3 +84,9 @@ class PersonalInformationTest(unittest.TestCase):
         self.assertEqual(self.user1.User_fName, "tester")
         self.assertEqual(self.user1.User_Pos, "IN",
                          "Position should have changed to IN")
+
+    def test_edit_account_info_change_city(self):
+        # Change the city
+        Users.editInfo(self.user1, city="Chicago")
+        self.assertEqual(self.user1.User_City, "Chicago",
+                         "City should have changed to Chicago")
