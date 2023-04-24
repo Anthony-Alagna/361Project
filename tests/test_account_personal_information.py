@@ -1,10 +1,13 @@
 import unittest
 
+from django.test import Client
+from django.urls import reverse
+
 from myapp.Classes.users import Users
 from myapp.models import User
 
 
-class PersonalInformationTest(unittest.TestCase):
+class UserInformationMethods(unittest.TestCase):
 
     def setUp(self):
         self.user1 = User.objects.create(User_fName='tester', User_lName="Smith",
@@ -95,3 +98,46 @@ class PersonalInformationTest(unittest.TestCase):
         # Change the email
         Users.editInfo(self.user1, email="test1@test.com")
         self.assertEqual(self.user1.User_Email, "test1@test.com",)
+
+
+class PersonalInformationPageTests(unittest.TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.user1 = User.objects.create(User_fName='tester', User_lName="Smith",
+                                         User_Email='user1@example.com',
+                                         User_Pos='TA', User_Phone='1234567890',
+                                         User_Address='123 Main St', User_City="Milwaukee",
+                                         User_LogName='user1ish', User_LogPass='password14',
+                                         User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00'
+                                         )
+
+    def tearDown(self):
+        self.user1.delete()
+
+    def test_get_edit_personal_information(self):
+        url = reverse('personal_information')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_edit_personal_information(self):
+        url = reverse('personal_information')
+        data = {
+            'first_name': 'NewFirstName',
+            'last_name': 'NewLastName',
+            'email': 'newemail@example.com',
+            'phone_number': '1111111111',
+            'address': 'New Address',
+            'position': 'New Position',
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "information updated")
+        # Refresh the user from the database
+        self.user1.refresh_from_db()
+        self.assertEqual(self.user1.User_fName, 'NewFirstName')
+        self.assertEqual(self.user1.User_lName, 'NewLastName')
+        self.assertEqual(self.user1.User_Email, 'newemail@example.com')
+        self.assertEqual(self.user1.User_Phone, '1111111111')
+        self.assertEqual(self.user1.User_Address, 'New Address')
+        self.assertEqual(self.user1.User_Pos, 'New Position')
