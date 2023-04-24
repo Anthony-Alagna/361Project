@@ -8,7 +8,6 @@ from myapp.Classes.courses import CourseUtility
 from . import views
 
 
-
 # Create your views here.
 
 
@@ -22,8 +21,11 @@ class Login(View):
         user = User.objects.filter(
             User_LogName=username, User_LogPass=password)
         if user:
-            return redirect('index')
+            # used to store the username in the session, so that it can be used later
+            request.session['username'] = username
+            return redirect('home')
         else:
+            # return status code 302
             return redirect('login')
 
 
@@ -69,9 +71,11 @@ class AccountBase(View):
         # create account functionality
         else:
             result = Supervisor.create_account(request.POST.get('firstname'), request.POST.get('lastname'),
-                                               request.POST.get('email'), request.POST.get('username'),
+                                               request.POST.get(
+                                                   'email'), request.POST.get('username'),
                                                request.POST.get('password'),
-                                               request.POST.get('address'), request.POST.get('city'),
+                                               request.POST.get(
+                                                   'address'), request.POST.get('city'),
                                                request.POST.get('number'), request.POST.get('position'))
 
             #  the isinstance function checks if the result variable contains an instance of the TypeError class
@@ -95,7 +99,7 @@ class EditCourse(View):
     def post(self, request, *args, **kwargs):
         print(request.POST)
         course_code = kwargs['Course_Code']
-        actCourse=Course.objects.get(Course_Code=course_code)
+        actCourse = Course.objects.get(Course_Code=course_code)
         print(course_code)
         print(actCourse)
         made_instructor = request.POST.get('Course_Instructor')
@@ -104,16 +108,15 @@ class EditCourse(View):
 
         elif actCourse.Course_Instructor is not "":
             print(Course.objects.get(Course_Code=course_code).Course_Instructor)
-            Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'),course_code)
+            Supervisor.removeInstructorFromClass(
+                request.POST.get('Course_Instructor'), course_code)
             return redirect('courseedit', Course_Code=course_code)
         else:
-            Supervisor.addInstructor(request.POST.get('Course_Instructor'), course_code)
+            Supervisor.addInstructor(request.POST.get(
+                'Course_Instructor'), course_code)
             courses = CourseUtility.get_course_list()
 
             return redirect('/course_base', {course_code})
-
-
-
 
 
 class CreateAccount(View):
@@ -149,3 +152,21 @@ class CreateCourse(View):
 
     def post(self, request):
         return render(request, 'createcourse.html', {"success": "course created"})
+
+
+class EditPersonalInformation(View):
+    def get(self, request):
+        return render(request, 'personal_information.html')
+
+    def post(self, request):
+        firstname = request.POST.get('first_name')
+        lastname = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        position = request.POST.get('position')
+        userAccount = Users.getUserByUsername(request.session['username'])
+
+        Users.editInfo(userAccount, fname=firstname, lname=lastname,
+                       email=email, phone=phone, address=address, position=position)
+        return render(request, 'personal_information.html', {"success": "information updated"})

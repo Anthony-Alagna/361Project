@@ -27,12 +27,18 @@ class TestGetUsers(TestCase):
                                          User_City="Milwuakee", User_LogName='user3', User_LogPass='password2',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
 
+    def tearDown(self):
+        self.user1.delete()
+        self.user2.delete()
+        self.user3.delete()
+
 
 # Method: UserUtility.get_all_users()
 class TestGetAllUsers(TestCase):
     def test_get_all_users(self):
-        result = UserUtility.get_all_users();
-        self.assertEqual(list(result), list(User.objects.all()), "get_all_users didn't return all of the users")
+        result = UserUtility.get_all_users()
+        self.assertEqual(list(result), list(User.objects.all()),
+                         "get_all_users didn't return all of the users")
 
 
 # Method: Users.searchUser(username: str)
@@ -49,14 +55,16 @@ class TestSearchUser(TestCase):
     def test_search_non_existing_user(self):
         last_name = "Mauule"
         result = Users.searchUser(last_name)
-        self.assertEqual(list(result), [], "searchUser should have returned no users")
+        self.assertEqual(list(result), [],
+                         "searchUser should have returned no users")
 
         # tests if it returns None for a non-existent user
 
     def test_search_no_user(self):
         last_name = ""
         result = Users.searchUser(last_name)
-        self.assertEqual(isinstance(result, TypeError), True, "searchUser should have returned no users")
+        self.assertEqual(isinstance(result, TypeError), True,
+                         "searchUser should have returned no users")
 
     # tests if it is not case-sensitive
     def test_search_is_case_insensitive(self):
@@ -97,7 +105,8 @@ class TestFilterUser(TestCase):
     def test_filter_no_user(self):
         usertype = None
         result = Users.filterUser(usertype)
-        self.assertEqual(isinstance(result, TypeError), True, "filterUser should have returned None")
+        self.assertEqual(isinstance(result, TypeError), True,
+                         "filterUser should have returned None")
 
 
 # Method: Supervisor.deleteUser(username: str)
@@ -108,7 +117,8 @@ class TestDeleteUser(TestCase):
 
         Supervisor.deleteUser(username)
 
-        self.assertFalse(User.objects.filter(User_LogName="user1").exists(), "User exists but they were deleted")
+        self.assertFalse(User.objects.filter(
+            User_LogName="user1").exists(), "User exists but they were deleted")
 
 
 # tests all the navigation functionality on the page
