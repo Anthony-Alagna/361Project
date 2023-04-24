@@ -9,11 +9,11 @@ class Supervisor(Users):
         for user in users:
             if user.User_LogName == username:
                 return TypeError(
-                    "username already exists")
+                    "That username already exists - please choose another")
 
         if fname == "" or lname == "" or email == "" or username == "" or password == "" or address == "" or city == "" or phone == "" or account_type == "":
             return TypeError(
-                "missing field")
+                "You're missing a field - please fill in all fields")
 
         else:
             user = User.objects.create(User_fName=fname, User_lName=lname, User_Email=email, User_LogName=username,
