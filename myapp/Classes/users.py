@@ -5,7 +5,7 @@ import abc
 class Users(abc.ABC):
     user_id = None
     email = None
-    Position = None
+    position = None
     fName = None
     lName = None
     phone = None
@@ -41,7 +41,7 @@ class Users(abc.ABC):
             raise TypeError("ID cannot be blank")
         return self.user_id
 
-    def editInfo(self, phone=None, address=None, city=None, fname=None, lname=None):
+    def editInfo(self, phone=None, address=None, city=None, fname=None, lname=None, position=None):
         if phone:
             self.User_Phone = phone
         if address:
@@ -52,6 +52,8 @@ class Users(abc.ABC):
             self.User_fName = fname
         if lname:
             self.User_lName = lname
+        if position:
+            self.User_Pos = position
         self.save()
 
         if fname != "":
