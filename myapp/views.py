@@ -21,6 +21,8 @@ class Login(View):
         user = User.objects.filter(
             User_LogName=username, User_LogPass=password)
         if user:
+            # used to store the username in the session, so that it can be used later
+            request.session['username'] = username
             return redirect('home')
         else:
             # return status code 302
@@ -163,5 +165,8 @@ class EditPersonalInformation(View):
         phone = request.POST.get('phone_number')
         address = request.POST.get('address')
         position = request.POST.get('position')
-        Users.editInfo(firstname, lastname, email, phone, address, position)
+        userAccount = Users.getUserByUsername(request.session['username'])
+
+        Users.editInfo(userAccount, fname=firstname, lname=lastname,
+                       email=email, phone=phone, address=address, position=position)
         return render(request, 'personal_information.html', {"success": "information updated"})

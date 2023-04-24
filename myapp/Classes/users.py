@@ -92,6 +92,12 @@ class Users(abc.ABC):
         courses = CourseToUser.objects.get(user=self)
         return courses
 
+    def getUserByUsername(username):
+        if username is None:
+            raise TypeError("Username cannot be blank")
+        user = User.objects.get(User_LogName=username)
+        return user
+
 
 class UserUtility:
     @ staticmethod

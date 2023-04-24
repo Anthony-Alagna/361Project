@@ -121,6 +121,9 @@ class PersonalInformationPageTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_post_edit_personal_information(self):
+        session = self.client.session
+        session['username'] = self.user1.User_LogName
+        session.save()
         url = reverse('personal_information')
         data = {
             'first_name': 'NewFirstName',
@@ -132,7 +135,8 @@ class PersonalInformationPageTests(unittest.TestCase):
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "information updated")
+        self.assertEqual(
+            response.context['success'], 'information updated')
         # Refresh the user from the database
         self.user1.refresh_from_db()
         self.assertEqual(self.user1.User_fName, 'NewFirstName')
