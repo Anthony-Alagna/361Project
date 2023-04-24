@@ -1,37 +1,33 @@
 import unittest
 
-from myapp.Classes import users
+from myapp.Classes.users import Users
 from myapp.models import User
 
 
 class PersonalInformationTest(unittest.TestCase):
 
     def setUp(self):
-        self.user1 = User.objects.create(
-            User_LogName="testUser1",
-            User_LogPass="testPass1",
-            User_Email="testuser1@test.com",
-            User_fName="Bob",
-            User_lName="Smith",
-            User_Phone="1111111111",
-            User_Address="123 Blvd",
-            User_Pos="TA"
-        )
+        self.user1 = User.objects.create(User_fName='tester', User_lName="Smith",
+                                         User_Email='user1@example.com',
+                                         User_Pos='TA', User_Phone='1234567890',
+                                         User_Address='123 Main St', User_City="Milwaukee",
+                                         User_LogName='user1ish', User_LogPass='password14',
+                                         User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00'
+                                         )
 
-        self.user2 = User.objects.create(
-            User_LogName="testUser2",
-            User_LogPass="testPass2",
-            User_Email="test@test.com",
-            User_fName="John",
-            User_lName="Doe",
-            User_Phone="2222222222",
-            User_Address="456 St",
-            User_Pos="IN"
-        )
+    def tearDown(self):
+        self.user1.delete()
 
     def test_get_account_info(self):
-        self.assertEqual("test@gmail.com", users.getAccountInfo(self.user1.username), "Should return email of "
-                                                                                      "account")
+        resp = Users.getAccountInfo(
+            self.user1.User_LogName, self.user1.id)
+        self.assertEqual(resp[0], "tester", "First name should be Bob")
+        self.assertEqual(resp[1], "Smith", "Last name should be Smith")
+        self.assertEqual(resp[2], "user1ish",
+                         "Usernamelogname should be user1")
+        self.assertEqual(
+            resp[3], "user1@example.com" "Email should be test@test.com")
+        self.assertEqual(resp[4], "TA", "Position should be TA")
 
     def test_get_account_info_unknown_account(self):
         # Should raise an exception if the account doesn't exist
