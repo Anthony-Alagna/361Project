@@ -5,11 +5,11 @@
 </head>
 <body>
 	<header>
-        <button>Home</button>
+        <button><a {{% url '/home/' %}}> Home</a></button>
 		<button>Log Out</button>
 	</header>
 	<h1>Personal Information</h1>
-	<form action="/edit" method="post">
+	<form action="/EditPersonalInformation/" method="post">
       <table>
         <tr>
           <td><label for="first-name">First Name:</label></td>
