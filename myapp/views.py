@@ -121,7 +121,8 @@ class CreateCourse(View):
     TEMPLATE = "createcourse.html"
 
     def get(self, request):
-        return render(request, 'createcourse.html')
+        users = UserUtility.get_all_users()
+        return render(request, 'createcourse.html', {"users": users})
 
     def post(self, request):
         return render(request, 'createcourse.html', {"success": "course created"})
