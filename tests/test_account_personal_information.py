@@ -60,20 +60,16 @@ class PersonalInformationTest(unittest.TestCase):
 
     def test_edit_account_info_change_address(self):
         # Change the address
-        self.user1.editInfo(self.user1.phone, "789 Blvd",
-                            self.user1.fName, self.user1.position)
-        self.assertEqual(self.user1.email, "test@gmail.com",
-                         "email should not have changed")
-        self.assertEqual(self.user1.phone, "1111111111",
-                         "Phone number should not have changed")
-        self.assertEqual(self.user1.fName, "Bob",
-                         "First name should not have changed")
-        self.assertEqual(self.user1.lName, "Smith",
-                         "Last name should not have changed")
-        self.assertEqual(self.user1.address, "789 Blvd",
-                         "Address should have changed")
-        self.assertEqual(self.user1.position, "TA",
-                         "Position should not have changed")
+        Users.editInfo(self.user1, self.user1.User_Phone, "123 Blvd",
+                       self.user1.User_City, self.user1.User_fName, self.user1.User_lName)
+        self.assertEqual(self.user1.User_Email,
+                         "user1@example.com")
+        self.assertEqual(self.user1.User_Phone, "1234567890")
+        self.assertEqual(self.user1.User_lName, "Smith")
+        self.assertEqual(self.user1.User_Address, "123 Blvd",
+                         "Address should have changed to 123 Blvd")
+        self.assertEqual(self.user1.User_City, "Milwaukee")
+        self.assertEqual(self.user1.User_fName, "tester",)
 
     def test_edit_account_info_change_position(self):
         # Change the position
