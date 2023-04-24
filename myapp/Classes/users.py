@@ -1,4 +1,3 @@
-import myapp.models
 from myapp.models import User, Section, Course, CourseToUser
 import abc
 
@@ -15,7 +14,7 @@ class Users(abc.ABC):
     username = None
     isgrader = False
 
-    def __Init__(self, user_id="", email="", position="", fname="", lname="", phone="", address="",
+    def __init__(self, user_id="", email="", position="", fname="", lname="", phone="", address="",
                  city="", username="", isgrader=""):
         self.user_id = user_id
         self.email = email
@@ -28,12 +27,14 @@ class Users(abc.ABC):
         self.username = username
         self.isgrader = isgrader
 
-    def getAccountInfo(self, username, id):
-        if self.username == username and self.user_id == id:
-            user = User.objects.get(User_Name=username)
-            return user.User_fName, user.User_lName, user.User_LogName, user.User_Email, user.User_Pos
-        else:
-            return Exception("user not in the database")
+    def getAccountInfo(username, id):
+        if username is None:
+            raise TypeError("Username cannot be blank")
+        if id is None:
+            raise TypeError("ID cannot be blank")
+
+        user = User.objects.get(User_LogName=username, id=id)
+        return user.User_fName, user.User_lName, user.User_LogName, user.User_Email, user.User_Pos
 
     def get_user_id(self):
         if self.user_id == "":
@@ -71,7 +72,6 @@ class Users(abc.ABC):
     def viewCourse(self, course_id):
         course = Course.objects.get(Course_ID=course_id)
         return course
-
 
     def filterUser(usertype):
         if usertype is None:

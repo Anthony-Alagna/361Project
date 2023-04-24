@@ -26,7 +26,7 @@ class PersonalInformationTest(unittest.TestCase):
         self.assertEqual(resp[2], "user1ish",
                          "Usernamelogname should be user1")
         self.assertEqual(
-            resp[3], "user1@example.com" "Email should be test@test.com")
+            resp[3], "user1@example.com")
         self.assertEqual(resp[4], "TA", "Position should be TA")
 
     def test_get_account_info_unknown_account(self):
