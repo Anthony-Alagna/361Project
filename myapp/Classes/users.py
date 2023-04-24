@@ -87,7 +87,6 @@ class Users(abc.ABC):
         users = User.objects.all()
         counter = 0
         for user in users:
-            print("USER", user.User_lName)
             if user.User_lName == last_name_cleaned:
                 counter += 1
         if counter == 0:
