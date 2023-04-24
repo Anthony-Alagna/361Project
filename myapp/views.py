@@ -101,8 +101,8 @@ class CourseBase(View):
 
     def post(self, request):
         courses = CourseUtility.get_course_list()
-        result = CourseUtility.create_course(request.POST.get('course_code'), request.POST.get('course_name'),
-                                             request.POST.get('course_desc'), request.POST.get('course_inst'))
+        result = Supervisor.create_course(request.POST.get('course_code'), request.POST.get('course_name'),
+                                          request.POST.get('course_desc'), request.POST.get('course_inst'))
         if isinstance(result, TypeError):
             users = UserUtility.get_all_users()
             return render(request, 'createcourse.html', {"users": users, "message": result})
