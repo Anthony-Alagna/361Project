@@ -24,7 +24,7 @@ class TestGetUsers(TestCase):
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
         self.user3 = User.objects.create(id='3', User_fName='Toby', User_lName="Smith", User_Email='user3@example.com',
                                          User_Pos='Instructor', User_Phone='0987654322', User_Address='457 Elm St',
-                                         User_City="Milwuakee", User_LogName='user3', User_LogPass='password2',
+                                         User_City="Milwaukee", User_LogName='user3', User_LogPass='password2',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
 
     def tearDown(self):

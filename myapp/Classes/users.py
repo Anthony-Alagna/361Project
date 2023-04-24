@@ -82,16 +82,17 @@ class Users(abc.ABC):
         if last_name == "":
             return TypeError(
                 "You didn't write a last name!")
+        # converts parameter to standard case and strips any whitespace before and after characters
+        last_name_cleaned = last_name.title().strip()
         users = User.objects.all()
         counter = 0
         for user in users:
-            if user.User_lName == last_name:
-                ++counter
+            print("USER", user.User_lName)
+            if user.User_lName == last_name_cleaned:
+                counter += 1
         if counter == 0:
-                return TypeError(
-                    "There are no users with this last name")
-        # converts parameter to standard case and strips any whitespace before and after characters
-        last_name_cleaned = last_name.title().strip()
+            return TypeError(
+                "There are no users with this last name")
         user = User.objects.filter(User_lName=last_name_cleaned)
         return user
 
@@ -108,6 +109,6 @@ class Users(abc.ABC):
 
 
 class UserUtility:
-    @ staticmethod
+    @staticmethod
     def get_all_users():
         return User.objects.all()
