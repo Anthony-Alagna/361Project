@@ -41,7 +41,7 @@ class Users(abc.ABC):
             raise TypeError("ID cannot be blank")
         return self.user_id
 
-    def editInfo(self, phone=None, address=None, city=None, fname=None, lname=None, position=None):
+    def editInfo(self, phone=None, address=None, city=None, fname=None, lname=None, position=None, email=None):
         if phone:
             self.User_Phone = phone
         if address:
@@ -54,6 +54,9 @@ class Users(abc.ABC):
             self.User_lName = lname
         if position:
             self.User_Pos = position
+        if email:
+            self.User_Email = email
+
         self.save()
 
     def viewCourse(self, course_id):

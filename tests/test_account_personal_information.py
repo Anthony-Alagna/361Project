@@ -90,3 +90,8 @@ class PersonalInformationTest(unittest.TestCase):
         Users.editInfo(self.user1, city="Chicago")
         self.assertEqual(self.user1.User_City, "Chicago",
                          "City should have changed to Chicago")
+
+    def test_edit_account_info_change_email(self):
+        # Change the email
+        Users.editInfo(self.user1, email="test1@test.com")
+        self.assertEqual(self.user1.User_Email, "test1@test.com",)
