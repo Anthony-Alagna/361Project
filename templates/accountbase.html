@@ -11,11 +11,11 @@
 <body>
 <h1>User Accounts</h1>
 <br>
-<a href="/">
+<a href="{% url 'home'%}">
     <button>Home</button>
 </a>
 <br>
-<a href="createaccount">
+<a href="{% url 'createaccount' %}">
     <button>Create New Account</button>
 </a>
 <br>
@@ -51,7 +51,7 @@
             <td>{{ user.User_fName }} {{ user.User_lName }}</td>
             <td>{{ user.User_Pos }}</td>
 
-            <td><a href="editaccount">
+            <td><a href="{% url 'editaccount' %}">
                 <button><span class="material-symbols-outlined">edit</span></button>
             </a>
                 <form action="{% url 'accountbase' %}" method="post">
@@ -64,6 +64,6 @@
         </tr>
     {% endfor %}
 </table>
-{{ success }}
+{{ message }}
 </body>
 </html>
