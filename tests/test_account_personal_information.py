@@ -24,13 +24,13 @@ class PersonalInformationTest(unittest.TestCase):
         self.assertEqual(resp, self.user1, "Should return the user object")
 
     def test_get_account_info_unknown_account(self):
-        # should return DoesNotExist error if user doesn't exist
+        # should raise DoesNotExist error if user doesn't exist
         self.assertRaises(User.DoesNotExist,
                           Users.getAccountInfo, "unknown", 1)
 
-    def test_get_account_info_no_email(self):
-        self.assertEqual("", users.getAccountInfo(self.user2.username), "Should return an empty string if email"
-                                                                        "doesn't exist for user")
+    def test_get_account_missing_parameter(self):
+        # should raise DoesNotExist if either argument is blank
+        self.assertRaises(User.DoesNotExist, Users.getAccountInfo, "", 1)
 
     def test_edit_account_info_change_fName(self):
         # Change the firstName
