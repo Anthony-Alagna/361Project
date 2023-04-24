@@ -30,6 +30,8 @@ class Supervisor(Users):
                 return TypeError("the course you search does not exist")
             elif course.Course_Instructor is not None:
                 return TypeError("you must remove instructor before you can add new one")
+            elif course.Course_Instructor == instructor_name:
+                return TypeError("course instructor with the name {{instructor_code}} name is already addd")
             else:
                 return True
 
@@ -41,15 +43,17 @@ class Supervisor(Users):
             course = Course.objects.get(Course_Code=course_code)
             course.Course_Instructor = ""
             course.save()
+            return course
 
     @staticmethod
     def addInstructor(instructor_name, course_code):
-        if not Supervisor.checkInstructorInCourse(Supervisor,instructor_name, course_code):
-            return TypeError("error cannot add instructor")
+        if not Supervisor.checkInstructorInCourse(instructor_name, course_code):
+            return Supervisor.checkInstructorInCourse(instructor_name, course_code)
         else:
             course = Course.objects.get(Course_Code=course_code)
             course.Course_Instructor=instructor_name
             course.save()
+            return course
 
     @staticmethod
     def editCourse(course_name='default', course_desc='default', isonline='default', location='default',
