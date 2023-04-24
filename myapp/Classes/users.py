@@ -69,7 +69,7 @@ class Users(abc.ABC):
     def filterUser(usertype):
         if usertype is None:
             print(usertype)
-            return TypeError(
+            return ValueError(
                 "you didn't select a usertype")
         elif usertype == "All Roles":
             user_positions = User.objects.all()
@@ -80,10 +80,14 @@ class Users(abc.ABC):
 
     def searchUser(last_name):
         if last_name == "":
-            return TypeError(
-                "you didn't select a usertype")
+            return ValueError(
+                "You didn't write a last name!")
         # converts parameter to standard case and strips any whitespace before and after characters
         last_name_cleaned = last_name.title().strip()
+        # users = User.objects.all()
+        if not User.objects.filter(User_lName=last_name_cleaned).exists():
+            return ValueError(
+                "There are no users with this last name")
         user = User.objects.filter(User_lName=last_name_cleaned)
         return user
 
@@ -100,6 +104,6 @@ class Users(abc.ABC):
 
 
 class UserUtility:
-    @ staticmethod
+    @staticmethod
     def get_all_users():
         return User.objects.all()
