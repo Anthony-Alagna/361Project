@@ -34,7 +34,7 @@ class Users(abc.ABC):
             raise TypeError("ID cannot be blank")
 
         user = User.objects.get(User_LogName=username, id=id)
-        return user.User_fName, user.User_lName, user.User_LogName, user.User_Email, user.User_Pos
+        return user
 
     def get_user_id(self):
         if self.user_id == "":
