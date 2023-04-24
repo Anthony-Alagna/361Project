@@ -150,3 +150,11 @@ class CreateCourse(View):
 
     def post(self, request):
         return render(request, 'createcourse.html', {"success": "course created"})
+
+
+class EditPersonalInformation:
+    def get(self, request):
+        return render(request, 'personal_information.html')
+
+    def post(self, request):
+        return render(request, 'personal_information.html')
