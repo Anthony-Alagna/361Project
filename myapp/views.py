@@ -21,8 +21,11 @@ class Login(View):
         user = User.objects.filter(
             User_LogName=username, User_LogPass=password)
         if user:
-            return redirect('index')
+            # used to store the username in the session, so that it can be used later
+            request.session['username'] = username
+            return redirect('home')
         else:
+            # return status code 302
             return redirect('login')
 
 
@@ -68,9 +71,11 @@ class AccountBase(View):
         # create account functionality
         else:
             result = Supervisor.create_account(request.POST.get('firstname'), request.POST.get('lastname'),
-                                               request.POST.get('email'), request.POST.get('username'),
+                                               request.POST.get(
+                                                   'email'), request.POST.get('username'),
                                                request.POST.get('password'),
-                                               request.POST.get('address'), request.POST.get('city'),
+                                               request.POST.get(
+                                                   'address'), request.POST.get('city'),
                                                request.POST.get('number'), request.POST.get('position'))
 
             #  the isinstance function checks if the result variable contains an instance of the TypeError class
@@ -140,3 +145,21 @@ class CreateCourse(View):
 
     def post(self, request):
         return render(request, 'createcourse.html', {"success": "course created"})
+
+
+class EditPersonalInformation(View):
+    def get(self, request):
+        return render(request, 'personal_information.html')
+
+    def post(self, request):
+        firstname = request.POST.get('first_name')
+        lastname = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        position = request.POST.get('position')
+        userAccount = Users.getUserByUsername(request.session['username'])
+
+        Users.editInfo(userAccount, fname=firstname, lname=lastname,
+                       email=email, phone=phone, address=address, position=position)
+        return render(request, 'personal_information.html', {"success": "information updated"})
