@@ -4,6 +4,8 @@ from django.views import View
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
 from myapp.models import User, Course, Section, CourseToUser
+from django.urls import reverse
+
 from . import views
 
 
@@ -80,6 +82,9 @@ class AccountBase(View):
             return render(request, 'accountbase.html', {"users": users})
 
 
+# want to return the same view but for a specific course
+
+
 class CreateAccount(View):
     def get(self, request):
         return render(request, 'createaccount.html')
@@ -126,27 +131,31 @@ class EditCourse(View):
         c_code = kwargs['Course_Code']
         course = Course.objects.get(Course_Code=c_code)
         users = UserUtility.get_all_users()
+
         return render(request, 'courseedit.html', {'course': course, "users": users})
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
         course_code = kwargs['Course_Code']
         actCourse = Course.objects.get(Course_Code=course_code)
-        print(course_code)
-        print(actCourse)
-        made_instructor = request.POST.get('Course_Instructor')
+        users= UserUtility.get_all_users()
+        made_instructor = request.POST.get('course_inst')
         if made_instructor == actCourse.Course_Instructor:
             return render(request, 'courseedit.html', {"error": "this instructor is already assigned to the course"})
 
-        elif actCourse.Course_Instructor is not "":
-            print(Course.objects.get(Course_Code=course_code).Course_Instructor)
-            Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'), course_code)
-            return redirect('courseedit', Course_Code=course_code)
+        elif actCourse.Course_Instructor:
+            if "delete_user" in request.POST:
+                Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'), course_code)
+                return render(request,'courseedit.html',  {'message': "user has been deleted ",  'course': actCourse, 'users': users})
+            else:
+                return render(request,'courseedit.html',  {'message': "user that was assigned to this course is different, press the delete button to assign a new instructor ",  'course': actCourse, 'users': users})
         else:
-            Supervisor.addInstructor(request.POST.get('Course_Instructor'), course_code)
-            courses = Course.objects.all()
 
-            return redirect('/course_base', {course_code})
+            print(made_instructor)
+            teacher=made_instructor.split()
+            prof = User.objects.get(User_fName=teacher[0])
+            Supervisor.addInstructor(prof.User_fName, course_code)
+            courses = Course.objects.all()
+            return redirect('course_base')
 
 
 class EditPersonalInformation(View):
@@ -163,5 +172,5 @@ class EditPersonalInformation(View):
         userAccount = Users.getUserByUsername(request.session['username'])
 
         Users.editInfo(userAccount, fname=firstname, lname=lastname,
-        email=email, phone=phone, address=address, position=position)
+                       email=email, phone=phone, address=address, position=position)
         return render(request, 'personal_information.html', {"success": "information updated"})

@@ -27,12 +27,14 @@
 {#                <td><input type="text"  name="Course_Instructor" {% if course.Course_isOnline %} {% endif %}></td>#}
                 <td>
                     <select name="course_inst" placeholder="Professor">
+
                     {% for user in users %}
                         {% if user.User_Pos == "Professor" %}
                         <option>{{ user.User_fName }} {{ user.User_lName }}</option>
                         {% endif %}
                     {% endfor %}
                     </select>
+                <button name="delete_user" type="submit">Remove Instructor</button>
                 </td>
             </tr>
             <tr>
@@ -44,8 +46,9 @@
                 <td><input type="text" name="Course_Location" value="{{ course.Course_Location }}"></td>
             </tr>
         </table>
-        <button type="submit">Save</button>
+        <button name = "save_ch" type="submit">Save</button>
     </form>
+    {{ message }}
 </body>
 </html>
 
