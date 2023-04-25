@@ -54,7 +54,7 @@ class Supervisor(Users):
             return ValueError("instructor name is blank or course id name is blank")
         else:
             course = Course.objects.get(Course_Code=course_code)
-            course.Course_Instructor = ""
+            course.Course_Instructor=""
             course.save()
             return course
 

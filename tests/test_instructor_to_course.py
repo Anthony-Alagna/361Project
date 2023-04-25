@@ -49,9 +49,11 @@ class AddInstructorsToCourse(TestCase):
 
     def test_add_teacher_to_class_with_no_instructor(self):
         teacher = self.user1
-        Supervisor.addInstructor("tiki",,  "382-01")
-        course = Course.objects.get(Course_ID='c1')
-        self.assertIn(teacher, course.Course_Instructor, "teacher should be added because it was blank")
+        Supervisor.addInstructor(self.user1,"101-01")
+        course = Course.objects.get(Course_ID='c3')
+        print(course)
+        print(course.Course_Instructor)
+        self.assertEqual(teacher, course.Course_Instructor, "teacher should be added because it was blank")
 
     def test_add_ta_to_instructor_position(self):
         Supervisor.addInstructor(self.id(), self.course3.Course_Code)
