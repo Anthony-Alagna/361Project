@@ -137,13 +137,14 @@ class EditCourse(View):
     def post(self, request, *args, **kwargs):
         course_code = kwargs['Course_Code']
         actCourse = Course.objects.get(Course_Code=course_code)
+        users= UserUtility.get_all_users()
         made_instructor = request.POST.get('course_inst')
         if made_instructor == actCourse.Course_Instructor:
             return render(request, 'courseedit.html', {"error": "this instructor is already assigned to the course"})
 
         elif actCourse.Course_Instructor is not "":
             Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'), course_code)
-            return render(request,'courseedit.html',  {'message': "this instructor is already assigned to the course",  'course': actCourse})
+            return render(request,'courseedit.html',  {'message': "user that was assigned to this course is differet, the user is now delted form the course ",  'course': actCourse, 'users': users})
         else:
             teacher=made_instructor.split()
 
