@@ -30,12 +30,16 @@ class TestNewCourse(TestCase):
 
     # tests that a new course has been created
     def test_new_course_exists(self):
+        # self.assertTrue(isinstance(Course.objects.get(Course_Code="101"), DoesNotExist), "Expected 0 courses, found 1")
+        # result = Supervisor.create_course("101", "Intro to Coding", "Learning how to code", "John Doe")
+        # self.assertEqual(result, Course.objects.get(Course_Code="101"), "Expected course with code 101, found none")
         c = 0
         for course in self.courseList:
             if course.Course_Code == "101":
                 c = c + 1
         self.assertTrue(c == 0, "Expected 0 courses, found " + str(c))
         Supervisor.create_course("101", "Intro to Coding", "Learning how to code", "John Doe")
+        self.courseList = Course.objects.all()
         for course in self.courseList:
             if course.Course_Code == "101":
                 c = c + 1
