@@ -147,7 +147,7 @@ class EditCourse(View):
                 Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'), course_code)
                 return render(request,'courseedit.html',  {'message': "user has been deleted ",  'course': actCourse, 'users': users})
             else:
-                return render(request,'courseedit.html',  {'message': "user that was assigned to this course is differet, press the delete button to assign a new instructor ",  'course': actCourse, 'users': users})
+                return render(request,'courseedit.html',  {'message': "user that was assigned to this course is different, press the delete button to assign a new instructor ",  'course': actCourse, 'users': users})
         else:
 
             print(made_instructor)
