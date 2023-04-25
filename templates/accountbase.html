@@ -12,13 +12,14 @@
 </head>
 <body>
 <h1>User Accounts</h1>
+<div class="center">
 <br>
 <a href="{% url 'home' %}">
-    <button id="button2">Home</button>
+    <button class="backbutton">Home</button>
 </a>
 <br>
 <a href="{% url 'createaccount' %}">
-    <button id="button4" >Create New Account</button>
+    <button id="button4" class="goldbutton">Create New Account</button>
 </a>
 <br>
 <br>
@@ -54,13 +55,13 @@
             <td>{{ user.User_Pos }}</td>
             <div style="text-align: center;">
                 <td id="table"><a href="{% url 'editaccount' %}">
-                    <button id="button1"><span class="material-symbols-outlined">edit</span></button>
+                    <button id="button1" class="goldbutton"><span class="material-symbols-outlined">edit</span></button>
                 </a>
                     <form action="{% url 'accountbase' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="method" value="deleteUser">
                         <input type="hidden" name="username" value="{{ user.User_LogName }}">
-                        <button id="button3" type="submit"><span class="material-symbols-outlined">delete</span></button>
+                        <button id="button3" class="goldbutton" type="submit"><span class="material-symbols-outlined">delete</span></button>
                     </form>
                 </td>
             </div>
@@ -68,5 +69,6 @@
     {% endfor %}
 </table>
 {{ message }}
+</div>
 </body>
 </html>

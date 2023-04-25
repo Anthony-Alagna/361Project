@@ -1,4 +1,4 @@
-#button1, #button3, #button4  {
+.goldbutton {
   border: 2px solid #ffcc00;
   border-radius: 3px;
   background-color: white;
@@ -36,12 +36,15 @@
   box-shadow: none;
 }
 
-body {
+h1 {
+  text-align: center;
+}
+
+.center {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
 form {
@@ -55,6 +58,16 @@ th, td {
   padding: 20px;
 }
 
+.gold-bar {
+  background-color: gold;
+  height: 40px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
 #table{
   display: flex;
   justify-content: center;
@@ -66,7 +79,7 @@ th, td {
   margin-right: 10px;
 }
 
-#button2{
+.backbutton{
   position: absolute;
   top: 20px;
   left: 20px;
@@ -82,4 +95,8 @@ h1, h2, h3, h4, h5, h6 {
 
 button, input[type="submit"], input[type="button"], input[type="text"], select {
   font-family: 'Calibri', sans-serif;
+}
+
+input[type="submit"] {
+    margin-top: auto;
 }
