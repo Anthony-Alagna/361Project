@@ -36,21 +36,10 @@ class Supervisor(Users):
         return Course.objects.create(Course_Code=code, Course_Name=name, Course_Description=desc,
                                      Course_Instructor=inst)
 
-    def checkInstructorInCourse(instructor_name, course_code):
-        if instructor_name == "" or course_code == "":
-            return ValueError("instructor name is blank or course id name is blank")
-        else:
-            course = Course.objects.get(Course_Code=course_code)
-            if course is None:
-                return ValueError("the course you search does not exist")
-            elif course.Course_Instructor is not None:
-                return ValueError("you must remove instructor before you can add new one")
-            else:
-                return True
 
     @staticmethod
     def removeInstructorFromClass(instructor_name, course_code):
-        if not Supervisor.checkInstructorInCourse(instructor_name, course_code):
+        if instructor_name == "" or course_code == "":
             return ValueError("instructor name is blank or course id name is blank")
         else:
             course = Course.objects.get(Course_Code=course_code)

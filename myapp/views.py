@@ -146,8 +146,8 @@ class EditCourse(View):
             Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'), course_code)
             return render(request,'courseedit.html',  {'message': "user that was assigned to this course is differet, the user is now delted form the course ",  'course': actCourse, 'users': users})
         else:
+            print(made_instructor)
             teacher=made_instructor.split()
-
             prof = User.objects.get(User_fName=teacher[0])
             Supervisor.addInstructor(prof.User_fName, course_code)
             courses = Course.objects.all()
