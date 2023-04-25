@@ -1,29 +1,47 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Manage Courses</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+
 </head>
 <body>
-    <h1>Manage Courses</h1>
-    <a href="{% url 'home'%}"><button>Home</button></a><br><br>
+
+<h1>Manage Courses</h1>
+<div class="center">
+    <a href="{% url 'home' %}">
+        <button class="backbutton">Home</button>
+    </a><br><br>
     <table style="border-spacing: 10px 0;">
         <tr style="font-size:25px">
             <td>Course</td>
             <td>Name</td>
             <td>Instructor</td>
-        </tr><br>
+        </tr>
+        <br>
 
         {% for course in courses %}
-            <tr><td>COMPSCI {{ course.Course_Code }}</td>
+            <tr>
+                <td>COMPSCI {{ course.Course_Code }}</td>
                 <td>{{ course.Course_Name }}</td>
                 <td>{{ course.Course_Instructor }}</td>
-                <td><a href=""><button>Info</button></a></td>
-                <td><a href="{% url 'courseedit' Course_Code=course.Course_Code %}"><button>Edit</button></a></td>
+                <td><a href="">
+                    <button>Info</button>
+                </a></td>
+                <td><a href="{% url 'courseedit' Course_Code=course.Course_Code %}">
+                    <button>Edit</button>
+                </a></td>
             </tr>
         {% endfor %}
-    </table><br>
-    <a href="{% url 'createcourse'%}"><button>New Course</button></a>
+    </table>
+    <br>
+    <a href="{% url 'createcourse' %}">
+        <button class="goldbutton">New Course</button>
+    </a>
     <br>{{ success }}
+</div>
 </body>
 </html>

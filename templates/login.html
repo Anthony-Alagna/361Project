@@ -1,25 +1,30 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <title>Title</title>
-  </head>
-  <body>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+</head>
+<div class="center">
+    <body>
     <h1>Home Page</h1>
     <form action="/" method="post">
-      {% csrf_token %}
-      <table>
-        <tr>
-          <td>username:</td>
-          <td><input type="text" name="username" /></td>
-        </tr>
-        <tr>
-          <td>password:</td>
-          <td><input type="password" name="password" /></td>
-        </tr>
-      </table>
-      <input type="submit" />
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username"/></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" name="password"/></td>
+            </tr>
+        </table>
+        <input class="goldbutton" type="submit"/>
     </form>
     {{ message }}
-  </body>
+</div>
+</body>
 </html>
