@@ -104,7 +104,8 @@ class CourseBase(View):
                                           request.POST.get('course_desc'), request.POST.get('course_inst'))
         if isinstance(result, TypeError):
             courses = Course.objects.all()
-            return render(request, 'createcourse.html', {"courses": courses, "message": result})
+            users = UserUtility.get_all_users()
+            return render(request, 'createcourse.html', {"courses": courses, "users":users, "message": result})
         return render(request, 'course_base.html', {"courses": courses})
 
 
