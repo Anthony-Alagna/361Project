@@ -172,5 +172,3 @@ class TestFunction(TestCase):
         #200 indicates its still on the same page after a post request
         self.assertEqual(result.status_code, 200)
 
-
-
