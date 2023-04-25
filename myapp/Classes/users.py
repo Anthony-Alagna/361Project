@@ -4,55 +4,73 @@ import abc
 
 
 class Users(abc.ABC):
-    def getAccountInfo(self, username, id):
-        if self.username == username and self.user_id == id:
-            user = User.objects.get(User_Name=username)
-            return user.User_fName, user.User_lName, user.User_LogName, user.User_Email, user.User_Pos
-        else:
-            return Exception("user not in the database")
+    user_id = None
+    email = None
+    position = None
+    fName = None
+    lName = None
+    phone = None
+    address = None
+    city = None
+    username = None
+    isgrader = False
+
+    def __init__(self, user_id="", email="", position="", fname="", lname="", phone="", address="",
+                 city="", username="", isgrader=""):
+        self.user_id = user_id
+        self.email = email
+        self.position = position
+        self.fName = fname
+        self.lName = lname
+        self.phone = phone
+        self.address = address
+        self.city = city
+        self.username = username
+        self.isgrader = isgrader
+
+    def getAccountInfo(username, id):
+        if username is None:
+            raise TypeError("Username cannot be blank")
+        if id is None:
+            raise TypeError("ID cannot be blank")
+
+        user = User.objects.get(User_LogName=username, id=id)
+        return user
 
     def get_user_id(self):
         if self.user_id == "":
             raise TypeError("ID cannot be blank")
         return self.user_id
 
-    def editInfo(self, phone, address, city, fname, lname):
-        if phone != "":
-            self.phone = phone
-            nPhone = User.objects.get(User_Phone=self.phone)
-            nPhone.phone = phone
-            nPhone.save()
-        if address != "":
-            self.address = address
-            nAddress = User.objects.get(User_Address=self.address)
-            nAddress.address = address
-            nAddress.save()
-        if city != "":
-            self.city = city
-            nCity = User.objects.get(User_City=self.city)
-            nCity.city = city
-            nCity.save()
+    def editInfo(self, phone=None, address=None, city=None, fname=None, lname=None, position=None, email=None):
+        if self is type(None) or type(self) is not User:
+            raise TypeError("User object is not valid")
 
-        if fname != "":
-            self.fName = fname
-            name = User.objects.get(User_fName=self.fName)
-            name.User_fName = fname
-            name.save()
-        if lname != "":
-            self.lName = lname
-            lastn = User.objects.get(User_lName=self.lName)
-            lastn.User_lName = lname
-            lastn.save()
+        if phone:
+            self.User_Phone = phone
+        if address:
+            self.User_Address = address
+        if city:
+            self.User_City = city
+        if fname:
+            self.User_fName = fname
+        if lname:
+            self.User_lName = lname
+        if position:
+            self.User_Pos = position
+        if email:
+            self.User_Email = email
+
+        self.save()
 
     def viewCourse(self, course_id):
         course = Course.objects.get(Course_ID=course_id)
         return course
 
-
     def filterUser(usertype):
         if usertype is None:
             print(usertype)
-            return TypeError(
+            return ValueError(
                 "you didn't select a usertype")
         elif usertype == "All Roles":
             user_positions = User.objects.all()
@@ -63,10 +81,14 @@ class Users(abc.ABC):
 
     def searchUser(last_name):
         if last_name == "":
-            return TypeError(
-                "you didn't select a usertype")
+            return ValueError(
+                "You didn't write a last name!")
         # converts parameter to standard case and strips any whitespace before and after characters
         last_name_cleaned = last_name.title().strip()
+        # users = User.objects.all()
+        if not User.objects.filter(User_lName=last_name_cleaned).exists():
+            return ValueError(
+                "There are no users with this last name")
         user = User.objects.filter(User_lName=last_name_cleaned)
         return user
 
@@ -74,6 +96,12 @@ class Users(abc.ABC):
         # how does this retrieve stuff from db?
         courses = CourseToUser.objects.get(user=self)
         return courses
+
+    def getUserByUsername(username):
+        if username is None:
+            raise TypeError("Username cannot be blank")
+        user = User.objects.get(User_LogName=username)
+        return user
 
 
 class UserUtility:

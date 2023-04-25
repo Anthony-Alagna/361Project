@@ -20,8 +20,11 @@ class Login(View):
         user = User.objects.filter(
             User_LogName=username, User_LogPass=password)
         if user:
-            return redirect('index')
+            # used to store the username in the session, so that it can be used later
+            request.session['username'] = username
+            return redirect('home')
         else:
+            # return status code 302
             return redirect('login')
 
 
@@ -41,20 +44,17 @@ class AccountBase(View):
 
         # filterUser functionality
         if method == 'filterUser':
-            search_type = request.POST.get('position')
-            users = Users.filterUser(search_type)
+            users = Users.filterUser(request.POST.get('position'))
             #  the isinstance function checks if the result variable contains an instance of the TypeError class
-            if isinstance(users, TypeError):
+            if isinstance(users, ValueError):
                 return render(request, 'accountbase.html', {"message": "You didn't select a User Type"})
             return render(request, 'accountbase.html', {"users": users})
 
         # searchUser functionality
         elif method == "searchUser":
-            search_name = request.POST.get('search')
-            user = Users.searchUser(search_name)
-            #  the isinstance function checks if the result variable contains an instance of the TypeError class
-            if isinstance(user, TypeError):
-                return render(request, 'accountbase.html', {"message": "No user with that last name"})
+            user = Users.searchUser(request.POST.get('search'))
+            if isinstance(user, ValueError):
+                return render(request, 'accountbase.html', {"message": user})
             return render(request, 'accountbase.html', {"users": user})
 
         # deleteUser functionality
@@ -67,15 +67,15 @@ class AccountBase(View):
         # create account functionality
         else:
             result = Supervisor.create_account(request.POST.get('firstname'), request.POST.get('lastname'),
-                                               request.POST.get('email'), request.POST.get('username'),
+                                               request.POST.get(
+                                                   'email'), request.POST.get('username'),
                                                request.POST.get('password'),
-                                               request.POST.get('address'), request.POST.get('city'),
+                                               request.POST.get(
+                                                   'address'), request.POST.get('city'),
                                                request.POST.get('number'), request.POST.get('position'))
-
-            #  the isinstance function checks if the result variable contains an instance of the TypeError class
-            if isinstance(result, TypeError):
+            if isinstance(result, ValueError):
                 return render(request, 'createaccount.html',
-                              {"message": "You forgot to fill in one of the fields - please fill out form again"})
+                              {"message": result})
             users = UserUtility.get_all_users()
             return render(request, 'accountbase.html', {"users": users})
 

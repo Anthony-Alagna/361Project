@@ -20,12 +20,18 @@ from myapp.views import CourseBase, CreateCourse, EditCourse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Home.as_view(), name='home'),
-    path('login/', Login.as_view(), name='login'),
-    path('accountbase/', AccountBase.as_view(), name='accountbase'),
-    path('accountbase/createaccount/', CreateAccount.as_view(), name='createaccount'),
-    path('accountbase/editaccount/', EditAccount.as_view(), name='editaccount'),
-    path('course_base/', CourseBase.as_view(), name='course_base'),
-    path('course_base/createcourse', CreateCourse.as_view(), name='createcourse'),
-    path('course_base/courseedit/<str:Course_Code>', EditCourse.as_view(), name='courseedit')
+    path('home/', Home.as_view(), name='home'),
+    path('', Login.as_view(), name='login'),
+    path('home/accountbase/', AccountBase.as_view(), name='accountbase'),
+    path('home/accountbase/createaccount/',
+         CreateAccount.as_view(), name='createaccount'),
+    path('home/accountbase/editaccount/', EditAccount.as_view(), name='editaccount'),
+    path('home/course_base/', CourseBase.as_view(), name='course_base'),
+    path('home/course_base/createcourse', CreateCourse.as_view(), name='createcourse'),
+    path('home/personal_information', EditPersonalInformation.as_view(),
+         name='personal_information'),
+
+    # have embed course id into url so that it can be retrieved to my method
+    path('course_base/courseedit/<str:Course_Code>',
+         EditCourse.as_view(), name='courseedit')
 ]
