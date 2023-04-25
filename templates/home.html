@@ -1,13 +1,20 @@
+{% load static %}
+
 <!DOCTYPE html>
 <htmllang="en">
 <head>
-<metacharset="UTF-8"/>
-<title>Title</title>
+    <metacharset
+    ="UTF-8"/>
+    <title>Title</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+
 </head>
-<body>
+<body style="text-align: center">
+
 <h1>Welcome User!</h1>
-<a href = "{% url 'course_base' %}"><button>Courses</button></a>
-<a href="{% url 'accountbase' %}"><button>Account</button></a>
-<a href="{% url 'personal_information' %}"><button>Personal Information</button></a>
+<a href="{% url 'course_base' %}"><button class="goldbutton">Courses</button></a>
+    <a href="{% url 'accountbase' %}"><button class="goldbutton">Account</button></a>
+    <a href="{% url 'personal_information' %}"><button class="goldbutton">Personal Information</button></a>
+
 </body>
 </html>
