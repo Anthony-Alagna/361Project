@@ -1,99 +1,99 @@
+# # from django.test import TestCase, Client
+# from myapp.models import User, Course
+# from myapp.Classes.supervisor import Supervisor
 # from django.test import TestCase, Client
-from myapp.models import User, Course
-from myapp.Classes.supervisor import Supervisor
-from django.test import TestCase, Client
-from django.urls import reverse
-
-
+# from django.urls import reverse
 #
 #
-#  M: As a supervisor I would like to assign instructors to courses so that they are able to manage their course
+# #
+# #
+# #  M: As a supervisor I would like to assign instructors to courses so that they are able to manage their course
+# #
+# #
+#
+# #  M: As a supervisor I would like to assign instructors to courses so that they are able to manage their course
+# #
+# #
 #
 #
-
-#  M: As a supervisor I would like to assign instructors to courses so that they are able to manage their course
+# # test the instructor  a class with no instructor, and instructor with
+# # test location when isOnline
+# class AddInstructorsToCourse(TestCase):
+#     def setUp(self):
+#         self.user1 = User.objects.create(id='1', User_fName='Cricket',User_lName="ROCKET", User_Email='user1@example.com',
+#                                          User_Pos='instructor', User_Phone='1234567890', User_Address='123 Main St',
+#                                          User_LogName='user1', User_LogPass='password', User_isGrader='True',
+#                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
+#         self.user2 = User.objects.create(id='2', User_fName='taco', User_lName="roco", User_Email='user2@example.com',
+#                                          User_Pos='insturctor', User_Phone='0987654321', User_Address='456 Elm St',
+#                                          User_LogName='user2', User_LogPass='password2', User_isGrader='True',
+#                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
+#         self.user3 = User.objects.create(id='3', User_fName='Noodle',User_lName="String", User_Email='user3@example.com',
+#                                          User_Pos='Teaching Assistant', User_Phone='034567921', User_Address='22 blanco Dr',
+#                                          User_LogName='user3', User_LogPass='password3', User_isGrader='False',
+#                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
+#         self.course1 = Course.objects.create(id='1', Course_Name='Lion King analysis', Course_Code='382-01',
+#                                              Course_Instructor=self.user1, Course_isOnline='False',
+#                                              Course_Location='123 Main St',
+#                                              Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00')
+#         self.course2 = Course.objects.create(id='2', Course_Name='Computer Architecture', Course_Code='482-01',
+#                                              Course_Instructor=self.user2, Course_isOnline='False',
+#                                              Course_Location='123 Main St',
+#                                              Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00')
+#         self.course3 = Course.objects.create(
+#             id='3', Course_Name='Python for Beginners', Course_Code='10101',
+#             Course_Instructor="", Course_isOnline='True',
+#             Course_Location='Online',
+#             Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00'
+#         )
+#
+#     def test_add_teacher_to_class_with_no_instructor(self):
+#         teacher = self.user1
+#         Supervisor.addInstructor(self.user1.User_fName,self.course3.Course_Code)
+#         course = Course.objects.get(id='3')
+#         print(course)
+#         print(course.Course_Instructor)
+#         self.assertEqual(teacher.User_fName, course.Course_Instructor, "teacher should be added because it was blank")
+#
+#     def test_add_ta_to_instructor_position(self):
+#         Supervisor.addInstructor(self.user3.User_fName, self.course3.Course_Code)
+#         course = Course.objects.get(id='3')
+#         self.assertRaises(cou, course.Course_Instructor,
+#                          "teacher should be added because a TA was inapporpriatly added to the Instructor position")
+#
+#     def test_add_blank_user_to_course(self):
+#         Supervisor.addInstructor("", self.course3.Course_Code)
+#         course = Course.objects.get(Course_ID='c3')
+#         self.assertEqual("", course.Course_Instructor,
+#                          "cannot add a blank instructor to course")
+#
+#     def test_add_multiple_instructors(self):
+#         Supervisor.addInstructor(self.user2.id, self.course3.Course_Code)
+#         course = Course.objects.get(Course_ID='c2')
+#         self.assertEqual('1', course.objects.filter(Course_ID='2').count(),
+#                          "there should only be on isntructor that can be assigned toa  course")
+#
+#     def test_remove_instructor(self):
+#         User.removeInstructor(self.course2.Course_Code, self.user2.id)
+#         course = Course.objects.get(Course_ID='c2')
+#         self.assertEqual(0, course.objects.filter(Course_ID='2').count(),
+#                          "there should only be on isntructor that can be assigned toa  course")
+#
+#     def test_remove_blank_instructor(self):
+#         course = Course.objects.get(Course_ID='c3')
+#         init_length = len(course.Course_Instructor)
+#         User.removeInstructor(self.course3.Course_Code, self.course3.id)
+#
+#         self.assertEqual(init_length, len(course.Course_Instructor), "nothing to remove already blank")
+#
+#     def test_replace_instructor(self):
+#         course1 = Course.objects.get(Course_ID='c1')
+#         course2 = Course.objects.get(Course_ID='c2')
+#         inst1 = course1.Course_Instructor
+#         inst2 = course2.Course_Instructor
+#         User.removeInstructor(self.course3.Course_Code, self.course2.id)
+#         User.removeInstructor(self.course3.Course_Code, self.course1.id)
+#         self.assertEqual(inst1, course2.Course_Instructor,
+#                          "the course 1 instructor should not have been added to course 2")
 #
 #
-
-
-# test the instructor  a class with no instructor, and instructor with
-# test location when isOnline
-class AddInstructorsToCourse(TestCase):
-    def setUp(self):
-        self.user1 = User.objects.create(id='1', User_fName='Cricket',User_lName="ROCKET", User_Email='user1@example.com',
-                                         User_Pos='instructor', User_Phone='1234567890', User_Address='123 Main St',
-                                         User_LogName='user1', User_LogPass='password', User_isGrader='True',
-                                         User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
-        self.user2 = User.objects.create(id='2', User_fName='taco', User_lName="roco", User_Email='user2@example.com',
-                                         User_Pos='insturctor', User_Phone='0987654321', User_Address='456 Elm St',
-                                         User_LogName='user2', User_LogPass='password2', User_isGrader='True',
-                                         User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
-        self.user3 = User.objects.create(id='3', User_fName='Noodle',User_lName="String", User_Email='user3@example.com',
-                                         User_Pos='Teaching Assistant', User_Phone='034567921', User_Address='22 blanco Dr',
-                                         User_LogName='user3', User_LogPass='password3', User_isGrader='False',
-                                         User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
-        self.course1 = Course.objects.create(id='1', Course_Name='Lion King analysis', Course_Code='382-01',
-                                             Course_Instructor=self.user1, Course_isOnline='False',
-                                             Course_Location='123 Main St',
-                                             Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00')
-        self.course2 = Course.objects.create(id='2', Course_Name='Computer Architecture', Course_Code='482-01',
-                                             Course_Instructor=self.user2, Course_isOnline='False',
-                                             Course_Location='123 Main St',
-                                             Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00')
-        self.course3 = Course.objects.create(
-            id='3', Course_Name='Python for Beginners', Course_Code='10101',
-            Course_Instructor="", Course_isOnline='True',
-            Course_Location='Online',
-            Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00'
-        )
-
-    def test_add_teacher_to_class_with_no_instructor(self):
-        teacher = self.user1
-        Supervisor.addInstructor(self.user1.User_fName,self.course3.Course_Code)
-        course = Course.objects.get(id='3')
-        print(course)
-        print(course.Course_Instructor)
-        self.assertEqual(teacher.User_fName, course.Course_Instructor, "teacher should be added because it was blank")
-
-    def test_add_ta_to_instructor_position(self):
-        Supervisor.addInstructor(self.user3.User_fName, self.course3.Course_Code)
-        course = Course.objects.get(id='3')
-        self.assertRaises(cou, course.Course_Instructor,
-                         "teacher should be added because a TA was inapporpriatly added to the Instructor position")
-
-    def test_add_blank_user_to_course(self):
-        Supervisor.addInstructor("", self.course3.Course_Code)
-        course = Course.objects.get(Course_ID='c3')
-        self.assertEqual("", course.Course_Instructor,
-                         "cannot add a blank instructor to course")
-
-    def test_add_multiple_instructors(self):
-        Supervisor.addInstructor(self.user2.id, self.course3.Course_Code)
-        course = Course.objects.get(Course_ID='c2')
-        self.assertEqual('1', course.objects.filter(Course_ID='2').count(),
-                         "there should only be on isntructor that can be assigned toa  course")
-
-    def test_remove_instructor(self):
-        User.removeInstructor(self.course2.Course_Code, self.user2.id)
-        course = Course.objects.get(Course_ID='c2')
-        self.assertEqual(0, course.objects.filter(Course_ID='2').count(),
-                         "there should only be on isntructor that can be assigned toa  course")
-
-    def test_remove_blank_instructor(self):
-        course = Course.objects.get(Course_ID='c3')
-        init_length = len(course.Course_Instructor)
-        User.removeInstructor(self.course3.Course_Code, self.course3.id)
-
-        self.assertEqual(init_length, len(course.Course_Instructor), "nothing to remove already blank")
-
-    def test_replace_instructor(self):
-        course1 = Course.objects.get(Course_ID='c1')
-        course2 = Course.objects.get(Course_ID='c2')
-        inst1 = course1.Course_Instructor
-        inst2 = course2.Course_Instructor
-        User.removeInstructor(self.course3.Course_Code, self.course2.id)
-        User.removeInstructor(self.course3.Course_Code, self.course1.id)
-        self.assertEqual(inst1, course2.Course_Instructor,
-                         "the course 1 instructor should not have been added to course 2")
-
-
