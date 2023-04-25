@@ -146,9 +146,9 @@ class EditCourse(View):
             return render(request,'courseedit.html',  {'message': "this instructor is already assigned to the course",  'course': actCourse})
         else:
             teacher=made_instructor.split()
-            print(teacher)
+
             prof = User.objects.get(User_fName=teacher[0])
-            Supervisor.addInstructor(prof.User_fName, prof.User_lName, course_code)
+            Supervisor.addInstructor(prof.User_fName, course_code)
             courses = Course.objects.all()
             return redirect('course_base')
 

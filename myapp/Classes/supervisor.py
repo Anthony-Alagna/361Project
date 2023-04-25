@@ -38,13 +38,13 @@ class Supervisor(Users):
 
     def checkInstructorInCourse(instructor_name, course_code):
         if instructor_name == "" or course_code == "":
-            return TypeError("instructor name is blank or course id name is blank")
+            return ValueError("instructor name is blank or course id name is blank")
         else:
             course = Course.objects.get(Course_Code=course_code)
             if course is None:
-                return TypeError("the course you search does not exist")
+                return ValueError("the course you search does not exist")
             elif course.Course_Instructor is not None:
-                return TypeError("you must remove instructor before you can add new one")
+                return ValueError("you must remove instructor before you can add new one")
             else:
                 return True
 
@@ -59,18 +59,18 @@ class Supervisor(Users):
             return course
 
     @staticmethod
-    def addInstructor(ins_fname, ins_lname, course_code):
-        #checks if user is real
-        if ins_fname == "" or ins_lname == "":
+    def addInstructor(ins_fname, course_code):
+        # checks if user is real
+        if ins_fname == "" or user_id == "" or course_code == "":
             return ValueError("cannot figure out user if first name or last name are inputted as a blank")
         user_f = User.objects.get(User_fName=ins_fname)
-        user_l = User.objects.get(User_lName=ins_lname)
-
-        if user_f.User_fName == user_l.User_fName and user_f.User_lName == user_l.User_lName:
+        course = Course.objects.get(Course_Code=course_code)
+        course_instructor = User.objects.get(id=course.Course_Instructor)
+        if not user_f.id == course_instructor.id:
             if not Supervisor.checkInstructorInCourse(user_f, course_code):
                 return Supervisor.checkInstructorInCourse(user_f, course_code)
             else:
-                course = Course.objects.get(Course_Code=course_code)
+
                 course.Course_Instructor = user_f.User_fName
                 course.save()
                 return course
