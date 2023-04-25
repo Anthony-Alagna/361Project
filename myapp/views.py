@@ -122,13 +122,16 @@ class EditAccount(View):
 
 class CourseBase(View):
     def get(self, request):
-        courses = CourseUtility.get_course_list()
+        courses = Course.objects.all()
         return render(request, 'course_base.html', {"courses": courses})
 
     def post(self, request):
-        CourseUtility.create_course(request.POST.get('course_name'), request.POST.get('course_code'),
-                                    request.POST.get('course_desc'))
-        courses = CourseUtility.get_course_list()
+        courses = Course.objects.all()
+        result = Supervisor.create_course(request.POST.get('course_code'), request.POST.get('course_name'),
+                                          request.POST.get('course_desc'), request.POST.get('course_inst'))
+        if isinstance(result, TypeError):
+            courses = Course.objects.all()
+            return render(request, 'createcourse.html', {"courses": courses, "message": result})
         return render(request, 'course_base.html', {"courses": courses})
 
 
@@ -136,10 +139,40 @@ class CreateCourse(View):
     TEMPLATE = "createcourse.html"
 
     def get(self, request):
-        return render(request, 'createcourse.html')
+        users = UserUtility.get_all_users()
+        return render(request, 'createcourse.html', {"users": users})
 
     def post(self, request):
         return render(request, 'createcourse.html', {"success": "course created"})
+
+
+class EditCourse(View):
+
+    def get(self, request, *args, **kwargs):
+        c_code = kwargs['Course_Code']
+        course = Course.objects.get(Course_Code=c_code)
+        users = UserUtility.get_all_users()
+        return render(request, 'courseedit.html', {'course': course, "users": users})
+
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+        course_code = kwargs['Course_Code']
+        actCourse = Course.objects.get(Course_Code=course_code)
+        print(course_code)
+        print(actCourse)
+        made_instructor = request.POST.get('Course_Instructor')
+        if made_instructor == actCourse.Course_Instructor:
+            return render(request, 'courseedit.html', {"error": "this instructor is already assigned to the course"})
+
+        elif actCourse.Course_Instructor is not "":
+            print(Course.objects.get(Course_Code=course_code).Course_Instructor)
+            Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'), course_code)
+            return redirect('courseedit', Course_Code=course_code)
+        else:
+            Supervisor.addInstructor(request.POST.get('Course_Instructor'), course_code)
+            courses = Course.objects.all()
+
+            return redirect('/course_base', {course_code})
 
 
 class EditPersonalInformation(View):
