@@ -34,6 +34,7 @@
                         {% endif %}
                     {% endfor %}
                     </select>
+                <button name="delete_user" type="submit">Remove Instructor</button>
                 </td>
             </tr>
             <tr>
@@ -45,7 +46,7 @@
                 <td><input type="text" name="Course_Location" value="{{ course.Course_Location }}"></td>
             </tr>
         </table>
-        <button type="submit">Save</button>
+        <button name = "save_ch" type="submit">Save</button>
     </form>
     {{ message }}
 </body>

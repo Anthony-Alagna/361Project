@@ -142,10 +142,14 @@ class EditCourse(View):
         if made_instructor == actCourse.Course_Instructor:
             return render(request, 'courseedit.html', {"error": "this instructor is already assigned to the course"})
 
-        elif actCourse.Course_Instructor is not "":
-            Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'), course_code)
-            return render(request,'courseedit.html',  {'message': "user that was assigned to this course is differet, the user is now delted form the course ",  'course': actCourse, 'users': users})
+        elif actCourse.Course_Instructor:
+            if "delete_user" in request.POST:
+                Supervisor.removeInstructorFromClass(request.POST.get('Course_Instructor'), course_code)
+                return render(request,'courseedit.html',  {'message': "user has been deleted ",  'course': actCourse, 'users': users})
+            else:
+                return render(request,'courseedit.html',  {'message': "user that was assigned to this course is differet, press the delete button to assign a new instructor ",  'course': actCourse, 'users': users})
         else:
+
             print(made_instructor)
             teacher=made_instructor.split()
             prof = User.objects.get(User_fName=teacher[0])
