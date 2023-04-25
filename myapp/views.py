@@ -103,8 +103,8 @@ class CourseBase(View):
         result = Supervisor.create_course(request.POST.get('course_code'), request.POST.get('course_name'),
                                           request.POST.get('course_desc'), request.POST.get('course_inst'))
         if isinstance(result, TypeError):
-            users = UserUtility.get_all_users()
-            return render(request, 'createcourse.html', {"users": users, "message": result})
+            courses = Course.objects.all()
+            return render(request, 'createcourse.html', {"courses": courses, "message": result})
         return render(request, 'course_base.html', {"courses": courses})
 
 
@@ -146,3 +146,21 @@ class EditCourse(View):
             courses = Course.objects.all()
 
             return redirect('/course_base', {course_code})
+
+
+class EditPersonalInformation(View):
+    def get(self, request):
+        return render(request, 'personal_information.html')
+
+    def post(self, request):
+        firstname = request.POST.get('first_name')
+        lastname = request.POST.get('last_name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        position = request.POST.get('position')
+        userAccount = Users.getUserByUsername(request.session['username'])
+
+        Users.editInfo(userAccount, fname=firstname, lname=lastname,
+        email=email, phone=phone, address=address, position=position)
+        return render(request, 'personal_information.html', {"success": "information updated"})

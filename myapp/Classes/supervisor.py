@@ -63,7 +63,7 @@ class Supervisor(Users):
             return TypeError("Course name cannot be blank!")
         elif desc == "":
             return TypeError("Course description cannot be blank!")
-        Course.objects.create(Course_Code=code, Course_Name=name, Course_Description=desc, Course_Instructor=inst)
+        return Course.objects.create(Course_Code=code, Course_Name=name, Course_Description=desc, Course_Instructor=inst)
 
     @staticmethod
     def editCourse(course_name='default', course_desc='default', isonline='default', location='default',

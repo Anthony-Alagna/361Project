@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myapp.views import AccountBase, Login, Home, CreateAccount, EditAccount
+from myapp.views import AccountBase, Login, Home, CreateAccount, EditAccount, EditPersonalInformation
 from myapp.views import CourseBase, CreateCourse, EditCourse
 
 urlpatterns = [
@@ -32,6 +32,5 @@ urlpatterns = [
          name='personal_information'),
 
     # have embed course id into url so that it can be retrieved to my method
-    path('course_base/courseedit/<str:Course_Code>',
-         EditCourse.as_view(), name='courseedit')
+    path('home/course_base/courseedit/<str:Course_Code>', EditCourse.as_view(), name='courseedit')
 ]
