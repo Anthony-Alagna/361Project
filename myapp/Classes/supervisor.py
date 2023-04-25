@@ -36,17 +36,17 @@ class Supervisor(Users):
         return Course.objects.create(Course_Code=code, Course_Name=name, Course_Description=desc,
                                      Course_Instructor=inst)
 
-    def checkInstructorInCourse(instructor_name, course_code):
-        if instructor_name == "" or course_code == "":
-            return ValueError("instructor name is blank or course id name is blank")
-        else:
-            course = Course.objects.get(Course_Code=course_code)
-            if course is None:
-                return ValueError("the course you search does not exist")
-            elif course.Course_Instructor is not None:
-                return ValueError("you must remove instructor before you can add new one")
-            else:
-                return True
+    # def checkInstructorInCourse(instructor_name, course_code):
+    #     if instructor_name == "" or course_code == "":
+    #         return ValueError("instructor name is blank or course id name is blank")
+    #     else:
+    #         course = Course.objects.get(Course_Code=course_code)
+    #         if course is None:
+    #             return ValueError("the course you search does not exist")
+    #         elif course.Course_Instructor is not None:
+    #             return ValueError("you must remove instructor before you can add new one")
+    #         else:
+    #             return True
 
     @staticmethod
     def removeInstructorFromClass(instructor_name, course_code):
@@ -61,21 +61,23 @@ class Supervisor(Users):
     @staticmethod
     def addInstructor(ins_fname, course_code):
         # checks if user is real
-        if ins_fname == "" or user_id == "" or course_code == "":
+        if ins_fname == "" or course_code == "":
             return ValueError("cannot figure out user if first name or last name are inputted as a blank")
         user_f = User.objects.get(User_fName=ins_fname)
         course = Course.objects.get(Course_Code=course_code)
-        course_instructor = User.objects.get(id=course.Course_Instructor)
-        if not user_f.id == course_instructor.id:
-            if not Supervisor.checkInstructorInCourse(user_f, course_code):
-                return Supervisor.checkInstructorInCourse(user_f, course_code)
-            else:
+        cTeacher = course.Course_Instructor
 
-                course.Course_Instructor = user_f.User_fName
-                course.save()
-                return course
+        if cTeacher != "":
+            course_instructor = User.objects.get(id=cTeacher)
+            if course.Course_Instructor == user_f:
+                return ValueError("professor already assigne to this course")
+            else:
+                return ValueError("you need to remove this user by clicking on it twice")
         else:
-            return ValueError("user with this first and last name does not exist")
+
+            course.Course_Instructor = user_f.User_fName
+            course.save()
+            return course
 
     @staticmethod
     def editCourse(course_name=Course.Course_Name, course_desc=Course.Course_Description,
