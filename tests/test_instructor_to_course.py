@@ -21,15 +21,15 @@ from django.urls import reverse
 class AddInstructorsToCourse(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(id='1', User_fName='Cricket',User_lName="ROCKET", User_Email='user1@example.com',
-                                         User_Type='instructor', User_Phone='1234567890', User_Address='123 Main St',
+                                         User_Pos='instructor', User_Phone='1234567890', User_Address='123 Main St',
                                          User_LogName='user1', User_LogPass='password', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-18 00:00:00')
         self.user2 = User.objects.create(id='2', User_Name='taco', User_Email='user2@example.com',
-                                         User_Type='insturctor', User_Phone='0987654321', User_Address='456 Elm St',
+                                         User_Pos='insturctor', User_Phone='0987654321', User_Address='456 Elm St',
                                          User_LogName='user2', User_LogPass='password2', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
         self.user3 = User.objects.create(id='3', User_fName='Noodle',User_lName="String", User_Email='user3@example.com',
-                                         User_Type='TA', User_Phone='034567921', User_Address='22 blanco Dr',
+                                         User_Pos='TA', User_Phone='034567921', User_Address='22 blanco Dr',
                                          User_LogName='user2', User_LogPass='password3', User_isGrader='no',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
         self.course1 = Course.objects.create(Course_ID='c1', Course_Name='Lion King analysis', Course_Code='382-01',
