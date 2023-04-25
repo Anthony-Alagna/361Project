@@ -104,7 +104,7 @@ class EditCourse(View):
             return redirect('courseedit', Course_Code=course_code)
         else:
             Supervisor.addInstructor(request.POST.get('Course_Instructor'), course_code)
-            return redirect('/course_base', {course_code})
+            return redirect('home/course_base/', {course_code})
 
 
 class CreateAccount(View):

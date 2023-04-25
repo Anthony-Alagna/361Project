@@ -29,7 +29,6 @@ urlpatterns = [
     path('home/course_base/createcourse', CreateCourse.as_view(), name='createcourse'),
     path('home/personal_information', EditPersonalInformation.as_view(),
          name='personal_information'),
-
     # have embed course id into url so that it can be retrieved to my method
     path('course_base/courseedit/<str:Course_Code>',
          EditCourse.as_view(), name='courseedit')
