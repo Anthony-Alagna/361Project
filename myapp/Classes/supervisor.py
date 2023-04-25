@@ -52,6 +52,20 @@ class Supervisor(Users):
             course.save()
 
     @staticmethod
+    def create_course(code, name, desc, inst):
+        courses = Course.objects.all()
+        for course in courses:
+            if course.Course_Code == code:
+                return TypeError("A course with that code already exists!")
+        if code == "":
+            return TypeError("Course code cannot be blank!")
+        elif name == "":
+            return TypeError("Course name cannot be blank!")
+        elif desc == "":
+            return TypeError("Course description cannot be blank!")
+        return Course.objects.create(Course_Code=code, Course_Name=name, Course_Description=desc, Course_Instructor=inst)
+
+    @staticmethod
     def editCourse(course_name='default', course_desc='default', isonline='default', location='default',
                    begin='default', updated='default'):
         # what do the form fields come through as if they're empty? assuming it's None

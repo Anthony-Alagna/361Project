@@ -7,22 +7,23 @@
 <body>
     <h1>Manage Courses</h1>
     <a href="/"><button>Home</button></a><br><br>
-    <table>
-        <tr>Course&emsp;</tr>
-        <tr>Name&emsp;</tr>
-        <tr>Instructor</tr><br>
+    <table style="border-spacing: 10px 0;">
+        <tr style="font-size:25px">
+            <td>Course</td>
+            <td>Name</td>
+            <td>Instructor</td>
+        </tr><br>
 
         {% for course in courses %}
-            <tr>{{ course.Course_Code }}&emsp;</tr>
-            <tr>{{ course.Course_Name }}&emsp;</tr>
-            {# change to instructor #}
-            <tr>{{ course.Course_Description }}&ensp;</tr>
-            {# link to edit course page #}
-            <a href=""><button>Info</button></a>
-             <a href="{% url 'courseedit' Course_Code=course.Course_Code %}"><button>Edit</button></a><br>
+            <tr><td>COMPSCI {{ course.Course_Code }}</td>
+                <td>{{ course.Course_Name }}</td>
+                <td>{{ course.Course_Instructor }}</td>
+                <td><a href=""><button>Info</button></a></td>
+                <td><a href="{% url 'courseedit' Course_Code=course.Course_Code %}"><button>Edit</button></a></td>
+            </tr>
         {% endfor %}
     </table><br>
-    <a href="createcourse"><button>New Course</button></a>
+    <a href="{% url 'createcourse'%}"><button>New Course</button></a>
     <br>{{ success }}
 </body>
 </html>
