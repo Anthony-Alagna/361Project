@@ -27,18 +27,18 @@ class Supervisor(Users):
         else:
             course = Course.objects.get(Course_Code=course_code)
             if course is None:
-                return TypeError("the course you search does not exist")
+                return ValueError("the course you search does not exist")
             elif course.Course_Instructor is not None:
-                return TypeError("you must remove instructor before you can add new one")
+                return ValueError("you must remove instructor before you can add new one")
             elif course.Course_Instructor == instructor_name:
-                return TypeError("course instructor with the name {{instructor_code}} name is already addd")
+                return ValueError("course instructor with the name {{instructor_code}} name is already addd")
             else:
                 return True
 
     @staticmethod
     def removeInstructorFromClass(instructor_name, course_code):
         if not Supervisor.checkInstructorInCourse(instructor_name, course_code):
-            return TypeError("instructor name is blank or course id name is blank")
+            return ValueError("instructor name is blank or course id name is blank")
         else:
             course = Course.objects.get(Course_Code=course_code)
             course.Course_Instructor = ""
@@ -56,20 +56,20 @@ class Supervisor(Users):
             return course
 
     @staticmethod
-    def editCourse(course_name='default', course_desc='default', isonline='default', location='default',
+    def editCourse(course_name=Course.Course_Name, course_desc=Course.Course_Description, isonline=Course.Course_isOnline, location=Course.Course_Location,
                    begin='default', updated='default'):
         # what do the form fields come through as if they're empty? assuming it's None
         if course_name == "" or course_desc == "" or isonline == "" or location == "":
-            return TypeError(
-                "cannot leave a value blank")
+            return ValueError(
+                "cannot make a value blank")
         else:
-            if course_name != 'default':
+            if course_name != Course.Course_Name:
                 Course.objects.update(Course_Name=course_name)
-            if course_desc != 'default':
+            if course_desc != Course.Course_Description:
                 Course.objects.update(Course_Description=course_desc)
-            if isonline != 'default':
+            if isonline != Course.Course_isOnline:
                 Course.objects.update(Course_isOnline=isonline)
-            if location != 'default':
+            if location != Course.Course_Location:
                 Course.objects.update(Course_Location=location)
 
     def deleteUser(username):
