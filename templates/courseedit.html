@@ -27,6 +27,7 @@
 {#                <td><input type="text"  name="Course_Instructor" {% if course.Course_isOnline %} {% endif %}></td>#}
                 <td>
                     <select name="course_inst" placeholder="Professor">
+
                     {% for user in users %}
                         {% if user.User_Pos == "Professor" %}
                         <option>{{ user.User_fName }} {{ user.User_lName }}</option>
