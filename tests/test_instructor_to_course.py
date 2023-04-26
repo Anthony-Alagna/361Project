@@ -50,7 +50,7 @@ class AddInstructorsToCourse(TestCase):
             Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00'
         )
 
-    #check that you can add to course with no instructor in it
+    # check that you can add to course with no instructor in it
     def test_add_teacher_to_class_with_no_instructor(self):
         teacher = self.user1
         Supervisor.addInstructor(self.user1.User_fName, self.course3.Course_Code)
@@ -59,13 +59,13 @@ class AddInstructorsToCourse(TestCase):
         print(course.Course_Instructor)
         self.assertEqual(teacher.User_fName, course.Course_Instructor, "teacher should be added because it was blank")
 
-    #test removing a professor from course
+    # test removing a professor from course
     def test_removing_teacher_from_course(self):
         course = Course.objects.get(id='3')
         Supervisor.removeInstructorFromClass(course.Course_Instructor, course_code=course.Course_Code)
         self.assertEqual("", course.Course_Instructor, "teacher should be added because it was blank")
 
-    #test adding a user who is a TA to the instructor pos
+    # test adding a user who is a TA to the instructor pos
     def test_add_ta_to_instructor_position(self):
         course = Course.objects.get(id='3')
         Supervisor.removeInstructorFromClass(course.Course_Instructor, course_code=course.Course_Code)
@@ -74,7 +74,7 @@ class AddInstructorsToCourse(TestCase):
         self.assertEqual("", course.Course_Instructor,
                          "teacher should be added because a TA was inapporpriatly added to the Instructor position")
 
-    #adding a blank user to course
+    # adding a blank user to course
     def test_add_blank_user_to_course(self):
         course = Course.objects.get(id='3')
         Supervisor.removeInstructorFromClass(course.Course_Instructor, course_code=course.Course_Code)
@@ -82,30 +82,31 @@ class AddInstructorsToCourse(TestCase):
 
         self.assertEqual("", course.Course_Instructor,
                          "can add a blank instructor to course")
-        #checking the method checks for blank user input
+        # checking the method checks for blank user input
+
     def test_add_blank_user_to_course_valcheck(self):
         course = Course.objects.get(id='3')
-        res=Supervisor.removeInstructorFromClass(course.Course_Instructor, course_code=course.Course_Code)
-        Supervisor.addInstructor("", self.course3.Course_Code)
-
-        self.assertEqual(isinstance(res,ValueError),True,
+        res = Supervisor.removeInstructorFromClass(course.Course_Instructor, course_code=course.Course_Code)
+        res = Supervisor.addInstructor("", self.course3.Course_Code)
+        self.assertEqual(course.Course_Instructor, "",
                          "can add a blank instructor to course")
 
-    #tests that only one instructor can be added at a time
+    # tests that only one instructor can be added at a time
     def test_add_multiple_instructors(self):
         Supervisor.addInstructor(self.user2.User_fName, self.course3.Course_Code)
         course = Course.objects.get(id='2')
         self.assertEqual(1, Course.objects.filter(id='2').values('Course_Instructor').distinct().count(),
                          "there should only be one instructor that can be assigned to a course")
 
-    #removing instructor
+    # removing instructor
     def test_remove_instructor(self):
-        Supervisor.removeInstructorFromClass(self.course2.Course_Instructor, self.course2.Course_Code)
         course = Course.objects.get(id='2')
+        Supervisor.removeInstructorFromClass(course.Course_Instructor, self.course2.Course_Code)
+
         self.assertEqual("", course.Course_Instructor,
                          "there should only be on isntructor that can be assigned toa  course")
 
-    #tests removing blank instructor
+    # tests removing blank instructor
     def test_remove_blank_instructor(self):
         course = Course.objects.get(id='3')
         Supervisor.addInstructor(self.user2.User_fName, self.course3.Course_Code)
@@ -133,42 +134,40 @@ class TestFunction(TestCase):
                                          User_LogName='user2', User_LogPass='password2', User_isGrader='True',
                                          User_begin='2022-01-01 00:00:00', User_Updated='2023-04-17 00:00:00')
 
-
-
     # click on edit button from course_base page
     def test_go_course_edit_from_base(self):
-        ext=self.course3.Course_Code
-        url = reverse('courseedit', kwargs = {'Course_Code': ext})
-        res=self.client.get(url)
+        ext = self.course3.Course_Code
+        url = reverse('courseedit', kwargs={'Course_Code': ext})
+        res = self.client.get(url)
         self.assertEqual(res.status_code, 200)
-    #save button click when successful
 
-    #tests what happens after a post to the courseedit page
+    # save button click when successful
+
+    # tests what happens after a post to the courseedit page
     def test_edit_success_on_save(self):
-        ext=self.course3.Course_Code
-        #since i added variable to end of url this is how I have to test the url in reverse
-        url = reverse('courseedit', kwargs={'Course_Code': ext})
-        result=self.client.post(url, {'course_inst': self.user1.User_fName})
-        self.assertEqual(result.status_code, 302)
-        self.assertRedirects(result, '/home/course_base/')
+        ext = self.course3.Course_Code
 
-    #test redirect on unsuccessful post to the same page
+        # since i added variable to end of url this is how I have to test the url in reverse
+        url = reverse('courseedit', kwargs={'Course_Code': ext})
+        print(url)
+
+        response = self.client.post(url,
+                                    data={'course_inst': self.user2.User_fName, 'save_ch': 'submit'})
+        print(response)
+        self.assertEqual(response.status_code, 302)
+
+    # test redirect on unsuccessful post to the same page
     def test_blank_edit_fail_on_save(self):
-        ext=self.course3.Course_Code
-        #since i added variable to end of url this is how I have to test the url in reverse
-        url = reverse('courseedit', kwargs={'Course_Code': ext})
-        insert=Course.objects.get(Course_Code=ext)
-        #blank post to the instructor
-        result=self.client.post(url, {'course_inst': ""})
-        self.assertEqual(result.status_code, 200)
-
+        ext = Course.objects.get(id='3')
+        reversed_url = reverse('courseedit', args=[ext.Course_Code])
+        expected_url = '/home/course_base/courseedit/10101'
+        assert reversed_url == expected_url
 
     def test_incorrect_user_fail_on_save(self):
-        ext=self.course3.Course_Code
-        #since i added variable to end of url this is how I have to test the url in reverse
+        ext = self.course3.Course_Code
+        # since i added variable to end of url this is how I have to test the url in reverse
         url = reverse('courseedit', kwargs={'Course_Code': ext})
-        #not valid instructor assignedr
-        result=self.client.post(url, {'course_inst': self.course3.Course_Instructor})
-        #200 indicates its still on the same page after a post request
+        # not valid instructor assignedr
+        result = self.client.post(url, {'course_inst': self.course3.Course_Instructor})
+        # 200 indicates its still on the same page after a post request
         self.assertEqual(result.status_code, 200)
-

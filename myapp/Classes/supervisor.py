@@ -39,36 +39,44 @@ class Supervisor(Users):
 
     @staticmethod
     def removeInstructorFromClass(instructor_name, course_code):
-        if instructor_name == "" or course_code == "":
-            return ValueError("instructor name is blank or course id name is blank")
+        if course_code == "" or instructor_name == "":
+            return ValueError("instructor name or course id name is blank")
         else:
             course = Course.objects.get(Course_Code=course_code)
-            course.Course_Instructor=""
-            course.save()
-            return course
+            if course.Course_Instructor != instructor_name:
+                return ValueError("instructor is not assigned to this course")
+            else:
+                course.Course_Instructor =""
+                course.save()
+                return course
 
     @staticmethod
     def addInstructor(ins_fname, course_code):
         # checks if user is real
-        if ins_fname == "" or course_code == "":
+        if course_code == "":
             return ValueError("cannot figure out user if first name or last name are inputted as a blank")
-        user_f = User.objects.get(User_fName=ins_fname)
+
         course = Course.objects.get(Course_Code=course_code)
         cTeacher = course.Course_Instructor
 
+
         if cTeacher != "":
-            course_instructor = User.objects.get(id=cTeacher)
-            if course.Course_Instructor == user_f:
+
+            if course.Course_Instructor == ins_fname:
                 return ValueError("professor already assigne to this course")
             else:
                 return ValueError("you need to remove this user by clicking on it twice")
+        elif ins_fname =="":
+            return course
         else:
-            if user_f.User_Pos != "Instructor":
+            user_f = User.objects.get(User_fName=ins_fname)
+            if user_f.User_fName!="":
+
                 course.Course_Instructor = user_f.User_fName
                 course.save()
                 return course
             else:
-                return ValueError("the instructor has to be categorized as a professor ")
+                return course
 
 
     @staticmethod
