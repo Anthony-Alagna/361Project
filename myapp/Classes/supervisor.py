@@ -4,21 +4,41 @@ from myapp.Classes.users import Users
 
 class Supervisor(Users):
     @staticmethod
-    def create_account(fname, lname, email, username, password, address, city, phone, account_type):
+    def create_account(
+        fname, lname, email, username, password, address, city, phone, account_type
+    ):
         users = User.objects.all()
         for user in users:
             if user.User_LogName == username:
                 return ValueError(
-                    "That username already exists - please choose another")
+                    "That username already exists - please choose another"
+                )
 
-        if fname == "" or lname == "" or email == "" or username == "" or password == "" or address == "" or city == "" or phone == "" or account_type == "":
-            return ValueError(
-                "You're missing a field - please fill in all fields")
+        if (
+            fname == ""
+            or lname == ""
+            or email == ""
+            or username == ""
+            or password == ""
+            or address == ""
+            or city == ""
+            or phone == ""
+            or account_type == ""
+        ):
+            return ValueError("You're missing a field - please fill in all fields")
 
         else:
-            user = User.objects.create(User_fName=fname, User_lName=lname, User_Email=email, User_LogName=username,
-                                       User_LogPass=password, User_Address=address, User_City=city, User_Phone=phone,
-                                       User_Pos=account_type)
+            user = User.objects.create(
+                User_fName=fname,
+                User_lName=lname,
+                User_Email=email,
+                User_LogName=username,
+                User_LogPass=password,
+                User_Address=address,
+                User_City=city,
+                User_Phone=phone,
+                User_Pos=account_type,
+            )
             return user
 
     @staticmethod
@@ -33,9 +53,12 @@ class Supervisor(Users):
             return TypeError("Course name cannot be blank!")
         elif desc == "":
             return TypeError("Course description cannot be blank!")
-        return Course.objects.create(Course_Code=code, Course_Name=name, Course_Description=desc,
-                                     Course_Instructor=inst)
-
+        return Course.objects.create(
+            Course_Code=code,
+            Course_Name=name,
+            Course_Description=desc,
+            Course_Instructor=inst,
+        )
 
     @staticmethod
     def removeInstructorFromClass(instructor_name, course_code):
@@ -43,7 +66,7 @@ class Supervisor(Users):
             return ValueError("instructor name is blank or course id name is blank")
         else:
             course = Course.objects.get(Course_Code=course_code)
-            course.Course_Instructor=""
+            course.Course_Instructor = ""
             course.save()
             return course
 
@@ -51,7 +74,9 @@ class Supervisor(Users):
     def addInstructor(ins_fname, course_code):
         # checks if user is real
         if ins_fname == "" or course_code == "":
-            return ValueError("cannot figure out user if first name or last name are inputted as a blank")
+            return ValueError(
+                "cannot figure out user if first name or last name are inputted as a blank"
+            )
         user_f = User.objects.get(User_fName=ins_fname)
         course = Course.objects.get(Course_Code=course_code)
         cTeacher = course.Course_Instructor
@@ -61,24 +86,31 @@ class Supervisor(Users):
             if course.Course_Instructor == user_f:
                 return ValueError("professor already assigne to this course")
             else:
-                return ValueError("you need to remove this user by clicking on it twice")
+                return ValueError(
+                    "you need to remove this user by clicking on it twice"
+                )
         else:
             if user_f.User_Pos != "Instructor":
                 course.Course_Instructor = user_f.User_fName
                 course.save()
                 return course
             else:
-                return ValueError("the instructor has to be categorized as a professor ")
-
+                return ValueError(
+                    "the instructor has to be categorized as a professor "
+                )
 
     @staticmethod
-    def editCourse(course_name=Course.Course_Name, course_desc=Course.Course_Description,
-                   isonline=Course.Course_isOnline, location=Course.Course_Location,
-                   begin='default', updated='default'):
+    def editCourse(
+        course_name=Course.Course_Name,
+        course_desc=Course.Course_Description,
+        isonline=Course.Course_isOnline,
+        location=Course.Course_Location,
+        begin="default",
+        updated="default",
+    ):
         # what do the form fields come through as if they're empty? assuming it's None
         if course_name == "" or course_desc == "" or isonline == "" or location == "":
-            return ValueError(
-                "cannot make a value blank")
+            return ValueError("cannot make a value blank")
         else:
             if course_name != Course.Course_Name:
                 Course.objects.update(Course_Name=course_name)
