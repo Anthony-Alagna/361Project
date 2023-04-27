@@ -7,15 +7,14 @@ from datetime import datetime
 
 
 class User(models.Model):
-    id = models.AutoField(("user_id"), primary_key=True,
-                          unique=True)
+    id = models.AutoField(("user_id"), primary_key=True, unique=True)
     # edited
     User_fName = models.CharField(max_length=200)
     # edited
     User_lName = models.CharField(max_length=200)
     User_Email = models.CharField(max_length=200)
     # edited
-    #user_positions = [('SA', 'Supervisor'), ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
+    # user_positions = [('SA', 'Supervisor'), ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
     User_Pos = models.CharField(max_length=25, blank=True)
     User_Phone = models.CharField(max_length=200, blank=True)
     User_Address = models.TextField(max_length=500, blank=True)
@@ -24,7 +23,8 @@ class User(models.Model):
     User_LogPass = models.CharField(max_length=200, blank=True)
     User_isGrader = models.BooleanField(default=False, blank=True)
     User_SecAssigned = models.ManyToManyField(
-        'Course', through='CourseToUser', related_name='users', blank=True)
+        "Course", through="CourseToUser", related_name="users", blank=True
+    )
 
     # need courses foreign key
 
@@ -42,13 +42,14 @@ class Course(models.Model):
     Course_Description = models.CharField(max_length=150, blank=True)
     Course_isOnline = models.BooleanField(default=False)
     Course_Location = models.CharField(max_length=50, blank=True)
-    Course_begin = models.DateTimeField(auto_now_add=True)  # Does this need to be a DateTimeField
+    Course_begin = models.DateTimeField(
+        auto_now_add=True
+    )  # Does this need to be a DateTimeField
     Course_Updated = models.DateTimeField(auto_now=True)
 
 
 class Section(models.Model):
-    id = models.AutoField(("section_id"), primary_key=True,
-                          unique=True)
+    id = models.AutoField(("section_id"), primary_key=True, unique=True)
     Sec_Name = models.CharField(max_length=200)
     Sec_Location = models.CharField(max_length=200)
     # foreign key for user, is there only one instructor per section/course?

@@ -7,5 +7,5 @@ class TestEditAccount(TestCase):
         self.client = Client()
 
     def test_edit_account_accessible(self):
-        response = self.client.get(reverse('accountbase'))
+        response = self.client.get(reverse("accountbase"))
         self.assertEqual(response.status_code, 200)
