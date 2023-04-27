@@ -151,7 +151,7 @@ class EditCourse(View):
                               {'message': "no instructor to remove", 'courses': courses})
             else:
                 actCourse.Course_Instructor = ""
-                Supervisor.removeInstructorFromClass(first_name, course_code)
+                Supervisor.removeInstructorFromClass(first_name,course_code)
                 actCourse.save()
                 return render(request, 'courseedit.html',
                               {'message': "Instructor has been removed from the course", 'course': actCourse,
@@ -164,8 +164,7 @@ class EditCourse(View):
                 return render(request, 'course_base.html', {'courses': courses})
             elif first_name == actCourse.Course_Instructor:
                 return render(request, 'courseedit.html',
-                              {'message': "Instructor is already assigned to this course", 'course': actCourse,
-                               'users': users})
+                              {'message': "Instructor is already assigned to this course", 'course': actCourse, 'users':users})
             else:
                 prof = User.objects.get(User_fName=first_name[0])
                 Supervisor.addInstructor(prof.User_fName, course_code)
@@ -177,13 +176,7 @@ class EditCourse(View):
                 actCourse.Course_Instructor = prof.User_fName
                 actCourse.save()
                 user = User.objects.all()
-                return redirect(request, 'course_base.html', {'courses': courses, 'user': user})
-                #
-                # actCourse.save()
-                # courses = Course.objects.all()
-                # print(Course.objects.get(Course_Code=course_code).Course_Instructor)
-                # user = User.objects.all()
-                # return render(request, 'course_base.html', {'courses': courses, 'user':users})
+                return render(request, 'course_base.html', {'courses': courses, 'user':users})
 
     # def post(self, request, *args, **kwargs):
     #     course_code = kwargs['Course_Code']
