@@ -1,26 +1,33 @@
-name: black-action
-
-on: [push, pull_request]
+name: autopep8
+on: pull_request
 jobs:
-  linter_name:
-    name: runner / black
+  autopep8:
+    # Check if the PR is not raised by this workflow and is not from a fork
+    if: startsWith(github.head_ref, 'autopep8-patches') == false && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check files using the black formatter
-        uses: rickstaa/action-black@v1.3.1
-        id: action_black
         with:
-          black_args: "."
+          ref: ${{ github.head_ref }}
+      - name: autopep8
+        id: autopep8
+        uses: peter-evans/autopep8@v1
+        with:
+          args: --exit-code --recursive --in-place --aggressive --aggressive .
+      - name: Set autopep8 branch name
+        id: vars
+        run: |
+          branch-name="autopep8-patches/${{ github.head_ref }}"
+          echo "branch-name=$branch-name" >> $GITHUB_OUTPUT
       - name: Create Pull Request
-        if: steps.action_black.outputs.is_formatted == 'true'
-        uses: peter-evans/create-pull-request@v3
+        if: steps.autopep8.outputs.exit-code == 2
+        uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: "Format Python code with psf/black push"
-          commit-message: ":art: Format Python code with psf/black"
-          body: |
-            There appear to be some python formatting errors in ${{ github.sha }}. This pull request
-            uses the [psf/black](https://github.com/psf/black) formatter to fix these issues.
-          base: ${{ github.head_ref }} # Creates pull request onto pull request or commit branch
-          branch: actions/black
+          commit-message: autopep8 action fixes
+          title: Fixes by autopep8 action
+          body: This is an auto-generated PR with fixes by autopep8.
+          labels: autopep8, automated pr
+          branch: ${{ steps.vars.outputs.branch-name }}
+      - name: Fail if autopep8 made changes
+        if: steps.autopep8.outputs.exit-code == 2
+        run: exit 1
