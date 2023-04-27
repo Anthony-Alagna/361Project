@@ -123,7 +123,7 @@ class CourseBase(View):
             return render(
                 request,
                 "createcourse.html",
-                {"courses": courses, "users": users, "message": result},
+                {"courses": courses, "users": users, "message": result}
             )
         return render(request, "course_base.html", {"courses": courses})
 

@@ -31,6 +31,7 @@
             <tr>
                 <td>
                     <select name="course_inst" placeholder="Professor">
+                    <option value="">No Instructor</option>
                     {% for user in users %}
                         {% if user.User_Pos == "Professor" %}
                         <option>{{ user.User_fName }} {{ user.User_lName }}</option>
