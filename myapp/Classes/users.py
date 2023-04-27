@@ -15,8 +15,19 @@ class Users(abc.ABC):
     username = None
     isgrader = False
 
-    def __init__(self, user_id="", email="", position="", fname="", lname="", phone="", address="",
-                 city="", username="", isgrader=""):
+    def __init__(
+        self,
+        user_id="",
+        email="",
+        position="",
+        fname="",
+        lname="",
+        phone="",
+        address="",
+        city="",
+        username="",
+        isgrader="",
+    ):
         self.user_id = user_id
         self.email = email
         self.position = position
@@ -42,7 +53,16 @@ class Users(abc.ABC):
             raise TypeError("ID cannot be blank")
         return self.user_id
 
-    def editInfo(self, phone=None, address=None, city=None, fname=None, lname=None, position=None, email=None):
+    def editInfo(
+        self,
+        phone=None,
+        address=None,
+        city=None,
+        fname=None,
+        lname=None,
+        position=None,
+        email=None,
+    ):
         if self is type(None) or type(self) is not User:
             raise TypeError("User object is not valid")
 
@@ -70,8 +90,7 @@ class Users(abc.ABC):
     def filterUser(usertype):
         if usertype is None:
             print(usertype)
-            return ValueError(
-                "you didn't select a usertype")
+            return ValueError("you didn't select a usertype")
         elif usertype == "All Roles":
             user_positions = User.objects.all()
             return user_positions
@@ -81,14 +100,12 @@ class Users(abc.ABC):
 
     def searchUser(last_name):
         if last_name == "":
-            return ValueError(
-                "You didn't write a last name!")
+            return ValueError("You didn't write a last name!")
         # converts parameter to standard case and strips any whitespace before and after characters
         last_name_cleaned = last_name.title().strip()
         # users = User.objects.all()
         if not User.objects.filter(User_lName=last_name_cleaned).exists():
-            return ValueError(
-                "There are no users with this last name")
+            return ValueError("There are no users with this last name")
         user = User.objects.filter(User_lName=last_name_cleaned)
         return user
 
