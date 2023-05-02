@@ -151,45 +151,38 @@ class EditCourse(View):
         course_code = kwargs["Course_Code"]
         actCourse = Course.objects.get(Course_Code=course_code)
         users = UserUtility.get_all_users()
-        made_instructor = request.POST.get("course_inst")
-        if made_instructor == actCourse.Course_Instructor:
-            return render(
-                request,
-                "courseedit.html",
-                {"error": "this instructor is already assigned to the course"},
-            )
 
-        elif actCourse.Course_Instructor:
-            if "delete_user" in request.POST:
-                Supervisor.removeInstructorFromClass(
-                    request.POST.get("Course_Instructor"), course_code
-                )
-                return render(
-                    request,
-                    "courseedit.html",
-                    {
-                        "message": "user has been deleted ",
-                        "course": actCourse,
-                        "users": users,
-                    },
-                )
+        courses = Course.objects.all()
+        res = request.POST
+        made_instructor = request.POST.get('course_inst')
+        first_name = made_instructor.split()
+        inst = actCourse.Course_Instructor
+
+        if 'delete_user' in res:
+            if inst == "":
+                return render(request, 'courseedit.html',
+                              {'message': "no instructor to remove", 'courses': courses, 'users': users})
             else:
-                return render(
-                    request,
-                    "courseedit.html",
-                    {
-                        "message": "user that was assigned to this course is different, press the delete button to assign a new instructor ",
-                        "course": actCourse,
-                        "users": users,
-                    },
-                )
-        else:
-            print(made_instructor)
-            teacher = made_instructor.split()
-            prof = User.objects.get(User_fName=teacher[0])
-            Supervisor.addInstructor(prof.User_fName, course_code)
-            courses = Course.objects.all()
-            return redirect("course_base")
+                actCourse = Supervisor.removeInstructorFromClass(inst, course_code)
+                return render(request, 'courseedit.html',
+                              {'message': "Instructor has been removed from the course", 'course': actCourse,
+                               'users': users})
+        elif 'save_ch' in res:
+            if made_instructor == "":
+                actCourse.save()
+                courses = Course.objects.all()
+                return render(request, 'course_base.html', {'courses': courses})
+            elif first_name == actCourse.Course_Instructor:
+                return render(request, 'courseedit.html',
+                              {'message': "Instructor is already assigned to this course", 'course': actCourse,
+                               'users': users})
+            else:
+
+                prof = User.objects.get(User_fName=first_name[0])
+                # have to set act courses = to it becauuse it returned in addINstructor
+                actCourse = Supervisor.addInstructor(prof.User_fName, course_code)
+                user = User.objects.all()
+                return render(request, 'course_base.html', {'message': "instructor has successfully changed",'courses': courses, 'user': user})
 
 
 class EditPersonalInformation(View):
