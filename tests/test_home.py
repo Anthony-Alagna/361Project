@@ -8,5 +8,5 @@ class HomeTest(TestCase):
         self.client = Client()
 
     def test_home_accessible(self):
-        response = self.client.get('/home/')
+        response = self.client.get("/home/")
         self.assertEqual(response.status_code, 200)
