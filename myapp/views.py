@@ -138,21 +138,19 @@ class EditCourse(View):
         course_code = kwargs['Course_Code']
         actCourse = Course.objects.get(Course_Code=course_code)
         users = UserUtility.get_all_users()
-
         courses = Course.objects.all()
         res = request.POST
         made_instructor = request.POST.get('course_inst')
         first_name = made_instructor.split()
+        inst=actCourse.Course_Instructor
 
         if 'delete_user' in res:
 
-            if first_name == "":
+            if inst == "":
                 return render(request, 'courseedit.html',
-                              {'message': "no instructor to remove", 'courses': courses})
+                              {'message': "no instructor to remove", 'courses': courses,'users': users})
             else:
-                actCourse.Course_Instructor = ""
-                Supervisor.removeInstructorFromClass(first_name,course_code)
-                actCourse.save()
+                actCourse=Supervisor.removeInstructorFromClass(inst,course_code)
                 return render(request, 'courseedit.html',
                               {'message': "Instructor has been removed from the course", 'course': actCourse,
                                'users': users})
@@ -165,17 +163,12 @@ class EditCourse(View):
                 return render(request, 'courseedit.html',
                               {'message': "Instructor is already assigned to this course", 'course': actCourse, 'users':users})
             else:
-                prof = User.objects.get(User_fName=first_name[0])
-                Supervisor.addInstructor(prof.User_fName, course_code)
-                actCourse.Course_Instructor = prof.User_fName
 
                 prof = User.objects.get(User_fName=first_name[0])
-
-                Supervisor.addInstructor(prof.User_fName, course_code)
-                actCourse.Course_Instructor = prof.User_fName
-                actCourse.save()
+                #have to set act courses = to it becauuse it returned in addINstructor
+                actCourse=Supervisor.addInstructor(prof.User_fName, course_code)
                 user = User.objects.all()
-                return render(request, 'course_base.html', {'courses': courses, 'user':users})
+                return render(request, 'course_base.html', {'courses': courses, 'user':user})
 
 
 

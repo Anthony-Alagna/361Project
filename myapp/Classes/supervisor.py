@@ -46,7 +46,9 @@ class Supervisor(Users):
             # if course.Course_Instructor == instructor_name:
             #     return ValueError("instructor is assigned to this course")
             # else:
-            course.Course_Instructor =""
+            print("in remove" +course.Course_Instructor)
+            course.Course_Instructor=""
+            print("in remove after " + course.Course_Instructor)
             course.save()
             return course
 
