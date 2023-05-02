@@ -5,7 +5,7 @@ from myapp.Classes.users import Users
 class Supervisor(Users):
     @staticmethod
     def create_account(
-            fname, lname, email, username, password, address, city, phone, account_type
+        fname, lname, email, username, password, address, city, phone, account_type
     ):
         users = User.objects.all()
         for user in users:
@@ -15,15 +15,15 @@ class Supervisor(Users):
                 )
 
         if (
-                fname == ""
-                or lname == ""
-                or email == ""
-                or username == ""
-                or password == ""
-                or address == ""
-                or city == ""
-                or phone == ""
-                or account_type == ""
+            fname == ""
+            or lname == ""
+            or email == ""
+            or username == ""
+            or password == ""
+            or address == ""
+            or city == ""
+            or phone == ""
+            or account_type == ""
         ):
             return ValueError("You're missing a field - please fill in all fields")
 
@@ -85,19 +85,18 @@ class Supervisor(Users):
             return ValueError("professor already assigned to this course")
 
         else:
-
             course.Course_Instructor = ins_fname
             course.save()
             return course
 
     @staticmethod
     def editCourse(
-            course_name=Course.Course_Name,
-            course_desc=Course.Course_Description,
-            isonline=Course.Course_isOnline,
-            location=Course.Course_Location,
-            begin="default",
-            updated="default",
+        course_name=Course.Course_Name,
+        course_desc=Course.Course_Description,
+        isonline=Course.Course_isOnline,
+        location=Course.Course_Location,
+        begin="default",
+        updated="default",
     ):
         # what do the form fields come through as if they're empty? assuming it's None
         if course_name == "" or course_desc == "" or isonline == "" or location == "":
