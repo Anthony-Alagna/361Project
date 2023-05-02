@@ -16,6 +16,14 @@ jobs:
       - name: Check for modified files
         id: git-check
         run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: Save state
+        id: save-state
+        if: steps.git-check.outputs.modified == 'true'
+        uses: actions/cache@v2
+        with:
+          key: state-${{ github.sha }}
+          path: state.txt
+          restore-keys: state-${{ github.sha }}
       - name: Push changes
         if: steps.git-check.outputs.modified == 'true'
         run: |
