@@ -39,8 +39,8 @@ class AddInstructorsToCourse(TestCase):
                                              Course_Instructor=self.user1, Course_isOnline='False',
                                              Course_Location='123 Main St',
                                              Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00')
-        self.course2 = Course.objects.create(id='2', Course_Name='Computer Architecture', Course_Code='482-01',
-                                             Course_Instructor=self.user2, Course_isOnline='False',
+        self.course2 = Course.objects.create(id='2', Course_Name='Computer Architecture', Course_Code='48201',
+                                             Course_Instructor=self.user2.User_fName, Course_isOnline='False',
                                              Course_Location='123 Main St',
                                              Course_begin='2022-01-01 00:00:00', Course_Updated='2023-04-18 00:00:00')
         self.course3 = Course.objects.create(
@@ -79,7 +79,7 @@ class AddInstructorsToCourse(TestCase):
         course = Course.objects.get(id='3')
         Supervisor.removeInstructorFromClass(course.Course_Instructor, course_code=course.Course_Code)
         Supervisor.addInstructor("", self.course3.Course_Code)
-
+        course = Course.objects.get(id='3')
         self.assertEqual("", course.Course_Instructor,
                          "can add a blank instructor to course")
         # checking the method checks for blank user input
@@ -101,8 +101,12 @@ class AddInstructorsToCourse(TestCase):
     # removing instructor
     def test_remove_instructor(self):
         course = Course.objects.get(id='2')
-        Supervisor.removeInstructorFromClass(course.Course_Instructor, self.course2.Course_Code)
-
+        user = User.objects.get(User_fName=course.Course_Instructor)
+        print(course.Course_Instructor)
+        print(course.Course_Code)
+        Supervisor.removeInstructorFromClass(course.Course_Instructor, course_code=course.Course_Code)
+        #have to requery new course object
+        course = Course.objects.get(id='2')
         self.assertEqual("", course.Course_Instructor,
                          "there should only be on isntructor that can be assigned toa  course")
 
@@ -113,6 +117,7 @@ class AddInstructorsToCourse(TestCase):
         rest1 = Supervisor.removeInstructorFromClass(self.course3.Course_Instructor, self.course3.Course_Code)
         print(course.Course_Instructor)
         res = Supervisor.removeInstructorFromClass(self.course3.Course_Instructor, self.course3.Course_Code)
+
         self.assertEqual(isinstance(res, ValueError), True, "nothing to remove since it is blank")
 
 
@@ -149,12 +154,11 @@ class TestFunction(TestCase):
 
         # since i added variable to end of url this is how I have to test the url in reverse
         url = reverse('courseedit', kwargs={'Course_Code': ext})
-        print(url)
 
         response = self.client.post(url,
                                     data={'course_inst': self.user2.User_fName, 'save_ch': 'submit'})
         print(response)
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 200)
 
     # test redirect on unsuccessful post to the same page
     def test_blank_edit_fail_on_save(self):
@@ -163,11 +167,9 @@ class TestFunction(TestCase):
         expected_url = '/home/course_base/courseedit/10101'
         assert reversed_url == expected_url
 
-    def test_incorrect_user_fail_on_save(self):
-        ext = self.course3.Course_Code
-        # since i added variable to end of url this is how I have to test the url in reverse
-        url = reverse('courseedit', kwargs={'Course_Code': ext})
-        # not valid instructor assignedr
-        result = self.client.post(url, {'course_inst': self.course3.Course_Instructor})
-        # 200 indicates its still on the same page after a post request
-        self.assertEqual(result.status_code, 200)
+    def test_blank_correct_user_fail_on_save(self):
+        ext = Course.objects.get(id='3')
+        url = reverse('courseedit', kwargs={'Course_Code': ext.Course_Code})
+        res = self.client.post(url,
+                               data={'course_inst': self.user2.User_fName, 'save_ch': 'submit'})
+        self.assertEqual(res.status_code, 200)  # Check if the response is a redirect

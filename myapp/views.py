@@ -157,7 +157,6 @@ class EditCourse(View):
                               {'message': "Instructor has been removed from the course", 'course': actCourse,
                                'users': users})
         elif 'save_ch' in res:
-
             if made_instructor == "":
                 actCourse.save()
                 courses = Course.objects.all()
@@ -178,38 +177,6 @@ class EditCourse(View):
                 user = User.objects.all()
                 return render(request, 'course_base.html', {'courses': courses, 'user':users})
 
-    # def post(self, request, *args, **kwargs):
-    #     course_code = kwargs['Course_Code']
-    #     actCourse = Course.objects.get(Course_Code=course_code)
-    #     users = UserUtility.get_all_users()
-    #     made_instructor = request.POST.get('edit')
-    #
-    #
-    #     if made_instructor == actCourse.Course_Instructor:
-    #         return render(request, 'courseedit.html',
-    #                       {"error": "This instructor is already assigned to the course", 'course': actCourse,
-    #                        'users': users})
-    #
-    #     elif actCourse.Course_Instructor:
-    #         if "delete_user" in request.POST:
-    #             Supervisor.removeInstructorFromClass(actCourse.Course_Instructor, course_code)
-    #             return render(request, 'courseedit.html',
-    #                           {'message': "Instructor has been removed from the course", 'course': actCourse,
-    #                            'users': users})
-    #
-    #     else:
-    #         if made_instructor == "":
-    #             if "save_ch" in request.POST:
-    #                 return render(request, 'courseedit.html',
-    #                               {'error': "Please select an instructor", 'course': actCourse, 'users': users})
-    #         else:
-    #
-    #             teacher = made_instructor.split()
-    #             prof = User.objects.get(User_fName=teacher[0])
-    #             Supervisor.addInstructor(prof.User_fName, course_code)
-    #             courses = Course.objects.all()
-    #             return render(request, 'course_base.html', {'courses': courses})
-    #
 
 
 class EditPersonalInformation(View):

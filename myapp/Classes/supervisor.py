@@ -43,25 +43,21 @@ class Supervisor(Users):
             return ValueError("instructor name or course id name is blank")
         else:
             course = Course.objects.get(Course_Code=course_code)
-            if course.Course_Instructor != instructor_name:
-                return ValueError("instructor is not assigned to this course")
-            else:
-                course.Course_Instructor =""
-                course.save()
-                return course
+            # if course.Course_Instructor == instructor_name:
+            #     return ValueError("instructor is assigned to this course")
+            # else:
+            course.Course_Instructor =""
+            course.save()
+            return course
 
     @staticmethod
     def addInstructor(ins_fname, course_code):
         # checks if user is real
         if course_code == "":
             return ValueError("cannot figure out user if first name or last name are inputted as a blank")
-
         course = Course.objects.get(Course_Code=course_code)
         cTeacher = course.Course_Instructor
-
-
         if cTeacher != "":
-
             if course.Course_Instructor == ins_fname:
                 return ValueError("professor already assigne to this course")
             else:
