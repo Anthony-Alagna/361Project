@@ -61,7 +61,7 @@
                         <form action="{% url 'accountbase' %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="method" value="deleteUser">
-                            <input type="hidden" name="username" value="{{ user.User_LogName }}">
+                            <input type="hidden" name="username" value="{{ user.email }}">
                             <button id="button3" class="goldbutton" type="submit"><span
                                     class="material-symbols-outlined">delete</span></button>
                         </form>

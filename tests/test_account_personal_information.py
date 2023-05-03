@@ -12,12 +12,11 @@ class UserInformationMethods(unittest.TestCase):
         self.user1 = User.objects.create(
             User_fName="tester",
             User_lName="Smith",
-            User_Email="user1@example.com",
+            email="user1@example.com",
             User_Pos="TA",
             User_Phone="1234567890",
             User_Address="123 Main St",
             User_City="Milwaukee",
-            User_LogName="user1ish",
             User_LogPass="password14",
             User_begin="2022-01-01 00:00:00",
             User_Updated="2023-04-18 00:00:00",
@@ -27,7 +26,7 @@ class UserInformationMethods(unittest.TestCase):
         self.user1.delete()
 
     def test_get_account_info(self):
-        resp = Users.getAccountInfo(self.user1.User_LogName, self.user1.id)
+        resp = Users.getAccountInfo(self.user1.email, self.user1.id)
         self.assertEqual(resp, self.user1, "Should return the user object")
 
     def test_get_account_info_unknown_account(self):
@@ -49,7 +48,7 @@ class UserInformationMethods(unittest.TestCase):
             self.user1.User_lName,
         )
         self.assertEqual(
-            self.user1.User_Email, "user1@example.com", "email should not have changed"
+            self.user1.email, "user1@example.com", "email should not have changed"
         )
         self.assertEqual(self.user1.User_Phone, "1234567890")
         self.assertEqual(self.user1.User_lName, "Smith")
@@ -69,7 +68,7 @@ class UserInformationMethods(unittest.TestCase):
             self.user1.User_fName,
             self.user1.User_lName,
         )
-        self.assertEqual(self.user1.User_Email, "user1@example.com")
+        self.assertEqual(self.user1.email, "user1@example.com")
         self.assertEqual(
             self.user1.User_Phone,
             "1111111111",
@@ -93,7 +92,7 @@ class UserInformationMethods(unittest.TestCase):
             self.user1.User_fName,
             self.user1.User_lName,
         )
-        self.assertEqual(self.user1.User_Email, "user1@example.com")
+        self.assertEqual(self.user1.email, "user1@example.com")
         self.assertEqual(self.user1.User_Phone, "1234567890")
         self.assertEqual(self.user1.User_lName, "Smith")
         self.assertEqual(
@@ -118,7 +117,7 @@ class UserInformationMethods(unittest.TestCase):
             self.user1.User_lName,
             "IN",
         )
-        self.assertEqual(self.user1.User_Email, "user1@example.com")
+        self.assertEqual(self.user1.email, "user1@example.com")
         self.assertEqual(self.user1.User_Phone, "1234567890")
         self.assertEqual(self.user1.User_lName, "Smith")
         self.assertEqual(self.user1.User_Address, "123 Main St")
@@ -135,14 +134,6 @@ class UserInformationMethods(unittest.TestCase):
             self.user1.User_City, "Chicago", "City should have changed to Chicago"
         )
 
-    def test_edit_account_info_change_email(self):
-        # Change the email
-        Users.editInfo(self.user1, email="test1@test.com")
-        self.assertEqual(
-            self.user1.User_Email,
-            "test1@test.com",
-        )
-
 
 class PersonalInformationPageTests(unittest.TestCase):
     def setUp(self):
@@ -150,12 +141,11 @@ class PersonalInformationPageTests(unittest.TestCase):
         self.user1 = User.objects.create(
             User_fName="tester",
             User_lName="Smith",
-            User_Email="user1@example.com",
+            email="user1@example.com",
             User_Pos="TA",
             User_Phone="1234567890",
             User_Address="123 Main St",
             User_City="Milwaukee",
-            User_LogName="user1ish",
             User_LogPass="password14",
             User_begin="2022-01-01 00:00:00",
             User_Updated="2023-04-18 00:00:00",
@@ -171,7 +161,7 @@ class PersonalInformationPageTests(unittest.TestCase):
 
     def test_post_edit_personal_information(self):
         session = self.client.session
-        session["username"] = self.user1.User_LogName
+        session["username"] = self.user1.email
         session.save()
         url = reverse("personal_information")
         data = {
@@ -189,7 +179,7 @@ class PersonalInformationPageTests(unittest.TestCase):
         self.user1.refresh_from_db()
         self.assertEqual(self.user1.User_fName, "NewFirstName")
         self.assertEqual(self.user1.User_lName, "NewLastName")
-        self.assertEqual(self.user1.User_Email, "newemail@example.com")
+        self.assertEqual(self.user1.email, "newemail@example.com")
         self.assertEqual(self.user1.User_Phone, "1111111111")
         self.assertEqual(self.user1.User_Address, "New Address")
         self.assertEqual(self.user1.User_Pos, "New Position")

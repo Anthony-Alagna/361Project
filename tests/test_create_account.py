@@ -19,7 +19,6 @@ class TestCreateAccount(TestCase):
             "Michael",
             "Scott",
             "mscott@uwm.edu",
-            "mscott",
             "password",
             "123 Oakland Ave",
             "Milwaukee",
@@ -28,7 +27,7 @@ class TestCreateAccount(TestCase):
         )
         self.assertEqual(
             result,
-            User.objects.get(User_LogName="mscott"),
+            User.objects.get(email="mscott@uwm.edu"),
             "Created account not found in database",
         )
 
@@ -37,12 +36,11 @@ class TestCreateAccount(TestCase):
         self.user1 = User.objects.create(
             User_fName="Michael",
             User_lName="Scott",
-            User_Email="mscott@uwm.edu",
+            email="mscott@uwm.edu",
             User_Pos="Instructor",
             User_Phone="1234567890",
             User_Address="123 Main St",
             User_City="Milwaukee",
-            User_LogName="agentscarn",
             User_LogPass="password",
             User_begin="2022-01-01 00:00:00",
             User_Updated="2023-04-18 00:00:00",
@@ -52,7 +50,6 @@ class TestCreateAccount(TestCase):
             "Michael",
             "Scott",
             "mscott@uwm.edu",
-            "agentscarn",
             "password",
             "123 Oakland Ave",
             "Milwaukee",
@@ -71,7 +68,6 @@ class TestCreateAccount(TestCase):
             "",
             "Scott",
             "mscott@uwm.edu",
-            "mscott",
             "password",
             "123 Oakland Ave",
             "Milwaukee",
@@ -89,7 +85,6 @@ class TestCreateAccount(TestCase):
             "Michael",
             "",
             "mscott@uwm.edu",
-            "mscott",
             "password",
             "123 Oakland Ave",
             "Milwaukee",
@@ -107,7 +102,6 @@ class TestCreateAccount(TestCase):
             "Michael",
             "Scott",
             "",
-            "mscott",
             "password",
             "123 Oakland Ave",
             "Milwaukee",
@@ -120,30 +114,11 @@ class TestCreateAccount(TestCase):
             "Account should not have been created, email missing",
         )
 
-    def test_create_account_field_username_missing(self):
-        result = Supervisor.create_account(
-            "Michael",
-            "Scott",
-            "mscott@uwm.edu",
-            "",
-            "password",
-            "123 Oakland Ave",
-            "Milwaukee",
-            "4144165289",
-            "Instructor",
-        )
-        self.assertEqual(
-            isinstance(result, ValueError),
-            True,
-            "Account should not have been created, username missing",
-        )
-
     def test_create_account_field_password_missing(self):
         result = Supervisor.create_account(
             "Michael",
             "Scott",
             "mscott@uwm.edu",
-            "mscott",
             "",
             "123 Oakland Ave",
             "Milwaukee",
@@ -161,7 +136,6 @@ class TestCreateAccount(TestCase):
             "Michael",
             "Scott",
             "mscott@uwm.edu",
-            "mscott",
             "password",
             "",
             "Milwaukee",
@@ -179,7 +153,6 @@ class TestCreateAccount(TestCase):
             "Michael",
             "Scott",
             "mscott@uwm.edu",
-            "mscott",
             "password",
             "123 Oakland Ave",
             "",
@@ -197,7 +170,6 @@ class TestCreateAccount(TestCase):
             "Michael",
             "Scott",
             "mscott@uwm.edu",
-            "mscott",
             "password",
             "123 Oakland Ave",
             "Milwaukee",
@@ -215,7 +187,6 @@ class TestCreateAccount(TestCase):
             "Michael",
             "Scott",
             "mscott@uwm.edu",
-            "mscott",
             "password",
             "123 Oakland Ave",
             "Milwaukee",

@@ -5,11 +5,11 @@ from myapp.Classes.users import Users
 class Supervisor(Users):
     @staticmethod
     def create_account(
-        fname, lname, email, username, password, address, city, phone, account_type
+        fname, lname, email, password, address, city, phone, account_type
     ):
         users = User.objects.all()
         for user in users:
-            if user.User_LogName == username:
+            if user.email == email:
                 return ValueError(
                     "That username already exists - please choose another"
                 )
@@ -18,7 +18,6 @@ class Supervisor(Users):
             fname == ""
             or lname == ""
             or email == ""
-            or username == ""
             or password == ""
             or address == ""
             or city == ""
@@ -31,8 +30,7 @@ class Supervisor(Users):
             user = User.objects.create(
                 User_fName=fname,
                 User_lName=lname,
-                User_Email=email,
-                User_LogName=username,
+                email=email,
                 User_LogPass=password,
                 User_Address=address,
                 User_City=city,
@@ -122,5 +120,5 @@ class Supervisor(Users):
                 Course.objects.update(Course_Location=location)
 
     def deleteUser(username):
-        user = User.objects.filter(User_LogName=username)
+        user = User.objects.filter(email=username)
         user.delete()

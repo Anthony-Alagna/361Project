@@ -19,7 +19,7 @@ class Login(View):
     def post(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = User.objects.filter(User_LogName=username, User_LogPass=password)
+        user = User.objects.filter(email=username, User_LogPass=password)
         if user:
             # used to store the username in the session, so that it can be used later
             request.session["username"] = username
@@ -75,7 +75,6 @@ class AccountBase(View):
                 request.POST.get("firstname"),
                 request.POST.get("lastname"),
                 request.POST.get("email"),
-                request.POST.get("username"),
                 request.POST.get("password"),
                 request.POST.get("address"),
                 request.POST.get("city"),
