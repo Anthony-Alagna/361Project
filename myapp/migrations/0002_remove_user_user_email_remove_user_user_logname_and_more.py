@@ -4,23 +4,22 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('myapp', '0001_initial'),
+        ("myapp", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='user',
-            name='User_Email',
+            model_name="user",
+            name="User_Email",
         ),
         migrations.RemoveField(
-            model_name='user',
-            name='User_LogName',
+            model_name="user",
+            name="User_LogName",
         ),
         migrations.AddField(
-            model_name='user',
-            name='email',
-            field=models.CharField(default='', max_length=200, unique=True),
+            model_name="user",
+            name="email",
+            field=models.CharField(default="", max_length=200, unique=True),
         ),
     ]
