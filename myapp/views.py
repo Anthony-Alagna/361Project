@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
-
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
 from myapp.models import User, Course, Section, CourseToUser
-from django.urls import reverse
-
-from . import views
 
 
 # Create your views here.
@@ -169,7 +165,8 @@ class EditCourse(View):
                     },
                 )
             else:
-                actCourse = Supervisor.removeInstructorFromClass(inst, course_code)
+                actCourse = Supervisor.removeInstructorFromClass(
+                    inst, course_code)
                 return render(
                     request,
                     "courseedit.html",
@@ -197,7 +194,8 @@ class EditCourse(View):
             else:
                 prof = User.objects.get(User_fName=first_name[0])
                 # have to set act courses = to it becauuse it returned in addINstructor
-                actCourse = Supervisor.addInstructor(prof.User_fName, course_code)
+                actCourse = Supervisor.addInstructor(
+                    prof.User_fName, course_code)
                 user = User.objects.all()
                 return render(
                     request,
@@ -233,5 +231,6 @@ class EditPersonalInformation(View):
             position=position,
         )
         return render(
-            request, "personal_information.html", {"success": "information updated"}
+            request, "personal_information.html", {
+                "success": "information updated"}
         )
