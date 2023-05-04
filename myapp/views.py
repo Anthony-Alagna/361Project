@@ -25,6 +25,21 @@ class Login(View):
             return redirect("login")
 
 
+class ForgotPassword(View):
+    def get(self, request):
+        return render(request, "forgotpassword.html")
+
+    def post(self, request):
+        username = request.POST.get("username")
+        user = User.objects.filter(email=username)
+        if user:
+            # send email to user
+
+            return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
+        else:
+            return render(request, "forgotpassword.html", {"message": "User does not exist, please enter a valid username"})
+
+
 class Home(View):
     def get(self, request):
         return render(request, "home.html")
