@@ -1,5 +1,9 @@
 name: auto-format
-on: pull_request
+on:
+  push:
+    branches:
+      - main
+
 jobs:
   format:
     # Check if the PR is not from a fork
@@ -16,11 +20,20 @@ jobs:
       - name: Check for modified files
         id: git-check
         run: echo "modified=$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)" >> $GITHUB_OUTPUT
+      - name: Save state
+        id: save-state
+        if: steps.git-check.outputs.modified == 'true'
+        uses: actions/cache@v2
+        with:
+          key: state-${{ github.sha }}
+          path: state.txt
+          restore-keys: state-${{ github.sha }}
       - name: Push changes
         if: steps.git-check.outputs.modified == 'true'
         run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git remote set-url origin https://x-access-token:${{ secrets.GHA_PAT }}@github.com/${{ github.repository }}
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions"
           git commit -am "Automated Formatting"
           git push
+

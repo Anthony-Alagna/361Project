@@ -5,6 +5,9 @@ on:
     branches: ["main"]
   pull_request:
     branches: ["main"]
+    types:
+      - opened
+      - synchronize
 
 jobs:
   build:
@@ -14,9 +17,18 @@ jobs:
       matrix:
         python-version: [3.11]
     steps:
-      - uses: actions/checkout@v3
+      - name: Restore state
+        id: restore-state
+        uses: actions/cache@v2
+        with:
+          key: state-${{ github.sha }}
+          path: state.txt
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Dependencies
