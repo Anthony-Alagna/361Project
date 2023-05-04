@@ -10,7 +10,7 @@ class LoginTest(TestCase):
         self.client = Client()
         for i in range(10):
             User.objects.create(
-                User_LogName=(i),
+                email=(i),
                 User_LogPass=str(i),
             )
 

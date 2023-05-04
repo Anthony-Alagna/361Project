@@ -45,7 +45,7 @@ class Users(abc.ABC):
         if id is None:
             raise TypeError("ID cannot be blank")
 
-        user = User.objects.get(User_LogName=username, id=id)
+        user = User.objects.get(email=username, id=id)
         return user
 
     def get_user_id(self):
@@ -79,7 +79,7 @@ class Users(abc.ABC):
         if position:
             self.User_Pos = position
         if email:
-            self.User_Email = email
+            self.email = email
 
         self.save()
 
@@ -117,7 +117,7 @@ class Users(abc.ABC):
     def getUserByUsername(username):
         if username is None:
             raise TypeError("Username cannot be blank")
-        user = User.objects.get(User_LogName=username)
+        user = User.objects.get(email=username)
         return user
 
 
