@@ -24,6 +24,8 @@ class User(models.Model):
     User_SecAssigned = models.ManyToManyField(
         "Course", through="CourseToUser", related_name="users", blank=True
     )
+    pw_reset_token = models.CharField(
+        max_length=40, blank=True, unique=True, default='')
 
     # need courses foreign key
 
