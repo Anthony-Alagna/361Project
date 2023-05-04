@@ -1,5 +1,4 @@
-import myapp.models
-from myapp.models import User, Section, Course, CourseToUser
+from myapp.models import User, Course, CourseToUser
 import abc
 
 
