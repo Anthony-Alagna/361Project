@@ -13,7 +13,7 @@ services:
   nginx:
     restart: always
     build: ./nginx/
-    container_name: 361_project_django
+    container_name: 361_project_django_nginx
     volumes:
       - ./nginx/:/etc/nginx/conf.d
       - ./nginx/logs/:/code/logs
