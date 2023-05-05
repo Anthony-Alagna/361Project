@@ -11,19 +11,25 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# env settings
+load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-&ux!=(g%nn!uz!$4cj==p*))snr4$+k7o(h*34tzvr-7e_#84b"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", False)
 
 ALLOWED_HOSTS = []
 
@@ -76,8 +82,8 @@ WSGI_APPLICATION = "TASchedulerApp.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.getenv("DB_ENGINE"),
+        "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
     }
 }
 
@@ -112,15 +118,42 @@ USE_I18N = True
 
 USE_TZ = True
 
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# production settings
+if not DEBUG:
+    # Ensure that the host is set to your production domain name
+
+    # Set the database configuration for production
+    DATABASES = {
+        'default': {
+            "ENGINE": os.getenv("DB_ENGINE"),
+            "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
+        }
+    }
+
+    # Use secure HTTPS connections for cookies and sessions
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # Use the production email backend for sending emails
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'www.gmail.com'
+    EMAIL_PORT = '587'
+    EMAIL_HOST_USER = os.getenv("EMAIL_USERNAME")
+    EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
+    EMAIL_USE_TLS = True
