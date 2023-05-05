@@ -11,7 +11,7 @@ touch /gunicorn/logs/error.log
 
 # Start Gunicorn processes
 echo Starting Gunicorn.
-exec gunicorn weather_app.wsgi:application \
+exec gunicorn TASchedulerApp.wsgi:application \
     --bind 0.0.0.0:8000 \
     --workers 3 \
     --log-level=info \
