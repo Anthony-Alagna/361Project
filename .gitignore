@@ -140,3 +140,4 @@ GitHub.sublime-settings
 staticfiles/*
 mediafiles/*
 gunicorn/*
+static/*
