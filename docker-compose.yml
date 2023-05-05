@@ -1,0 +1,30 @@
+version: "3"
+services:
+  web:
+    build: .
+    container_name: 361_project_django
+    restart: unless-stopped
+    volumes:
+      - .:/code
+      - static:/code/static
+      - media:/code/media
+
+  nginx:
+    restart: always
+    build: ./nginx/
+    container_name: 361_project_django
+    volumes:
+      - ./nginx/:/etc/nginx/conf.d
+      - ./nginx/logs/:/code/logs
+      - static:/code/static
+      - media:/code/media
+    ports:
+      - "127.0.0.1:8006:80"
+    depends_on:
+      - web
+    links:
+      - web
+
+volumes:
+  media:
+  static:
