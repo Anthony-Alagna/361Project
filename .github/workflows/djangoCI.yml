@@ -36,5 +36,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Run Tests
+        env:
+          DEBUG: ${{ secrets.DEBUG }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_ENGINE: ${{ secrets.DB_ENGINE }}
+          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          MAIL_SERVER: ${{ secrets.MAIL_SERVER }}
         run: |
           python manage.py test tests/
