@@ -59,13 +59,9 @@ class LoginTest(TestCase):
         response = self.client.post("", {"username": "", "password": "2"})
         self.assertEqual(response.status_code, 302)
 
-# TODO implement this test
-
 
 class ForgotPasswordTest(TestCase):
     def setUp(self):
-        self.fp = login.ForgotPassword(
-            os.getenv("MAIL_USERNAME"), os.getenv("MAIL_PASSWORD"))
         self.client = Client()
         User.objects.create(
             email=os.getenv("MAIL_USERNAME"),
@@ -96,3 +92,20 @@ class ForgotPasswordTest(TestCase):
         response = self.client.post(reverse("forgotpassword"), {})
         self.assertEqual(
             response.context["message"], "Please enter a username")
+
+
+class TestMailClient(TestCase):
+    def setUp(self):
+        self.testUser = User.objects.create(
+            email=os.getenv("MAIL_USERNAME"),
+            User_LogPass=str(1),
+        )
+        self.fp = login.ForgotPassword(
+            os.getenv("MAIL_USERNAME"), os.getenv("MAIL_PASSWORD"))
+
+    def tearDown(self):
+        self.fp = None
+
+    def test_mail_client(self):
+        """_summary_ tests that the mail client can send emails"""
+        self.fp.send_reset_email(self.testUser.email)
