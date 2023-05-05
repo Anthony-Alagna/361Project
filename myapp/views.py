@@ -34,7 +34,6 @@ class ForgotPassword(View):
         user = User.objects.filter(email=username)
         if user:
             # send email to user
-
             return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
         else:
             return render(request, "forgotpassword.html", {"message": "User does not exist, please enter a valid username"})

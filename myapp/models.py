@@ -25,7 +25,7 @@ class User(models.Model):
         "Course", through="CourseToUser", related_name="users", blank=True
     )
     pw_reset_token = models.CharField(
-        max_length=40, blank=True, unique=True, default='')
+        max_length=40, blank=True, default='')
 
     # need courses foreign key
 
