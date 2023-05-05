@@ -35,6 +35,8 @@ class ForgotPassword(View):
         if user:
             # send email to user
             return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
+        if username is None:
+            return render(request, "forgotpassword.html", {"message": "Please enter a username"})
         else:
             return render(request, "forgotpassword.html", {"message": "User does not exist, please enter a valid username"})
 

@@ -79,16 +79,20 @@ class ForgotPasswordTest(TestCase):
 
     def test_forgot_password_post(self):
         """_summary_ tests that the forgot password form can be submitted"""
-        response = self.client.post("forgotpassword/", {"username": "1"})
-        self.assertContains(response, "Password reset email sent.")
+        response = self.client.post(
+            reverse("forgotpassword"), {"username": os.getenv("MAIL_USERNAME")})
+        self.assertEqual(
+            response.context["message"], "Password reset email sent")
 
     def test_forgot_password_post_invalid_username(self):
         """_summary_ tests that an error message is displayed for invalid usernames"""
         response = self.client.post(
-            "forgotpassword/", {"username": "invalid"})
-        self.assertContains(response, "Invalid username or email address.")
+            reverse("forgotpassword"), {"username": "invalid"})
+        self.assertEqual(
+            response.context["message"], "User does not exist, please enter a valid username")
 
     def test_forgot_password_post_no_username(self):
         """_summary_ tests that an error message is displayed for missing usernames"""
-        response = self.client.post("forgotpassword/", {})
-        self.assertContains(response, "This field is required.")
+        response = self.client.post(reverse("forgotpassword"), {})
+        self.assertEqual(
+            response.context["message"], "Please enter a username")
