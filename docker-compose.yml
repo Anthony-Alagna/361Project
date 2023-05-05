@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     volumes:
       - .:/code
+      - ./gunicorn/logs:/gunicorn/logs
       - static:/code/static
       - media:/code/media
 
