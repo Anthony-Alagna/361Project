@@ -134,6 +134,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# CSRF settings for local development
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8006", "http://localhost:8006"]
+
 # production settings
 if not DEBUG:
     # Ensure that the host is set to your production domain name
