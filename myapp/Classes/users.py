@@ -88,7 +88,6 @@ class Users(abc.ABC):
 
     def filterUser(usertype):
         if usertype is None:
-            print(usertype)
             return ValueError("you didn't select a usertype")
         elif usertype == "All Roles":
             user_positions = User.objects.all()
