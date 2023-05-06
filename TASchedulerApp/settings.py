@@ -31,8 +31,6 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", False)
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -150,13 +148,15 @@ if not DEBUG:
         }
     }
 
+    ALLOWED_HOSTS = ['204.48.17.50']
+
     # Use secure HTTPS connections for cookies and sessions
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
 
     # Use the production email backend for sending emails
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    EMAIL_HOST = 'www.gmail.com'
+    EMAIL_HOST = os.getenv("MAIL_SERVER")
     EMAIL_PORT = '587'
     EMAIL_HOST_USER = os.getenv("EMAIL_USERNAME")
     EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")

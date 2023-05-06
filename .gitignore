@@ -141,3 +141,5 @@ staticfiles/*
 mediafiles/*
 gunicorn/*
 static/*
+*.env
+```
