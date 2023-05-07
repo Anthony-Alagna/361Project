@@ -83,3 +83,43 @@ class ForgotPassword:
         callback_url = f"http://tascheduler.aalagna.com/reset_password?token={token}"
         message = f"Please click the link below to reset your password:\n\n{callback_url}"
         return message
+
+
+class ResetPassword():
+    def __init__(self):
+        pass
+
+    def reset_password(self, token, new_password):
+        """
+        Resets the user's password.
+
+        Args:
+            token (str): The token used for password reset.
+            new_password (str): The new password to be set.
+
+        Returns:
+            bool: True if the password was reset successfully, False otherwise.
+        """
+
+        if token is None or new_password is None or token == "" or new_password == "":
+            raise ValueError("Token and new password must be provided")
+        if ":" not in token:
+            raise ValueError("Invalid token")
+
+        try:
+            # Split the token into the username and authentication string
+            username, auth_str = token.split(":")
+
+            # Retrieve the user from the database
+            user = User.objects.get(email=username)
+
+            # Check that the authentication string matches the one stored in the database
+            if user.pw_reset_token.split(":")[1] == auth_str:
+                # Update the user's password
+                user.User_LogPass = new_password
+                user.save()
+                return True
+            else:
+                return False
+        except Exception as e:
+            raise e

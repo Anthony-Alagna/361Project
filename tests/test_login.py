@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.core import mail
 from myapp.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from myapp.Classes import login
 import os
 
@@ -125,3 +126,62 @@ class TestMailClient(TestCase):
 
         # Verify that the subject of the first message is correct.
         self.assertEqual(mail.outbox[0].subject, "Subject here")
+
+
+class TestResetPassword(TestCase):
+    def setUp(self):
+        # Create a test user with a password reset token
+        self.user = User.objects.create(
+            email="exampleuser@example.com", pw_reset_token="exampleuser@example.com:auth_token", User_LogPass="old_password")
+        self.reset = login.ResetPassword()
+
+    def tearDown(self):
+        self.user.delete()
+        self.reset = None
+
+    def test_valid_password_reset(self):
+        token = "exampleuser@example.com:auth_token"
+        new_password = "new_password123"
+        self.assertTrue(self.reset.reset_password(token, new_password))
+
+        # Check that the user's password is updated
+        updated_user = User.objects.get(email="exampleuser@example.com")
+        self.assertEqual(updated_user.User_LogPass, new_password)
+
+    def test_invalid_token(self):
+        token = "invalid_token"
+        new_password = "new_password123"
+        with self.assertRaises(ValueError):
+            self.reset.reset_password(token, new_password)
+
+    def test_incorrect_auth_string(self):
+        token = "exampleuser@example.com:wrong_auth_token"
+        new_password = "new_password123"
+        self.assertFalse(self.reset.reset_password(token, new_password))
+
+    def test_nonexistent_user(self):
+        token = "nonexistentuser:auth_token"
+        new_password = "new_password123"
+        with self.assertRaises(User.DoesNotExist):
+            self.reset.reset_password(token, new_password)
+
+    def test_empty_token(self):
+        token = ""
+        new_password = "new_password123"
+        with self.assertRaises(ValueError, msg="Invalid token"):
+            self.reset.reset_password(token, new_password)
+
+    def test_empty_new_password(self):
+        token = "exampleuser:auth_token"
+        new_password = ""
+        with self.assertRaises(ValueError, msg="Token and new password must be provided"):
+            self.reset.reset_password(token, new_password)
+
+    def test_valid_password_reset_complex_password(self):
+        token = "exampleuser@example.com:auth_token"
+        new_password = "C0mpl3x_P@ssw0rd"
+        self.assertTrue(self.reset.reset_password(token, new_password))
+
+        # Check that the user's password is updated
+        updated_user = User.objects.get(email="exampleuser@example.com")
+        self.assertEqual(updated_user.User_LogPass, new_password)

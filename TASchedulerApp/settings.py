@@ -130,8 +130,8 @@ if env == "development":
         'localhost',
     ]
     CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8006", "http://localhost:8006"]
-    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    # EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 
 # Static files (CSS, JavaScript, Images)
@@ -148,10 +148,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Email settings
 EMAIL_HOST = os.getenv("MAIL_SERVER")
 EMAIL_PORT = '587'
-EMAIL_HOST_USER = os.getenv("EMAIL_USERNAME")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PASSWORD")
+EMAIL_HOST_USER = os.getenv("MAIL_USERNAME")
+MAIL_HOST_PASSWORD = os.getenv("MAIL_PASSWORD")
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = os.getenv("EMAIL_USERNAME")
+DEFAULT_FROM_EMAIL = os.getenv("MAIL_USERNAME")
 
 # CSRF settings for local development
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
