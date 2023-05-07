@@ -1,23 +1,16 @@
 import random
 import string
-from myapp.models import User, Course, Section, CourseToUser
+from myapp.models import User
 from django.core.mail import send_mail
-
-# this class implements methods to send the user
-# an email to reset their password if they forgot it
 
 
 class ForgotPassword:
-
     """
-    _summary_ : constructor for the ForgotPassword class
-    _params_ : email - The email of the account being used to send the pass reset email
-                password - The password of the account being used to send the pass reset email
+    Class for handling password reset functionality.
     """
 
-    def __init__(self, email, password):
-        self.email = email
-        self.password = password
+    def __init__(self):
+        pass
 
     """_summary_ : sends the user an email to reset their password
         _params_ : username - The username of the account that needs to reset their password
