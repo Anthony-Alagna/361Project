@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
+from django.core import mail
 from myapp.models import User
 from myapp.Classes import login
 import os
@@ -100,12 +101,27 @@ class TestMailClient(TestCase):
             email=os.getenv("MAIL_USERNAME"),
             User_LogPass=str(1),
         )
-        self.fp = login.ForgotPassword(
-            os.getenv("MAIL_USERNAME"), os.getenv("MAIL_PASSWORD"))
+        self.fp = login.ForgotPassword()
 
     def tearDown(self):
         self.fp = None
 
     def test_mail_client(self):
         """_summary_ tests that the mail client can send emails"""
-        self.fp.send_reset_email(self.testUser.email)
+        self.assertTrue(self.fp.send_reset_email(self.testUser.email))
+
+    def test_send_email(self):
+        # Send message.
+        mail.send_mail(
+            "Subject here",
+            "Here is the message.",
+            "from@example.com",
+            ["to@example.com"],
+            fail_silently=False,
+        )
+
+        # Test that one message has been sent.
+        self.assertEqual(len(mail.outbox), 1)
+
+        # Verify that the subject of the first message is correct.
+        self.assertEqual(mail.outbox[0].subject, "Subject here")

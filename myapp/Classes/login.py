@@ -39,7 +39,7 @@ class ForgotPassword:
             send_mail(
                 subject,  # subject
                 message,  # message
-                self.email,  # from_email
+                None,  # from_email
                 [username],  # recipient_list
                 fail_silently=False,
             )
