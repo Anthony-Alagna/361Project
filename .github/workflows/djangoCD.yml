@@ -31,3 +31,4 @@ jobs:
             git pull ${{secrets.REPO_URL}}
             docker-compose down -v
             docker-compose up --build -d --remove-orphans --renew-anon-volumes --force-recreate
+            sudo ufw-docker allow 361_project_django_nginx
