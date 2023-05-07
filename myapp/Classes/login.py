@@ -12,24 +12,32 @@ class ForgotPassword:
     def __init__(self):
         pass
 
-    """_summary_ : sends the user an email to reset their password
-        _params_ : username - The username of the account that needs to reset their password
-                     message - The message to be sent to the user (optional)
-        _returns_ : True if the email was sent successfully, otherwise raises an error
-    """
+    def send_reset_email(self, username, message=None, subject=None):
+        """
+        Sends a password reset email to the specified user.
 
-    def send_reset_email(self, username, message=None):
+        Args:
+            username (str): The username or email address of the user.
+            message (str, optional): The custom message to include in the email.
+                If not provided, a default message with a password reset link will be generated.
+
+        Returns:
+            bool: True if the email was sent successfully, False otherwise.
+
+        Raises:
+            Exception: If an error occurs while sending the email.
+
+        """
 
         if message is None:
             token = self._generate_token(username)
             # Generate the message to be sent to the user if one was not provided
-            message = self._generate_message(
-                "Password Reset", f"Please click the link below to reset your password:\n\n{token}"
-            )
+            message = self._generate_message(token)
+            subject = "Password Reset"
 
         try:
             send_mail(
-                "Password Reset",  # subject
+                subject,  # subject
                 message,  # message
                 self.email,  # from_email
                 [username],  # recipient_list
@@ -39,12 +47,17 @@ class ForgotPassword:
         except Exception as e:
             raise e
 
-    """
-    _summary_ : generates a token for the user to reset their password
-    _params_ : username - The username of the account that needs to reset their password
-    """
-
     def _generate_token(self, username):
+        """
+        Generates a token to be used for password reset.
+
+        Args:
+            username (str): The username or email address of the user.
+
+        Returns:
+            str: The generated token string.
+        """
+
         # Generate a random string of 20 characters for the authentication portion of the token
         auth_str = ''.join(random.choices(
             string.ascii_uppercase + string.ascii_lowercase + string.digits, k=20))
@@ -57,7 +70,16 @@ class ForgotPassword:
         user.save()
         return token
 
-    def _generate_message(self, subject, body):
-        # Generate the message to be sent to the user
-        message = f"Subject: {subject}\n\n{body}"
+    def _generate_message(self, token):
+        """
+        Generates a message for password reset email.
+
+        Args:
+            token (str): The token used for password reset.
+
+        Returns:
+            str: The generated message with a password reset link.
+        """
+        callback_url = f"http://tascheduler.aalagna.com/reset_password?token={token}"
+        message = f"Please click the link below to reset your password:\n\n{callback_url}"
         return message
