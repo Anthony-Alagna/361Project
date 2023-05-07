@@ -18,9 +18,17 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# env settings
-load_dotenv(os.path.join(BASE_DIR, ".env"))
+# Determine the environment (development, production, etc.)
+env = os.getenv("ENVIRONMENT", "development")
 
+# Load the appropriate dotenv file based on the environment
+if env == "production":
+    dotenv_path = os.path.join(BASE_DIR, "prod.env")
+else:
+    dotenv_path = os.path.join(BASE_DIR, ".env")
+
+# Load the environment variables
+load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -29,7 +37,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", False)
+DEBUG = os.getenv("DEBUG")
 
 
 # Application definition
@@ -116,10 +124,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-]
+if env == "development":
+    ALLOWED_HOSTS = [
+        '127.0.0.1',
+        'localhost',
+    ]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -137,9 +146,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8006", "http://localhost:8006"]
 
 # production settings
-if not DEBUG:
-    # Ensure that the host is set to your production domain name
-
+if env == "production":
     # Set the database configuration for production
     DATABASES = {
         'default': {
@@ -148,11 +155,12 @@ if not DEBUG:
         }
     }
 
-    ALLOWED_HOSTS = ['204.48.17.50']
+    ALLOWED_HOSTS = ['204.48.17.50',
+                     '204.48.17.50:80']
 
     # Use secure HTTPS connections for cookies and sessions
-    # SESSION_COOKIE_SECURE = True
-    # CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
     # Use the production email backend for sending emails
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

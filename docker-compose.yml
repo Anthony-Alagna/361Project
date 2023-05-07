@@ -5,12 +5,13 @@ services:
     container_name: 361_project_django
     restart: unless-stopped
     volumes:
-      - code:/code
+      - ./app:/code
       - gunicorn_logs:/gunicorn/logs
       - static:/code/static
       - media:/code/media
     env_file:
       - prod.env
+
   nginx:
     restart: always
     build: ./nginx/
@@ -21,15 +22,15 @@ services:
       - static:/code/static
       - media:/code/media
     ports:
-      - "8006:80"
+      - "80:80"
     depends_on:
       - web
     links:
       - web
     env_file:
       - prod.env
+
 volumes:
-  code:
   gunicorn_logs:
   media:
   static:
