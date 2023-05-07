@@ -29,5 +29,5 @@ jobs:
           script: |
             cd ${{ secrets.PROJECT_PATH }}
             git pull ${{secrets.REPO_URL}}
-            docker-compose down 
-            docker-compose up --build -d
+            docker-compose down -v
+            docker-compose up --build -d --remove-orphans --renew-anon-volumes --force-recreate
