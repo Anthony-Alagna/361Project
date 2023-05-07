@@ -21,14 +21,28 @@ services:
       - nginx_logs:/code/logs
       - static:/code/static
       - media:/code/media
+      - certbot_conf:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - web
     links:
       - web
     env_file:
       - prod.env
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot_conf:/etc/letsencrypt
+      - certbot_www:/var/www/certbot
+    command: certonly --webroot --webroot-path=/var/www/certbot --agree-tos --no-eff-email --staging -d tascheduler.aalagna.com --email anthonyalagna1999@gmail.com
+    env_file:
+      - prod.env
+
 
 volumes:
   code:
@@ -37,3 +51,9 @@ volumes:
   static:
   nginx_conf:
   nginx_logs:
+  certbot_conf:
+    external:
+      name: certbot_conf
+  certbot_www:
+    external:
+      name: certbot_www

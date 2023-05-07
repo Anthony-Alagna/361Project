@@ -155,7 +155,7 @@ if env == "production":
             "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
         }
     }
-    CSRF_TRUSTED_ORIGINS = ["http://204.48.17.50"]
+    CSRF_TRUSTED_ORIGINS = ["http://204.48.17.50", "204.48.17.50"]
     ALLOWED_HOSTS = ['204.48.17.50',
                      '204.48.17.50:80']
 
