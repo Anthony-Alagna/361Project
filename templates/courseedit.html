@@ -5,6 +5,7 @@
     <title>Edit Course Page</title>
 </head>
 <body>
+
     <h1>Edit Course</h1>
     <a href="{% url 'course_base'%}"><button style="margin-right: 30px;">Back</button></a>
     <form method="post">
@@ -26,15 +27,18 @@
                 <td>Instructor:</td>
 {#                <td><input type="text"  name="Course_Instructor" {% if course.Course_isOnline %} {% endif %}></td>#}
                 <td>
+                    <option>{{""}}</option>
                     <select name="course_inst" placeholder="Professor">
-
+                    <option>{{ user.User_fName }} {{ user.User_lName }}</option>
                     {% for user in users %}
+
                         {% if user.User_Pos == "Professor" %}
+
                         <option>{{ user.User_fName }} {{ user.User_lName }}</option>
                         {% endif %}
                     {% endfor %}
                     </select>
-                <button name="delete_user" type="submit">Remove Instructor</button>
+               # <button name="delete_user" type="submit">Remove Instructor</button>
                 </td>
             </tr>
             <tr>

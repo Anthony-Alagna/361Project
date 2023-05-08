@@ -5,11 +5,11 @@ from myapp.Classes.users import Users
 class Supervisor(Users):
     @staticmethod
     def create_account(
-        fname, lname, email, username, password, address, city, phone, account_type
+        fname, lname, email, password, address, city, phone, account_type
     ):
         users = User.objects.all()
         for user in users:
-            if user.User_LogName == username:
+            if user.email == email:
                 return ValueError(
                     "That username already exists - please choose another"
                 )
@@ -18,7 +18,6 @@ class Supervisor(Users):
             fname == ""
             or lname == ""
             or email == ""
-            or username == ""
             or password == ""
             or address == ""
             or city == ""
@@ -31,8 +30,7 @@ class Supervisor(Users):
             user = User.objects.create(
                 User_fName=fname,
                 User_lName=lname,
-                User_Email=email,
-                User_LogName=username,
+                email=email,
                 User_LogPass=password,
                 User_Address=address,
                 User_City=city,
@@ -62,8 +60,8 @@ class Supervisor(Users):
 
     @staticmethod
     def removeInstructorFromClass(instructor_name, course_code):
-        if instructor_name == "" or course_code == "":
-            return ValueError("instructor name is blank or course id name is blank")
+        if course_code == "":
+            return ValueError("course id name is blank")
         else:
             course = Course.objects.get(Course_Code=course_code)
             course.Course_Instructor = ""
@@ -73,31 +71,21 @@ class Supervisor(Users):
     @staticmethod
     def addInstructor(ins_fname, course_code):
         # checks if user is real
-        if ins_fname == "" or course_code == "":
+        if course_code == "":
             return ValueError(
-                "cannot figure out user if first name or last name are inputted as a blank"
+                "Cannot eddit course instructor because course code was blank"
             )
-        user_f = User.objects.get(User_fName=ins_fname)
+
         course = Course.objects.get(Course_Code=course_code)
         cTeacher = course.Course_Instructor
 
-        if cTeacher != "":
-            course_instructor = User.objects.get(id=cTeacher)
-            if course.Course_Instructor == user_f:
-                return ValueError("professor already assigne to this course")
-            else:
-                return ValueError(
-                    "you need to remove this user by clicking on it twice"
-                )
+        if course.Course_Instructor == ins_fname:
+            return ValueError("professor already assigned to this course")
+
         else:
-            if user_f.User_Pos != "Instructor":
-                course.Course_Instructor = user_f.User_fName
-                course.save()
-                return course
-            else:
-                return ValueError(
-                    "the instructor has to be categorized as a professor "
-                )
+            course.Course_Instructor = ins_fname
+            course.save()
+            return course
 
     @staticmethod
     def editCourse(
@@ -122,5 +110,5 @@ class Supervisor(Users):
                 Course.objects.update(Course_Location=location)
 
     def deleteUser(username):
-        user = User.objects.filter(User_LogName=username)
+        user = User.objects.filter(email=username)
         user.delete()
