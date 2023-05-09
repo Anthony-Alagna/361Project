@@ -39,7 +39,9 @@ services:
     volumes:
       - certbot_conf:/etc/letsencrypt
       - certbot_www:/var/www/certbot
-    command: certonly --webroot --webroot-path=/var/www/certbot --agree-tos --no-eff-email --staging -d tascheduler.aalagna.com --email anthonyalagna1999@gmail.com
+    command: certonly --webroot --webroot-path=/var/www/certbot --agree-tos --no-eff-email -d tascheduler.aalagna.com --email anthonyalagna1999@gmail.com --force-renewal 
+    depends_on:
+      - nginx
     env_file:
       - prod.env
 
