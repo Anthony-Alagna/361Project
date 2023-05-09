@@ -16,6 +16,9 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
+      - name: Check private key
+        run: |
+          ls -la $HOME/.ssh/private.key
       - name: Deploy to server
         # don't run locally
         uses: appleboy/ssh-action@master
