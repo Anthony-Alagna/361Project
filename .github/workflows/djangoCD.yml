@@ -39,4 +39,4 @@ jobs:
             git pull
             docker-compose down -v
             docker-compose up --build -d --remove-orphans --renew-anon-volumes --force-recreate
-            sudo ufw-docker allow 361_project_django_nginx
+            ufw-docker allow 361_project_django_nginx
