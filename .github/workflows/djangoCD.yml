@@ -9,8 +9,8 @@ jobs:
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ../private.key
-          sudo chmod 600 ../private.key
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
+          chmod 600 ~/.ssh/private.key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
         shell: bash
         env:
@@ -20,7 +20,7 @@ jobs:
         # don't run locally
         uses: appleboy/ssh-action@master
         env:
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+          SSH_KEY_PATH: ~/.ssh/private.key
         with:
           host: ${{ secrets.LIVE_SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
@@ -31,4 +31,4 @@ jobs:
             git pull ${{secrets.REPO_URL}}
             docker-compose down -v
             docker-compose up --build -d --remove-orphans --renew-anon-volumes --force-recreate
-            sudo ufw-docker allow 361_project_django_nginx
+            ufw-docker allow 361_project_django_nginx
