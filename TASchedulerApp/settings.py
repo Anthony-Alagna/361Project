@@ -11,21 +11,33 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Determine the environment (development, production, etc.)
+env = os.getenv("ENVIRONMENT", "development")
+
+# Load the appropriate dotenv file based on the environment
+if env == "production":
+    dotenv_path = os.path.join(BASE_DIR, "prod.env")
+else:
+    dotenv_path = os.path.join(BASE_DIR, ".env")
+
+# Load the environment variables
+load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-&ux!=(g%nn!uz!$4cj==p*))snr4$+k7o(h*34tzvr-7e_#84b"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = os.getenv("DEBUG", "") == "True"
 
 
 # Application definition
@@ -76,8 +88,8 @@ WSGI_APPLICATION = "TASchedulerApp.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.getenv("DB_ENGINE"),
+        "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
     }
 }
 
@@ -112,15 +124,51 @@ USE_I18N = True
 
 USE_TZ = True
 
+if env == "development":
+    ALLOWED_HOSTS = [
+        '127.0.0.1',
+        'localhost',
+    ]
+    CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8006", "http://localhost:8006"]
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    # EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Email settings
+EMAIL_HOST = os.getenv("MAIL_SERVER")
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = os.getenv("MAIL_USERNAME")
+MAIL_HOST_PASSWORD = os.getenv("MAIL_PASSWORD")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.getenv("MAIL_USERNAME")
+
+# CSRF settings for local development
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
+# production settings
+if env == "production":
+    # Set the database configuration for production
+    DATABASES = {
+        'default': {
+            "ENGINE": os.getenv("DB_ENGINE"),
+            "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
+        }
+    }
+    CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = ["http://204.48.17.50", "204.48.17.50", "http://tascheduler.aalagna.com",
+                                            "https://tascheduler.aalagna.com", "tascheduler.aalagna.com"]  # is this bad syntax?
+
+    # Use secure HTTPS connections for cookies and sessions
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True

@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
-
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
 from myapp.models import User, Course, Section, CourseToUser
-from django.urls import reverse
-
-from . import views
 
 
 # Create your views here.
@@ -27,6 +23,22 @@ class Login(View):
         else:
             # return status code 302
             return redirect("login")
+
+
+class ForgotPassword(View):
+    def get(self, request):
+        return render(request, "forgotpassword.html")
+
+    def post(self, request):
+        username = request.POST.get("username")
+        user = User.objects.filter(email=username)
+        if user:
+            # send email to user
+            return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
+        if username is None:
+            return render(request, "forgotpassword.html", {"message": "Please enter a username"})
+        else:
+            return render(request, "forgotpassword.html", {"message": "User does not exist, please enter a valid username"})
 
 
 class Home(View):
@@ -169,7 +181,8 @@ class EditCourse(View):
                     },
                 )
             else:
-                actCourse = Supervisor.removeInstructorFromClass(inst, course_code)
+                actCourse = Supervisor.removeInstructorFromClass(
+                    inst, course_code)
                 return render(
                     request,
                     "courseedit.html",
@@ -197,7 +210,8 @@ class EditCourse(View):
             else:
                 prof = User.objects.get(User_fName=first_name[0])
                 # have to set act courses = to it becauuse it returned in addINstructor
-                actCourse = Supervisor.addInstructor(prof.User_fName, course_code)
+                actCourse = Supervisor.addInstructor(
+                    prof.User_fName, course_code)
                 user = User.objects.all()
                 return render(
                     request,
@@ -233,5 +247,6 @@ class EditPersonalInformation(View):
             position=position,
         )
         return render(
-            request, "personal_information.html", {"success": "information updated"}
+            request, "personal_information.html", {
+                "success": "information updated"}
         )
