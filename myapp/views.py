@@ -1,5 +1,8 @@
+from django.views.generic import View
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.views import View
+from myapp.Classes.login import ForgotPassword, Logout, ResetPassword
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
 from myapp.models import User, Course, Section, CourseToUser
@@ -23,6 +26,14 @@ class Login(View):
         else:
             # return status code 302
             return redirect("login")
+
+
+class LogoutView(View):
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        redirect = Logout(request).redirect
+        return redirect
 
 
 class ForgotPassword(View):
