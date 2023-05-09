@@ -37,6 +37,7 @@ jobs:
           script: |
             cd ${{ env.PROJECT_PATH }}
             git pull https://github.com/Anthony-Alagna/361Project.git main
+            chmod +777 entrypoint.sh
             docker compose down -v
             docker compose up --build -d --remove-orphans --renew-anon-volumes --force-recreate
             ufw-docker allow 361_project_django_nginx
