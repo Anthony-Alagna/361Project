@@ -12,6 +12,8 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > $HOME/.ssh/private.key
           chmod 600 $HOME/.ssh/private.key
           echo "$SSH_KNOWN_HOSTS" > $HOME/.ssh/known_hosts
+          cd $HOME/.ssh/
+          pwd
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
