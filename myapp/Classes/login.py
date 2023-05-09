@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 import random
 import string
 from myapp.models import User
@@ -123,3 +124,11 @@ class ResetPassword():
                 return False
         except Exception as e:
             raise e
+
+
+class Logout:
+    def __init__(self, request):
+        if request.user.is_authenticated:
+            del request.session['user_id']
+            request.session.modified = True
+        self.redirect = redirect('login')
