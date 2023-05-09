@@ -8,10 +8,10 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
-          chmod 600 ~/.ssh/private.key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          mkdir -p $HOME/.ssh/
+          echo "$SSH_PRIVATE_KEY" > $HOME/.ssh/private.key
+          chmod 600 $HOME/.ssh/private.key
+          echo "$SSH_KNOWN_HOSTS" > $HOME/.ssh/known_hosts
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
@@ -20,7 +20,7 @@ jobs:
         # don't run locally
         uses: appleboy/ssh-action@master
         env:
-          SSH_KEY_PATH: ~/.ssh/private.key
+          SSH_KEY_PATH: $HOME/.ssh/private.key
         with:
           host: ${{ secrets.LIVE_SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
