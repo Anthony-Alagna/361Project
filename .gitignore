@@ -135,3 +135,11 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+# deployment and build artifacts
+staticfiles/*
+mediafiles/*
+gunicorn/*
+static/*
+*.env
+```

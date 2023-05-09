@@ -93,10 +93,9 @@ class AddInstructorsToCourse(TestCase):
     # check that you can add to course with no instructor in it
     def test_add_teacher_to_class_with_no_instructor(self):
         teacher = self.user1
-        Supervisor.addInstructor(self.user1.User_fName, self.course3.Course_Code)
+        Supervisor.addInstructor(
+            self.user1.User_fName, self.course3.Course_Code)
         course = Course.objects.get(id="3")
-        print(course)
-        print(course.Course_Instructor)
         self.assertEqual(
             teacher.User_fName,
             course.Course_Instructor,
@@ -119,7 +118,8 @@ class AddInstructorsToCourse(TestCase):
         Supervisor.removeInstructorFromClass(
             course.Course_Instructor, course_code=course.Course_Code
         )
-        Supervisor.addInstructor(self.user3.User_fName, self.course3.Course_Code)
+        Supervisor.addInstructor(
+            self.user3.User_fName, self.course3.Course_Code)
 
         self.assertEqual(
             "",
@@ -134,7 +134,6 @@ class AddInstructorsToCourse(TestCase):
         course = Supervisor.removeInstructorFromClass(
             course.Course_Instructor, course_code=course.Course_Code
         )
-        print(course.Course_Instructor)
         Supervisor.addInstructor("", self.course3.Course_Code)
 
         self.assertEqual(
@@ -154,7 +153,8 @@ class AddInstructorsToCourse(TestCase):
 
     # tests that only one instructor can be added at a time
     def test_add_multiple_instructors(self):
-        Supervisor.addInstructor(self.user2.User_fName, self.course3.Course_Code)
+        Supervisor.addInstructor(
+            self.user2.User_fName, self.course3.Course_Code)
         course = Course.objects.get(id="2")
         self.assertEqual(
             1,
@@ -169,8 +169,6 @@ class AddInstructorsToCourse(TestCase):
     def test_remove_instructor(self):
         course = Course.objects.get(id="2")
         user = User.objects.get(User_fName=course.Course_Instructor)
-        print(course.Course_Instructor)
-        print(course.Course_Code)
         Supervisor.removeInstructorFromClass(
             course.Course_Instructor, course_code=course.Course_Code
         )
@@ -184,11 +182,11 @@ class AddInstructorsToCourse(TestCase):
     # tests removing blank instructor
     def test_remove_blank_instructor(self):
         course = Course.objects.get(id="3")
-        Supervisor.addInstructor(self.user2.User_fName, self.course3.Course_Code)
+        Supervisor.addInstructor(
+            self.user2.User_fName, self.course3.Course_Code)
         rest1 = Supervisor.removeInstructorFromClass(
             self.course3.Course_Instructor, self.course3.Course_Code
         )
-        print(course.Course_Instructor)
         res = Supervisor.removeInstructorFromClass(
             self.course3.Course_Instructor, self.course3.Course_Code
         )
@@ -254,9 +252,9 @@ class TestFunction(TestCase):
         url = reverse("courseedit", kwargs={"Course_Code": ext})
 
         response = self.client.post(
-            url, data={"course_inst": self.user2.User_fName, "save_ch": "submit"}
+            url, data={"course_inst": self.user2.User_fName,
+                       "save_ch": "submit"}
         )
-        print(response)
         self.assertEqual(response.status_code, 200)
 
     # test redirect on unsuccessful post to the same page
@@ -270,6 +268,8 @@ class TestFunction(TestCase):
         ext = Course.objects.get(id="3")
         url = reverse("courseedit", kwargs={"Course_Code": ext.Course_Code})
         res = self.client.post(
-            url, data={"course_inst": self.user2.User_fName, "save_ch": "submit"}
+            url, data={"course_inst": self.user2.User_fName,
+                       "save_ch": "submit"}
         )
-        self.assertEqual(res.status_code, 200)  # Check if the response is a redirect
+        # Check if the response is a redirect
+        self.assertEqual(res.status_code, 200)
