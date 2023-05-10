@@ -89,7 +89,7 @@ WSGI_APPLICATION = "TASchedulerApp.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": os.getenv("DB_ENGINE"),
-        "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
+        "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME", "db.sqlite3")),
     }
 }
 

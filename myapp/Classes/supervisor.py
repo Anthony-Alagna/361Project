@@ -91,7 +91,6 @@ class Supervisor(Users):
     def editCourse(
         course_name=Course.Course_Name,
         course_desc=Course.Course_Description,
-        isonline=Course.Course_isOnline,
         location=Course.Course_Location,
         begin="default",
         updated="default",

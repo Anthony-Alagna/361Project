@@ -1,62 +1,69 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <title>Edit Course Page</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+
 </head>
 <body>
 
     <h1>Edit Course</h1>
-    <a href="{% url 'course_base'%}"><button style="margin-right: 30px;">Back</button></a>
-    <form method="post">
-        {% csrf_token %}
+    <a href="{% url 'course_base'%}">
+        <button class="backbutton">Back</button>
+    </a>
+{#    <a href="{% url 'course_base'%}"><button style="margin-right: 30px;">Back</button></a>#}
+{#    <form action="{% url 'course_base'%}" method="post">{% csrf_token %}#}
+    <form method="post">{% csrf_token %}
         <table>
             <tr>
-                <td>Course Name:</td>
-                <td><input type="text"  name="Course_Name" value="{{ course.Course_Name }}"></td>
+                <td>Course Code:</td>
+                <td><input type="text"  name="course_code" value="{{ course.Course_Code }}"></td>
             </tr>
             <tr>
-                <td>Course Code:</td>
-                <td><input type="text"  name="Course_Code" value="{{ course.Course_Code }}"></td>
+                <td>Course Name:</td>
+                <td><input type="text"  name="course_name" value="{{ course.Course_Name }}"></td>
             </tr>
             <tr>
                 <td>Description:</td>
-                <td><input type="text"  name="Course_Description" value=" {{ course.Course_Description }}"></td>
+                <td><input type="text"  name="course_desc" value="{{ course.Course_Description }}"></td>
             </tr>
             <tr>
                 <td>Instructor:</td>
-{#                <td><input type="text"  name="Course_Instructor" {% if course.Course_isOnline %} {% endif %}></td>#}
                 <td>
-                    <option>{{""}}</option>
                     <select name="course_inst" placeholder="Professor">
-                    <option>{{ user.User_fName }} {{ user.User_lName }}</option>
+                    <option value="">No Instructor</option>
                     {% for user in users %}
-
                         {% if user.User_Pos == "Professor" %}
-
                         <option>{{ user.User_fName }} {{ user.User_lName }}</option>
                         {% endif %}
                     {% endfor %}
                     </select>
-               # <button name="delete_user" type="submit">Remove Instructor</button>
                 </td>
             </tr>
             <tr>
-                <td>Online:</td>
-                <td><input type="text"  name="Course_isOnline" {% if course.Course_isOnline %} {% endif %}></td>
+                <td>Instruction Method:</td>
+                <td>
+                    <select name="course_inst_method">
+                    {% for user in users %}
+                        <option>In Person</option>
+                        <option>Hybrid</option>
+                        <option>Online</option>
+                    {% endfor %}
+                    </select>
+                </td>
+{#                <td><input type="text"  name="Course_Instruction_method" {% if course.Course_isOnline %} {% endif %}></td>#}
             </tr>
             <tr>
                 <td>Location:</td>
                 <td><input type="text" name="Course_Location" value="{{ course.Course_Location }}"></td>
             </tr>
         </table>
-        <button name = "save_ch" type="submit">Save</button>
+{#        <button name = "save_ch" type="submit">Save</button>#}
+        <input class="goldbutton" type="submit" value="Save"/>
     </form>
     {{ message }}
 </body>
 </html>
-
-
-
-
-
