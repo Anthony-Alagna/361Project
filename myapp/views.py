@@ -121,10 +121,42 @@ class CourseBase(View):
         return render(request, "course_base.html", {"courses": courses})
 
     def post(self, request):
-        courses = Course.objects.all()
+        # courses = Course.objects.all()
         # if request.POST.get("course_code") in courses:
         #     course = Course.objects.get(request.POST.get("course_inst"))
         #     course.Course_Instructor = request.POST.get("course_inst")
+
+        # result = Supervisor.create_course(
+        #     request.POST.get("course_code"),
+        #     request.POST.get("course_name"),
+        #     request.POST.get("course_desc"),
+        #     request.POST.get("course_inst"),
+        #     request.POST.get("course_inst"),
+        # )
+        # if isinstance(result, TypeError):
+        #     courses = Course.objects.all()
+        #     users = UserUtility.get_all_users()
+        #     return render(
+        #         request,
+        #         "createcourse.html",
+        #         {"courses": courses, "users": users, "message": result}
+        #     )
+        # return render(request, "course_base.html", {"courses": courses})
+
+        # button = request.POST.get("submit")
+        #
+        # Course.objects.get(Course_Code=)
+
+        return render(request, "course_base.html")
+
+
+class CreateCourse(View):
+    def get(self, request):
+        users = UserUtility.get_all_users()
+        return render(request, "createcourse.html", {"users": users})
+
+    def post(self, request):
+        courses = Course.objects.all()
 
         result = Supervisor.create_course(
             request.POST.get("course_code"),
@@ -143,14 +175,7 @@ class CourseBase(View):
             )
         return render(request, "course_base.html", {"courses": courses})
 
-
-class CreateCourse(View):
-    def get(self, request):
-        users = UserUtility.get_all_users()
-        return render(request, "createcourse.html", {"users": users})
-
-    def post(self, request):
-        return render(request, "createcourse.html", {"success": "course created"})
+        # return render(request, "createcourse.html", {"success": "course created"})
 
 
 class EditCourse(View):
@@ -160,25 +185,31 @@ class EditCourse(View):
 
         return render(request, "courseedit.html", {"course": course, "users": users})
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, **kwargs):
+        button = request.POST.get("button")
         courses = Course.objects.all()
         course = Course.objects.get(Course_Code=kwargs["Course_Code"])
 
-        result = Supervisor.edit_course(
-            course,
-            request.POST.get("course_code"),
-            request.POST.get("course_name"),
-            request.POST.get("course_desc"),
-            request.POST.get("course_inst"),
-            request.POST.get("course_inst_method"),
-        )
-        if isinstance(result, TypeError):
-            users = UserUtility.get_all_users()
-            return render(
-                request,
-                "courseedit.html",
-                {"users": users, "message": result}
+        # If the user clicks on Delete Course button
+        if button == "Delete Course":
+            Supervisor.delete_course(course)
+
+        else:
+            result = Supervisor.edit_course(
+                course,
+                request.POST.get("course_code"),
+                request.POST.get("course_name"),
+                request.POST.get("course_desc"),
+                request.POST.get("course_inst"),
+                request.POST.get("course_inst_method"),
             )
+            if isinstance(result, TypeError):
+                users = UserUtility.get_all_users()
+                return render(
+                    request,
+                    "courseedit.html",
+                    {"users": users, "message": result}
+                )
 
         return render(request, "course_base.html", {"courses": courses})
 

@@ -14,9 +14,13 @@
     <a href="{% url 'course_base'%}">
         <button class="backbutton">Back</button>
     </a>
+{#    <form action="{% url 'course_base'%}" method="post">#}
+{##}
+{#    </form>#}
 {#    <a href="{% url 'course_base'%}"><button style="margin-right: 30px;">Back</button></a>#}
 {#    <form action="{% url 'course_base'%}" method="post">{% csrf_token %}#}
     <form method="post">{% csrf_token %}
+        <input class="goldbutton" type="submit" name="button" value="Delete Course"/>
         <table>
             <tr>
                 <td>Course Code:</td>
@@ -34,10 +38,21 @@
                 <td>Instructor:</td>
                 <td>
                     <select name="course_inst">
-                    <option value="">No Instructor</option>
+                    {% if course.Course_Instructor == "" %}
+                        <option value="">No Instructor</option>
+                    {% else %}
+                        <option value={{ course.Course_Instructor }}>{{ course.Course_Instructor }}</option>
+                        <option value="">No Instructor</option>
+                    {% endif %}
+{#                    <option value="">No Instructor</option>#}
                     {% for user in users %}
                         {% if user.User_Pos == "Professor" %}
-                        <option>{{ user.User_fName }} {{ user.User_lName }}</option>
+                            <option>{{ user.User_fName }} {{ user.User_lName }}</option>
+{#                            {% if course.Course_Instructor %}#}
+{#                                <option selected="selected">{{ user.User_fName }} {{ user.User_lName }}</option>#}
+{#                            {% else %}#}
+{#                                <option>{{ user.User_fName }} {{ user.User_lName }}</option>#}
+{#                            {% endif %}#}
                         {% endif %}
                     {% endfor %}
                     </select>

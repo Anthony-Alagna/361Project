@@ -83,6 +83,10 @@ class Supervisor(Users):
         course.Course_Instruction_Method = inst_method
         course.save()
 
+    @staticmethod
+    def delete_course(course):
+        course.delete()
+
     def deleteUser(username):
         user = User.objects.filter(email=username)
         user.delete()

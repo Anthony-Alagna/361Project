@@ -15,7 +15,8 @@
         <button class="backbutton">Back</button>
     </a>
     {{ message }}<br><br>
-    <form action="{% url 'course_base'%}" method="post">{% csrf_token %}
+{#    <form action="{% url 'course_base'%}" method="post">{% csrf_token %}#}
+    <form method="post">{% csrf_token %}
         <table style="border-spacing: 30px 0;">
             <tr>
                 <td>
@@ -39,6 +40,12 @@
                         <option>{{ user.User_fName }} {{ user.User_lName }}</option>
                         {% endif %}
                     {% endfor %}
+                    </select>
+
+                    <select name="course_inst_method">
+                        <option>In Person</option>
+                        <option>Hybrid</option>
+                        <option>Online</option>
                     </select>
                 </td>
             </tr>
