@@ -33,7 +33,7 @@
             <tr>
                 <td>Instructor:</td>
                 <td>
-                    <select name="course_inst" placeholder="Professor">
+                    <select name="course_inst">
                     <option value="">No Instructor</option>
                     {% for user in users %}
                         {% if user.User_Pos == "Professor" %}
@@ -47,11 +47,9 @@
                 <td>Instruction Method:</td>
                 <td>
                     <select name="course_inst_method">
-                    {% for user in users %}
                         <option>In Person</option>
                         <option>Hybrid</option>
                         <option>Online</option>
-                    {% endfor %}
                     </select>
                 </td>
 {#                <td><input type="text"  name="Course_Instruction_method" {% if course.Course_isOnline %} {% endif %}></td>#}

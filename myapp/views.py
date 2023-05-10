@@ -120,34 +120,31 @@ class CourseBase(View):
         courses = Course.objects.all()
         return render(request, "course_base.html", {"courses": courses})
 
-    def post(self, request, **kwargs):
+    def post(self, request):
         courses = Course.objects.all()
-        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
-        if request.POST.get("course_code") in courses:
-            course = Course.objects.get(request.POST.get("course_inst"))
-            course.Course_Instructor = request.POST.get("course_inst")
+        # if request.POST.get("course_code") in courses:
+        #     course = Course.objects.get(request.POST.get("course_inst"))
+        #     course.Course_Instructor = request.POST.get("course_inst")
 
-        else:
-            result = Supervisor.create_course(
-                request.POST.get("course_code"),
-                request.POST.get("course_name"),
-                request.POST.get("course_desc"),
-                request.POST.get("course_inst"),
+        result = Supervisor.create_course(
+            request.POST.get("course_code"),
+            request.POST.get("course_name"),
+            request.POST.get("course_desc"),
+            request.POST.get("course_inst"),
+            request.POST.get("course_inst"),
+        )
+        if isinstance(result, TypeError):
+            courses = Course.objects.all()
+            users = UserUtility.get_all_users()
+            return render(
+                request,
+                "createcourse.html",
+                {"courses": courses, "users": users, "message": result}
             )
-            if isinstance(result, TypeError):
-                courses = Course.objects.all()
-                users = UserUtility.get_all_users()
-                return render(
-                    request,
-                    "createcourse.html",
-                    {"courses": courses, "users": users, "message": result}
-                )
         return render(request, "course_base.html", {"courses": courses})
 
 
 class CreateCourse(View):
-    TEMPLATE = "createcourse.html"
-
     def get(self, request):
         users = UserUtility.get_all_users()
         return render(request, "createcourse.html", {"users": users})
@@ -157,8 +154,8 @@ class CreateCourse(View):
 
 
 class EditCourse(View):
-    def get(self, request, **courses):
-        course = Course.objects.get(Course_Code=courses["Course_Code"])
+    def get(self, request, **kwargs):
+        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
         users = UserUtility.get_all_users()
 
         return render(request, "courseedit.html", {"course": course, "users": users})
@@ -167,12 +164,21 @@ class EditCourse(View):
         courses = Course.objects.all()
         course = Course.objects.get(Course_Code=kwargs["Course_Code"])
 
-        course.Course_Code = request.POST.get("course_code")
-        course.Course_Name = request.POST.get("course_name")
-        course.Course_Description = request.POST.get("course_desc")
-        course.Course_Instructor = request.POST.get("course_inst")
-        course.Course_Instruction_Method = request.POST.get("course_inst_method")
-        course.save()
+        result = Supervisor.edit_course(
+            course,
+            request.POST.get("course_code"),
+            request.POST.get("course_name"),
+            request.POST.get("course_desc"),
+            request.POST.get("course_inst"),
+            request.POST.get("course_inst_method"),
+        )
+        if isinstance(result, TypeError):
+            users = UserUtility.get_all_users()
+            return render(
+                request,
+                "courseedit.html",
+                {"users": users, "message": result}
+            )
 
         return render(request, "course_base.html", {"courses": courses})
 
