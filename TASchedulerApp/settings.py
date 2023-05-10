@@ -10,10 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-from pathlib import Path
 import os
-from dotenv import load_dotenv
+from pathlib import Path
 
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,7 +129,8 @@ if env == "development":
         '127.0.0.1',
         'localhost',
     ]
-    CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8006", "http://localhost:8006"]
+    CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8006", "http://localhost:8006",
+                            "http://127.0.0.1:8000", "http://localhost:8000"]
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
     # EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
