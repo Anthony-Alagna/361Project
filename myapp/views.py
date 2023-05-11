@@ -250,3 +250,10 @@ class EditPersonalInformation(View):
             request, "personal_information.html", {
                 "success": "information updated"}
         )
+
+class ContactMembers(View):
+    def get(selfself, request):
+        return render(request, "contact_members.html")
+
+    def post(self, request):
+        return render(request, "contact_members.html")

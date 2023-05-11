@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Members</title>
+</head>
+<body>
+    <h1>Contact Members</h1>
+
+    <form action="process.php" method="POST">
+        <label for="contact">Select member(s) to contact:</label><br>
+        <input type="checkbox" id="john" name="contact[]" value="john@example.com">
+        <label for="john">John Doe</label><br>
+
+        <input type="checkbox" id="jane" name="contact[]" value="jane@example.com">
+        <label for="jane">Jane Smith</label><br>
+
+        <input type="checkbox" id="alex" name="contact[]" value="alex@example.com">
+        <label for="alex">Alex Johnson</label><br>
+
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" cols="30" required></textarea><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

@@ -1,0 +1,7 @@
+SECRET_KEY = "r98pij^h&uajzk*=*=9qfl=kwf@y1^!re9yqci+$j3hnbcbxo8"
+DEBUG = True
+DB_NAME = "db.sqlite3"
+DB_ENGINE = "django.db.backends.sqlite3"
+MAIL_SERVER = "smtp-mail.outlook.com"
+MAIL_USERNAME = QaHlLUOsx@outlook.com
+MAIL_PASSWORD = YSm4x1obIudiHswksI01!!

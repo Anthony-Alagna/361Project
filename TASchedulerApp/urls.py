@@ -22,7 +22,7 @@ from myapp.views import (
     CreateAccount,
     EditAccount,
     EditPersonalInformation,
-    ForgotPassword,
+    ForgotPassword, ContactMembers,
 )
 from myapp.views import CourseBase, CreateCourse, EditCourse
 
@@ -44,6 +44,11 @@ urlpatterns = [
         "home/personal_information",
         EditPersonalInformation.as_view(),
         name="personal_information",
+    ),
+    path(
+        "home/contact_members",
+        ContactMembers.as_view(),
+        name="contact_members",
     ),
     # have embed course id into url so that it can be retrieved to my method
     path(
