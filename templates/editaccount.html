@@ -9,5 +9,45 @@
 </a>
 <body>
 <p>Edit Account</p>
+<form action="{% url 'accountbase' %}" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>First Name</td>
+                <td><input type="text" name="firstname" value="{{user.User_fName}}"/></td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td><input type="text" name="lastname" value="{{user.User_lName}}"/></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" name="email" value="{{user.email}}"/></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="text" name="password" value="{{user.User_LogPass}}"/></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" name="address" value="{{user.User_Address}}"/></td>
+            </tr>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td><input type="text" name="city" value="{{user.User_City}}"/></td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td><input type="text" name="number" value="{{user.User_Phone}}"/></td>
+            </tr>
+            </tr>
+            <tr>
+                <td>Position</td>
+                <td><input type="text" name="number" value="{{user.User_Pos}}"/></td>
+            </tr>
+        </table>
+        <input class="goldbutton" type="submit"/>
+    </form>
 </body>
 </html>

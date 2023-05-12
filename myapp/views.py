@@ -38,7 +38,8 @@ class ForgotPassword(View):
         if username is None:
             return render(request, "forgotpassword.html", {"message": "Please enter a username"})
         else:
-            return render(request, "forgotpassword.html", {"message": "User does not exist, please enter a valid username"})
+            return render(request, "forgotpassword.html",
+                          {"message": "User does not exist, please enter a valid username"})
 
 
 class Home(View):
@@ -81,38 +82,33 @@ class AccountBase(View):
             user = UserUtility.get_all_users()
             return render(request, "accountbase.html", {"users": user})
 
-        # create account functionality
-        else:
-            result = Supervisor.create_account(
-                request.POST.get("firstname"),
-                request.POST.get("lastname"),
-                request.POST.get("email"),
-                request.POST.get("password"),
-                request.POST.get("address"),
-                request.POST.get("city"),
-                request.POST.get("number"),
-                request.POST.get("position"),
-            )
-            if isinstance(result, ValueError):
-                return render(request, "createaccount.html", {"message": result})
-            users = UserUtility.get_all_users()
-            return render(request, "accountbase.html", {"users": users})
-
-
-# want to return the same view but for a specific course
-
 
 class CreateAccount(View):
     def get(self, request):
         return render(request, "createaccount.html")
 
     def post(self, request):
-        return render(request, "createaccount.html")
+        result = Supervisor.create_account(
+            request.POST.get("firstname"),
+            request.POST.get("lastname"),
+            request.POST.get("email"),
+            request.POST.get("password"),
+            request.POST.get("address"),
+            request.POST.get("city"),
+            request.POST.get("number"),
+            request.POST.get("position"),
+        )
+        if isinstance(result, ValueError):
+            return render(request, "createaccount.html", {"message": result})
+        users = UserUtility.get_all_users()
+        return render(request, "accountbase.html", {"users": users})
 
 
 class EditAccount(View):
-    def get(self, request):
-        return render(request, "editaccount.html")
+    def get(self, request, *args, **kwargs):
+        email_search = kwargs["user_email"]
+        user = User.objects.get(email=email_search)
+        return render(request, "editaccount.html", {"user": user})
 
 
 class CourseBase(View):

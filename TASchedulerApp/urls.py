@@ -35,7 +35,7 @@ urlpatterns = [
     path(
         "home/accountbase/createaccount/", CreateAccount.as_view(), name="createaccount"
     ),
-    path("home/accountbase/editaccount/",
+    path("home/accountbase/editaccount/<str:user_email>",
          EditAccount.as_view(), name="editaccount"),
     path("home/course_base/", CourseBase.as_view(), name="course_base"),
     path("home/course_base/createcourse",
