@@ -20,10 +20,14 @@
                 <td>Last Name</td>
                 <td><input type="text" name="lastname" value="{{user.User_lName}}"/></td>
             </tr>
+        {% if user.User_Pos == "Supervisor" %}
             <tr>
                 <td>Email</td>
+
                 <td><input type="text" name="email" value="{{user.email}}"/></td>
+
             </tr>
+                        {%  endif %}
             <tr>
                 <td>Password</td>
                 <td><input type="text" name="password" value="{{user.User_LogPass}}"/></td>
@@ -42,10 +46,13 @@
                 <td><input type="text" name="number" value="{{user.User_Phone}}"/></td>
             </tr>
             </tr>
+        {% if user.User_Pos == "Supervisor" %}
             <tr>
                 <td>Position</td>
+
                 <td><input type="text" name="number" value="{{user.User_Pos}}"/></td>
             </tr>
+                        {%  endif %}
         </table>
         <input class="goldbutton" type="submit"/>
     </form>
