@@ -42,8 +42,9 @@ class Section(models.Model):
 class User(AbstractUser):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
-    email = models.CharField(max_length=200, unique=True, default="")
-    username = models.CharField(max_length=200, unique=True, default="")
+    username = models.CharField(
+        max_length=50, blank=True, null=True, unique=True)
+    email = models.EmailField(('email address'), unique=True)
     password = models.CharField(max_length=200, blank=True)
     positions_choices = [('SA', 'Supervisor'),
                          ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
@@ -59,7 +60,7 @@ class User(AbstractUser):
     pw_reset_token = models.CharField(
         max_length=40, blank=True, default='')
     sections = models.ForeignKey(
-        Section, on_delete=models.CASCADE, related_name='enrolled_users')
+        Section, on_delete=models.CASCADE, related_name='enrolled_users', blank=True, null=True)
     created_at = models.DateTimeField(
         auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(
