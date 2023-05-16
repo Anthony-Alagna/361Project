@@ -109,8 +109,8 @@ class CreateAccount(View):
 
 class EditAccount(View):
     def get(self, request, *args, **kwargs):
-        email_search = kwargs["email"]
-        user = User.objects.get(email=email_search)
+        id_search = kwargs["id"]
+        user = User.objects.get(id=id_search)
         return render(request, "editaccount.html", {"user": user})
 
 
@@ -225,8 +225,8 @@ class EditCourse(View):
 
 class ViewPersonalInformation(View):
     def get(self, request, **kwargs):
-        email_search = kwargs["email"]
-        user = User.objects.get(email=email_search)
+        id_search = kwargs["id"]
+        user = User.objects.get(id=id_search)
         return render(request, "personal_information.html", {"user": user})
 
     def post(self, request):

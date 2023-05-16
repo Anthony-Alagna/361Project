@@ -35,13 +35,13 @@ urlpatterns = [
     path(
         "home/accountbase/createaccount/", CreateAccount.as_view(), name="createaccount"
     ),
-    path("home/accountbase/editaccount/<str:email>",
+    path("home/accountbase/editaccount/<int:id>",
          EditAccount.as_view(), name="editaccount"),
     path("home/course_base/", CourseBase.as_view(), name="course_base"),
     path("home/course_base/createcourse",
          CreateCourse.as_view(), name="createcourse"),
     path(
-        "home/personal_information/<str:email>",
+        "home/personal_information/<int:id>",
         ViewPersonalInformation.as_view(),
         name="personal_information",
     ),
