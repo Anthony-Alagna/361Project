@@ -54,7 +54,7 @@
                 <td>Position</td>
                 <td>
                     <select name="position">
-                        <option {% if user.User_Pos == "Supervisor" %}selected{% endif %}>Supervisor</option>
+                        <option {% if user.User_Pos == "Supervisor" %}selected{% endif %} disabled>Supervisor</option>
                         <option {% if user.User_Pos == "Teaching Assistant" %}selected{% endif %}>Teaching Assistant</option>
                         <option {% if user.User_Pos == "Professor" %}selected{% endif %}>Professor</option>
                     </select>
