@@ -18,10 +18,12 @@ class Login(View):
     def post(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = User.objects.filter(email=username, User_LogPass=password)
+        user = User.objects.get(email=username, User_LogPass=password)
         if user:
             # used to store the username in the session, so that it can be used later
             request.session["username"] = username
+            user.isLoggedIn = True
+            user.save()
             return redirect("home")
         else:
             # return status code 302
@@ -49,12 +51,14 @@ class ForgotPassword(View):
         if username is None:
             return render(request, "forgotpassword.html", {"message": "Please enter a username"})
         else:
-            return render(request, "forgotpassword.html", {"message": "User does not exist, please enter a valid username"})
+            return render(request, "forgotpassword.html",
+                          {"message": "User does not exist, please enter a valid username"})
 
 
 class Home(View):
-    def get(self, request):
-        return render(request, "home.html")
+    def get(self, request, **kwargs):
+        users = UserUtility.get_all_users()
+        return render(request, "home.html", {"users": users})
 
 
 class AccountBase(View):
@@ -92,38 +96,33 @@ class AccountBase(View):
             user = UserUtility.get_all_users()
             return render(request, "accountbase.html", {"users": user})
 
-        # create account functionality
-        else:
-            result = Supervisor.create_account(
-                request.POST.get("firstname"),
-                request.POST.get("lastname"),
-                request.POST.get("email"),
-                request.POST.get("password"),
-                request.POST.get("address"),
-                request.POST.get("city"),
-                request.POST.get("number"),
-                request.POST.get("position"),
-            )
-            if isinstance(result, ValueError):
-                return render(request, "createaccount.html", {"message": result})
-            users = UserUtility.get_all_users()
-            return render(request, "accountbase.html", {"users": users})
-
-
-# want to return the same view but for a specific course
-
 
 class CreateAccount(View):
     def get(self, request):
         return render(request, "createaccount.html")
 
     def post(self, request):
-        return render(request, "createaccount.html")
+        result = Supervisor.create_account(
+            request.POST.get("firstname"),
+            request.POST.get("lastname"),
+            request.POST.get("email"),
+            request.POST.get("password"),
+            request.POST.get("address"),
+            request.POST.get("city"),
+            request.POST.get("number"),
+            request.POST.get("position"),
+        )
+        if isinstance(result, ValueError):
+            return render(request, "createaccount.html", {"message": result})
+        users = UserUtility.get_all_users()
+        return render(request, "accountbase.html", {"users": users})
 
 
 class EditAccount(View):
-    def get(self, request):
-        return render(request, "editaccount.html")
+    def get(self, request, *args, **kwargs):
+        id_search = kwargs["id"]
+        user = User.objects.get(id=id_search)
+        return render(request, "editaccount.html", {"user": user})
 
 
 class CourseBase(View):
@@ -235,9 +234,11 @@ class EditCourse(View):
                 )
 
 
-class EditPersonalInformation(View):
-    def get(self, request):
-        return render(request, "personal_information.html")
+class ViewPersonalInformation(View):
+    def get(self, request, **kwargs):
+        id_search = kwargs["id"]
+        user = User.objects.get(id=id_search)
+        return render(request, "personal_information.html", {"user": user})
 
     def post(self, request):
         firstname = request.POST.get("first_name")
