@@ -115,6 +115,16 @@ class Users(abc.ABC):
         user = User.objects.get(email=username)
         return user
 
+    # need to code
+    def filterCourses(coursetype):
+        if coursetype is None:
+            return ValueError("you didn't select a coursetype")
+        elif coursetype == "All Courses":
+            user_courses = Course.objects.all()
+            return user_courses
+        else:
+            user_courses = User.objects.filter(User_Pos=coursetype)
+            return user_courses
 
 class UserUtility:
     @staticmethod

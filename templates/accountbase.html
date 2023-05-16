@@ -54,7 +54,7 @@
                 <td>{{ user.User_fName }} {{ user.User_lName }}</td>
                 <td>{{ user.User_Pos }}</td>
                 <div style="text-align: center;">
-                    <td id="table"><a href="{% url 'editaccount' email=user.email%}">
+                    <td id="table"><a href="{% url 'editaccount' id=user.id%}">
                         <button id="button1" class="goldbutton"><span class="material-symbols-outlined">edit</span>
                         </button>
                     </a>

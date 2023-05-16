@@ -24,7 +24,7 @@ from myapp.views import (
     ViewPersonalInformation,
     ForgotPassword,
 )
-from myapp.views import CourseBase, CreateCourse, EditCourse
+from myapp.views import CourseBase, CreateCourse, EditCourse, ViewTA
 
 
 

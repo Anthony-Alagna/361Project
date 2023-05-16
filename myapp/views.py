@@ -255,4 +255,37 @@ class ViewPersonalInformation(View):
 
 class ViewTA(View):
     def get(self, request):
-        return render(request, "view_TA.html")
+        courses = Course.objects.all()
+        users = User.objects.filter(User_Pos="Teaching Assistant")
+        return render(request, "view_TA.html", {"courses": courses, "TAs": users})
+
+    def post(self, request):
+        # get value of method from within request.POST
+        method = request.POST.get("method")
+
+        # filterUser functionality
+        if method == "filterCourses":
+            users = Users.filterCourses(request.POST.get("course"))
+            #  the isinstance function checks if the result variable contains an instance of the TypeError class
+            if isinstance(users, ValueError):
+                return render(
+                    request,
+                    "view_TA.html",
+                    {"message": "You didn't select a Course Type"},
+                )
+            return render(request, "view_TA.html", {"users": users})
+
+        # searchUser functionality
+        # elif method == "searchUser":
+        #     user = Users.searchUser(request.POST.get("search"))
+        #     if isinstance(user, ValueError):
+        #         return render(request, "accountbase.html", {"message": user})
+        #     return render(request, "accountbase.html", {"users": user})
+        #
+        # # deleteUser functionality
+        # elif method == "deleteUser":
+        #     username = request.POST.get("username")
+        #     Supervisor.deleteUser(username)
+        #     user = UserUtility.get_all_users()
+        #     return render(request, "accountbase.html", {"users": user})
+
