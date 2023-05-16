@@ -15,10 +15,12 @@ class Login(View):
     def post(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = User.objects.filter(email=username, User_LogPass=password)
+        user = User.objects.get(email=username, User_LogPass=password)
         if user:
             # used to store the username in the session, so that it can be used later
             request.session["username"] = username
+            user.isLoggedIn = True
+            user.save()
             return redirect("home")
         else:
             # return status code 302
@@ -43,8 +45,9 @@ class ForgotPassword(View):
 
 
 class Home(View):
-    def get(self, request):
-        return render(request, "home.html")
+    def get(self, request, **kwargs):
+        users = UserUtility.get_all_users()
+        return render(request, "home.html", {"users": users})
 
 
 class AccountBase(View):
@@ -106,7 +109,7 @@ class CreateAccount(View):
 
 class EditAccount(View):
     def get(self, request, *args, **kwargs):
-        email_search = kwargs["user_email"]
+        email_search = kwargs["email"]
         user = User.objects.get(email=email_search)
         return render(request, "editaccount.html", {"user": user})
 
@@ -220,9 +223,11 @@ class EditCourse(View):
                 )
 
 
-class EditPersonalInformation(View):
-    def get(self, request):
-        return render(request, "personal_information.html")
+class ViewPersonalInformation(View):
+    def get(self, request, **kwargs):
+        email_search = kwargs["email"]
+        user = User.objects.get(email=email_search)
+        return render(request, "personal_information.html", {"user": user})
 
     def post(self, request):
         firstname = request.POST.get("first_name")
