@@ -1,9 +1,9 @@
 {% load static %}
 
 <!DOCTYPE html>
-<htmllang="en">
+<html lang="en">
 <head>
-    <metacharset
+    <meta charset
     ="UTF-8"/>
     <title>Title</title>
     <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
@@ -15,6 +15,7 @@
 <a href="{% url 'course_base' %}"><button class="goldbutton">Courses</button></a>
     <a href="{% url 'accountbase' %}"><button class="goldbutton">Account</button></a>
     <a href="{% url 'personal_information' %}"><button class="goldbutton">Personal Information</button></a>
+    <a href="{% url 'view_teaching_assistant' %}"><button class="goldbutton">Teaching Assistants</button></a>
 
 </body>
 </html>

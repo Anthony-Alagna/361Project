@@ -38,7 +38,8 @@ class ForgotPassword(View):
         if username is None:
             return render(request, "forgotpassword.html", {"message": "Please enter a username"})
         else:
-            return render(request, "forgotpassword.html", {"message": "User does not exist, please enter a valid username"})
+            return render(request, "forgotpassword.html",
+                          {"message": "User does not exist, please enter a valid username"})
 
 
 class Home(View):
@@ -250,3 +251,8 @@ class EditPersonalInformation(View):
             request, "personal_information.html", {
                 "success": "information updated"}
         )
+
+
+class ViewTA(View):
+    def get(self, request):
+        return render(request, "view_TA.html")

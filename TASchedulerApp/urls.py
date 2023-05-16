@@ -22,9 +22,11 @@ from myapp.views import (
     CreateAccount,
     EditAccount,
     EditPersonalInformation,
-    ForgotPassword,
+    ForgotPassword, ViewTA
 )
 from myapp.views import CourseBase, CreateCourse, EditCourse
+
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -51,4 +53,5 @@ urlpatterns = [
         EditCourse.as_view(),
         name="courseedit",
     ),
+    path("home/view_teaching_assistant", ViewTA.as_view(), name="view_teaching_assistant")
 ]
