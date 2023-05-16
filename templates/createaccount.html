@@ -14,7 +14,7 @@
 </a>
 <div class="center">
     {{ message }}
-    <form action="{% url 'accountbase' %}" method="post">
+    <form action="{% url 'createaccount' %}" method="post">
         {% csrf_token %}
         <table>
             <tr>
