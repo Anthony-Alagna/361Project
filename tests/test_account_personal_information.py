@@ -167,7 +167,6 @@ class PersonalInformationPageTests(unittest.TestCase):
         data = {
             "first_name": "NewFirstName",
             "last_name": "NewLastName",
-            "email": "newemail@example.com",
             "phone_number": "1111111111",
             "address": "New Address",
             "position": "New Position",

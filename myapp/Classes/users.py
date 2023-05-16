@@ -52,7 +52,7 @@ class Users(abc.ABC):
             raise TypeError("ID cannot be blank")
         return self.user_id
 
-    def editInfo(
+    def edit_account(
         self,
         phone=None,
         address=None,
@@ -60,7 +60,6 @@ class Users(abc.ABC):
         fname=None,
         lname=None,
         position=None,
-        email=None,
     ):
         if self is type(None) or type(self) is not User:
             raise TypeError("User object is not valid")
@@ -77,8 +76,6 @@ class Users(abc.ABC):
             self.User_lName = lname
         if position:
             self.User_Pos = position
-        if email:
-            self.email = email
 
         self.save()
 
