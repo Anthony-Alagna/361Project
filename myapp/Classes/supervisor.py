@@ -28,14 +28,14 @@ class Supervisor(Users):
 
         else:
             user = User.objects.create(
-                User_fName=fname,
-                User_lName=lname,
+                first_name=fname,
+                last_name=lname,
                 email=email,
-                User_LogPass=password,
-                User_Address=address,
-                User_City=city,
-                User_Phone=phone,
-                User_Pos=account_type,
+                password=password,
+                address=address,
+                city=city,
+                phone_number=phone,
+                positions=account_type,
             )
             return user
 
@@ -53,7 +53,7 @@ class Supervisor(Users):
             return TypeError("Course description cannot be blank!")
         return Course.objects.create(
             Course_Code=code,
-            Course_Name=name,
+            name=name,
             Course_Description=desc,
             Course_Instructor=inst,
         )
@@ -89,7 +89,7 @@ class Supervisor(Users):
 
     @staticmethod
     def editCourse(
-        course_name=Course.Course_Name,
+        name=Course.name,
         course_desc=Course.Course_Description,
         isonline=Course.Course_isOnline,
         location=Course.Course_Location,
@@ -97,11 +97,11 @@ class Supervisor(Users):
         updated="default",
     ):
         # what do the form fields come through as if they're empty? assuming it's None
-        if course_name == "" or course_desc == "" or isonline == "" or location == "":
+        if name == "" or course_desc == "" or isonline == "" or location == "":
             return ValueError("cannot make a value blank")
         else:
-            if course_name != Course.Course_Name:
-                Course.objects.update(Course_Name=course_name)
+            if name != Course.name:
+                Course.objects.update(name=name)
             if course_desc != Course.Course_Description:
                 Course.objects.update(Course_Description=course_desc)
             if isonline != Course.Course_isOnline:

@@ -117,7 +117,7 @@ class ResetPassword():
             # Check that the authentication string matches the one stored in the database
             if user.pw_reset_token.split(":")[1] == auth_str:
                 # Update the user's password
-                user.User_LogPass = new_password
+                user.password = new_password
                 user.save()
                 return True
             else:

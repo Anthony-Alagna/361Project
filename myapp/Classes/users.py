@@ -1,4 +1,4 @@
-from myapp.models import User, Course, CourseToUser
+from myapp.models import User, Course, CourseEnrollment
 import abc
 
 
@@ -65,17 +65,19 @@ class Users(abc.ABC):
             raise TypeError("User object is not valid")
 
         if phone:
-            self.User_Phone = phone
+            self.phone_number = phone
         if address:
-            self.User_Address = address
+            self.address = address
         if city:
-            self.User_City = city
+            self.city = city
         if fname:
-            self.User_fName = fname
+            self.first_name = fname
         if lname:
-            self.User_lName = lname
+            self.last_name = lname
         if position:
-            self.User_Pos = position
+            self.positions = position
+        if email:
+            self.email = email
 
         self.save()
 
@@ -87,11 +89,11 @@ class Users(abc.ABC):
         if usertype is None:
             return ValueError("you didn't select a usertype")
         elif usertype == "All Roles":
-            user_positions = User.objects.all()
-            return user_positions
+            positionsitions = User.objects.all()
+            return positionsitions
         else:
-            user_positions = User.objects.filter(User_Pos=usertype)
-            return user_positions
+            positionsitions = User.objects.filter(positions=usertype)
+            return positionsitions
 
     def searchUser(last_name):
         if last_name == "":
@@ -99,9 +101,9 @@ class Users(abc.ABC):
         # converts parameter to standard case and strips any whitespace before and after characters
         last_name_cleaned = last_name.title().strip()
         # users = User.objects.all()
-        if not User.objects.filter(User_lName=last_name_cleaned).exists():
+        if not User.objects.filter(last_name=last_name_cleaned).exists():
             return ValueError("There are no users with this last name")
-        user = User.objects.filter(User_lName=last_name_cleaned)
+        user = User.objects.filter(last_name=last_name_cleaned)
         return user
 
     def viewCourseAssigned(self):

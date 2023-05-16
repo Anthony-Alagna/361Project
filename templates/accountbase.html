@@ -1,76 +1,83 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
+  <head>
+    <meta charset="UTF-8" />
     <title>Account</title>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-<h1>User Accounts</h1>
-<div class="center">
-    <br>
-    <a href="{% url 'home' %}">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>User Accounts</h1>
+    <div class="center">
+      <br />
+      <a href="{% url 'home' %}">
         <button class="backbutton">Home</button>
-    </a>
-    <br>
-    <a href="{% url 'createaccount' %}">
+      </a>
+      <br />
+      <a href="{% url 'createaccount' %}">
         <button id="button4" class="goldbutton">Create New Account</button>
-    </a>
-    <br>
-    <br>
-    <form action="{% url 'accountbase' %}" method="post">
+      </a>
+      <br />
+      <br />
+      <form action="{% url 'accountbase' %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="method" value="searchUser">
-        <input type="text" placeholder="Search By Last Name" name="search">
-        <input type="submit"/>
-    </form>
-    <br>
-    <form action="{% url 'accountbase' %}" method="post">
+        <input type="hidden" name="method" value="searchUser" />
+        <input type="text" placeholder="Search By Last Name" name="search" />
+        <input type="submit" />
+      </form>
+      <br />
+      <form action="{% url 'accountbase' %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="method" value="filterUser">
+        <input type="hidden" name="method" value="filterUser" />
         <select name="position">
-            <option disabled selected>Filter By Role</option>
-            <option>All Roles</option>
-            <option>Teaching Assistant</option>
-            <option>Professor</option>
+          <option disabled selected>Filter By Role</option>
+          <option>All Roles</option>
+          <option>Teaching Assistant</option>
+          <option>Professor</option>
         </select>
-        <input type="submit"/>
-    </form>
-    <br>
-    <br>
-    <table>
+        <input type="submit" />
+      </form>
+      <br />
+      <br />
+      <table>
         <tr>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Actions</th>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Actions</th>
         </tr>
         {% for user in users %}
-            <tr>
-                <td>{{ user.User_fName }} {{ user.User_lName }}</td>
-                <td>{{ user.User_Pos }}</td>
-                <div style="text-align: center;">
-                    <td id="table"><a href="{% url 'editaccount' email=user.email%}">
-                        <button id="button1" class="goldbutton"><span class="material-symbols-outlined">edit</span>
-                        </button>
-                    </a>
-                        <form action="{% url 'accountbase' %}" method="post">
-                            {% csrf_token %}
-                            <input type="hidden" name="method" value="deleteUser">
-                            <input type="hidden" name="username" value="{{ user.email }}">
-                            <button id="button3" class="goldbutton" type="submit"><span
-                                    class="material-symbols-outlined">delete</span></button>
-                        </form>
-                    </td>
-                </div>
-            </tr>
+        <tr>
+          <td>{{ user.first_name }} {{ user.last_name }}</td>
+          <td>{{ user.positions }}</td>
+          <div style="text-align: center">
+            <td id="table">
+              <a href="{% url 'editaccount' email=user.email%}">
+                <button id="button1" class="goldbutton">
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+              </a>
+              <form action="{% url 'accountbase' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="method" value="deleteUser" />
+                <input type="hidden" name="username" value="{{ user.email }}" />
+                <button id="button3" class="goldbutton" type="submit">
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </form>
+            </td>
+          </div>
+        </tr>
         {% endfor %}
-    </table>
-    {{ message }}
-</div>
-</body>
+      </table>
+      {{ message }}
+    </div>
+  </body>
 </html>

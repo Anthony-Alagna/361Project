@@ -5,7 +5,7 @@ from django.views import View
 from myapp.Classes.login import ForgotPassword, Logout, ResetPassword
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
-from myapp.models import User, Course, Section, CourseToUser
+from myapp.models import User, Course, Section, CourseEnrollment
 
 
 # Create your views here.
@@ -18,7 +18,7 @@ class Login(View):
     def post(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = User.objects.get(email=username, User_LogPass=password)
+        user = User.objects.filter(email=username, password=password)
         if user:
             # used to store the username in the session, so that it can be used later
             request.session["username"] = username
@@ -134,7 +134,7 @@ class CourseBase(View):
         courses = Course.objects.all()
         result = Supervisor.create_course(
             request.POST.get("course_code"),
-            request.POST.get("course_name"),
+            request.POST.get("name"),
             request.POST.get("course_desc"),
             request.POST.get("course_inst"),
         )
@@ -218,10 +218,10 @@ class EditCourse(View):
                     },
                 )
             else:
-                prof = User.objects.get(User_fName=first_name[0])
+                prof = User.objects.get(first_name=first_name[0])
                 # have to set act courses = to it becauuse it returned in addINstructor
                 actCourse = Supervisor.addInstructor(
-                    prof.User_fName, course_code)
+                    prof.first_name, course_code)
                 user = User.objects.all()
                 return render(
                     request,
