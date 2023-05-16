@@ -54,29 +54,34 @@ class Users(abc.ABC):
 
     def edit_account(
         self,
-        phone=None,
-        address=None,
-        city=None,
         fname=None,
         lname=None,
-        position=None,
+        email=None,
+        password=None,
+        address=None,
+        city=None,
+        phone=None,
+        position=None
     ):
         if self is type(None) or type(self) is not User:
             raise TypeError("User object is not valid")
 
-        if phone:
-            self.User_Phone = phone
-        if address:
-            self.User_Address = address
-        if city:
-            self.User_City = city
         if fname:
             self.User_fName = fname
         if lname:
             self.User_lName = lname
+        if email:
+            self.email = email
+        if password:
+            self.User_LogPass = password
+        if address:
+            self.User_Address = address
+        if city:
+            self.User_City = city
+        if phone:
+            self.User_Phone = phone
         if position:
             self.User_Pos = position
-
         self.save()
 
     def viewCourse(self, course_id):

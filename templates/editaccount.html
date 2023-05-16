@@ -9,7 +9,7 @@
 </a>
 <body>
 <p>Edit Account</p>
-<form action="{% url 'accountbase' %}" method="post">
+<form action="{% url 'editaccount' id=user.id %}" method="post">
         {% csrf_token %}
         <table>
             <tr>
@@ -20,7 +20,8 @@
                 <td>Last Name</td>
                 <td><input type="text" name="lastname" value="{{user.User_lName}}"/></td>
             </tr>
-        {% if user.User_Pos == "Supervisor" %}
+        {% for this_user in all_users %}
+        {% if this_user.User_Pos == "Supervisor" and this_user.isLoggedIn == True%}
             <tr>
                 <td>Email</td>
 
@@ -28,6 +29,7 @@
 
             </tr>
                         {%  endif %}
+        {% endfor %}
             <tr>
                 <td>Password</td>
                 <td><input type="text" name="password" value="{{user.User_LogPass}}"/></td>
@@ -46,13 +48,20 @@
                 <td><input type="text" name="number" value="{{user.User_Phone}}"/></td>
             </tr>
             </tr>
-        {% if user.User_Pos == "Supervisor" %}
+        {% for this_user in all_users %}
+        {% if this_user.User_Pos == "Supervisor" and this_user.isLoggedIn == True%}
             <tr>
                 <td>Position</td>
-
-                <td><input type="text" name="number" value="{{user.User_Pos}}"/></td>
+                <td>
+                    <select name="position">
+                        <option {% if user.User_Pos == "Supervisor" %}selected{% endif %}>Supervisor</option>
+                        <option {% if user.User_Pos == "Teaching Assistant" %}selected{% endif %}>Teaching Assistant</option>
+                        <option {% if user.User_Pos == "Professor" %}selected{% endif %}>Professor</option>
+                    </select>
+                </td>
             </tr>
                         {%  endif %}
+        {% endfor %}
         </table>
         <input class="goldbutton" type="submit"/>
     </form>
