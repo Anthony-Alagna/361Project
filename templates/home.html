@@ -10,12 +10,14 @@
 
 </head>
 <body style="text-align: center">
-
-<h1>Welcome User!</h1>
+{%  for user in users %}
+    {% if user.isLoggedIn == True %}
+<h1>Welcome {{ user.User_fName}}!</h1>
 <a href="{% url 'course_base' %}"><button class="goldbutton">Courses</button></a>
     <a href="{% url 'accountbase' %}"><button class="goldbutton">Account</button></a>
-    <a href="{% url 'personal_information' %}"><button class="goldbutton">Personal Information</button></a>
-    <a href="{% url 'view_teaching_assistant' %}"><button class="goldbutton">Teaching Assistants</button></a>
-
+    <a href="{% url 'personal_information' id=user.id%}"><button class="goldbutton">View Personal Information</button></a>
+        <a href="{% url 'view_teaching_assistant' %}"><button class="goldbutton">Teaching Assistants</button></a>
+    {%  endif %}
+{% endfor %}
 </body>
 </html>

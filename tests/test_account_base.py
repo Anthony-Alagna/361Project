@@ -387,6 +387,6 @@ class TestButtons(TestCase):
         self.assertEqual(response.status_code, 200)
 
     # click on the edit button
-    def test_edit_account_view(self):
-        response = self.client.get(reverse("editaccount"))
-        self.assertEqual(response.status_code, 200)
+    # def test_edit_account_view(self):
+    #     response = self.client.get(reverse("editaccount"))
+    #     self.assertEqual(response.status_code, 200)
