@@ -38,14 +38,6 @@ class Users(abc.ABC):
         self.username = username
         self.isgrader = isgrader
 
-    def getAccountInfo(username, id):
-        if username is None:
-            raise TypeError("Username cannot be blank")
-        if id is None:
-            raise TypeError("ID cannot be blank")
-
-        user = User.objects.get(email=username, id=id)
-        return user
 
     def get_user_id(self):
         if self.user_id == "":

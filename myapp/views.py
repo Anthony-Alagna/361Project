@@ -115,8 +115,8 @@ class EditAccount(View):
         return render(request, "editaccount.html", {"user": user, "all_users": users})
 
     def post(self, request, **kwargs):
-        firstname = request.POST.get("first_name")
-        lastname = request.POST.get("last_name")
+        firstname = request.POST.get("firstname")
+        lastname = request.POST.get("lastname")
         email = request.POST.get("email")
         password = request.POST.get("password")
         address = request.POST.get("address")
@@ -125,7 +125,6 @@ class EditAccount(View):
         position = request.POST.get("position")
         id_search = kwargs["id"]
         userAccount = User.objects.get(id=id_search)
-        # userAccount = Users.getUserByUsername(request.session["username"])
 
         Users.edit_account(
             userAccount,
