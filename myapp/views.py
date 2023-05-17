@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from django.views import View
 from myapp.Classes.supervisor import Supervisor
@@ -237,7 +239,7 @@ class EditCourse(View):
                 users = UserUtility.get_all_users()
                 return render(
                     request,
-                    "createsection.html.html",
+                    "createsection.html",
                     {"courses": courses, "users": users, "message": result}
                 )
 
@@ -259,9 +261,10 @@ class createSection(View):
         course = Course.objects.all()
         users = UserUtility.get_all_users()
 
-        result = createSection(request.POST.get("section_name"), request.POST.get("course"),
-                               request.POST.get("sect_instr"))
-        if isinstance(result,TypeError):
+
+        result = Supervisor.create_section(request.POST.get("section_name"), request.POST.get("course"),
+                                           request.POST.get("section_inst"), datetime.datetime)
+        if isinstance(result, ValueError):
             courses = Course.objects.all()
             users = UserUtility.get_all_users()
             return render(
