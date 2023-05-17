@@ -44,5 +44,11 @@ class TestEditedCourse(TestCase):
                          "Expected instruction method: Hybrid, got: " + str(self.course.Course_Instruction_Method))
 
 
-# class TestButtons(TestCase):
-    
+class TestButtons(TestCase):
+    def test_edit_course_page_accessible(self):
+        response = self.client.get(reverse("courseedit"))
+        self.assertEqual(
+            response.status_code,
+            200,
+            "Expected status_code 200, got " + str(response.status_code),
+        )
