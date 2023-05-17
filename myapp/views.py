@@ -109,8 +109,6 @@ class CreateAccount(View):
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
 
-
-
 class EditAccount(View):
     def get(self, request, *args, **kwargs):
         id_search = kwargs["id"]
@@ -246,11 +244,8 @@ class EditCourse(View):
         return render(request, "course_base.html", {"courses": courses})
 
 
-
-
 class viewSection(View):
     def get(self, request):
-
         return render(request, "coursesection.html")
 
 
@@ -258,21 +253,22 @@ class createSection(View):
     def get(self, request):
         course = Course.objects.all()
         users = UserUtility.get_all_users()
-        return render(request, "createsection.html", {"courses" :course, "users": users })
+        return render(request, "createsection.html", {"courses": course, "users": users})
 
     def post(self, request):
         course = Course.objects.all()
         users = UserUtility.get_all_users()
 
-        result = createSection(request.POST.get("section_name"), request.POST.get("course"), request.POST.get("sect_instr"))
-        if isinstance(result,ValueError):
+        result = createSection(request.POST.get("section_name"), request.POST.get("course"),
+                               request.POST.get("sect_instr"))
+        if isinstance(result,TypeError):
             courses = Course.objects.all()
             users = UserUtility.get_all_users()
             return render(
-                    request,
-                    "createsection.html",
-                    {"courses": courses, "users": users, "message": result}
-                )
+                request,
+                "createsection.html",
+                {"courses": courses, "users": users, "message": result}
+            )
 
         return render(request, "course_base.html", {"courses": course})
 

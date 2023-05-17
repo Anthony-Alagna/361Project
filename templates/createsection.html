@@ -16,6 +16,11 @@
         <table style="border-spacing: 30px 0;">
             <tr>
                 <td>
+                    <select>
+                    <input type="text" name="section_name" placeholder="Enter Section Name"
+                           minlength="1">
+                     </select>
+
                     <select name="course" >
                     <option value="">No Courses</option>
                     {% for course in courses %}
@@ -23,9 +28,6 @@
 
                     {% endfor %}
                     </select>
-                    <input type="text" name="section_name" placeholder="Enter Section Name"
-                           minlength="1">
-                     </select>
 
                     <select name="section_inst">
                     <option value="">No Instructor</option>
@@ -38,11 +40,7 @@
 
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <input type="text" name="sect" size="50" placeholder="Add Description...">
-                </td>
-            </tr>
+
             <tr>
                 <td>
                     <select name="sect_instr" placeholder="teaching Assistantr">
