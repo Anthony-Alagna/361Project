@@ -52,8 +52,9 @@ class Home(View):
 
 class AccountBase(View):
     def get(self, request):
+        current_user = User.objects.get(isLoggedIn=True)
         users = UserUtility.get_all_users()
-        return render(request, "accountbase.html", {"users": users})
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
     def post(self, request):
         # get value of method from within request.POST
@@ -104,14 +105,45 @@ class CreateAccount(View):
         if isinstance(result, ValueError):
             return render(request, "createaccount.html", {"message": result})
         users = UserUtility.get_all_users()
-        return render(request, "accountbase.html", {"users": users})
+        current_user = User.objects.get(isLoggedIn=True)
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
+
+
 
 
 class EditAccount(View):
     def get(self, request, *args, **kwargs):
         id_search = kwargs["id"]
         user = User.objects.get(id=id_search)
-        return render(request, "editaccount.html", {"user": user})
+        users = UserUtility.get_all_users()
+        return render(request, "editaccount.html", {"user": user, "all_users": users})
+
+    def post(self, request, **kwargs):
+        firstname = request.POST.get("firstname")
+        lastname = request.POST.get("lastname")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        address = request.POST.get("address")
+        city = request.POST.get("city")
+        phone = request.POST.get("phone_number")
+        position = request.POST.get("position")
+        id_search = kwargs["id"]
+        userAccount = User.objects.get(id=id_search)
+
+        Users.edit_account(
+            userAccount,
+            fname=firstname,
+            lname=lastname,
+            email=email,
+            password=password,
+            address=address,
+            city=city,
+            phone=phone,
+            position=position,
+        )
+        current_user = User.objects.get(isLoggedIn=True)
+        users = UserUtility.get_all_users()
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
 
 class CourseBase(View):
@@ -238,26 +270,3 @@ class ViewPersonalInformation(View):
         id_search = kwargs["id"]
         user = User.objects.get(id=id_search)
         return render(request, "personal_information.html", {"user": user})
-
-    def post(self, request):
-        firstname = request.POST.get("first_name")
-        lastname = request.POST.get("last_name")
-        email = request.POST.get("email")
-        phone = request.POST.get("phone_number")
-        address = request.POST.get("address")
-        position = request.POST.get("position")
-        userAccount = Users.getUserByUsername(request.session["username"])
-
-        Users.editInfo(
-            userAccount,
-            fname=firstname,
-            lname=lastname,
-            email=email,
-            phone=phone,
-            address=address,
-            position=position,
-        )
-        return render(
-            request, "personal_information.html", {
-                "success": "information updated"}
-        )
