@@ -51,9 +51,11 @@ class Home(View):
 
 
 class AccountBase(View):
-    def get(self, request):
+    def get(self, request, **kwargs):
+        id_search = kwargs["id"]
+        current_user = User.objects.get(id=id_search)
         users = UserUtility.get_all_users()
-        return render(request, "accountbase.html", {"users": users})
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
     def post(self, request):
         # get value of method from within request.POST

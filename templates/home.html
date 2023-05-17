@@ -14,7 +14,7 @@
     {% if user.isLoggedIn == True %}
 <h1>Welcome {{ user.User_fName}}!</h1>
 <a href="{% url 'course_base' %}"><button class="goldbutton">View All Courses</button></a>
-    <a href="{% url 'accountbase' %}"><button class="goldbutton">View All Accounts</button></a>
+    <a href="{% url 'accountbase' id=user.id%}"><button class="goldbutton">View All Accounts</button></a>
     <a href="{% url 'personal_information' id=user.id%}"><button class="goldbutton">View Your Personal Information</button></a>
     {%  endif %}
 {% endfor %}
