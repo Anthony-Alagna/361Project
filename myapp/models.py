@@ -28,7 +28,7 @@ class User(models.Model):
         max_length=40, blank=True, default='')
 
     # need courses foreign key
-
+    isLoggedIn = models.BooleanField(default=False)
     User_begin = models.DateTimeField(auto_now_add=True)
     User_Updated = models.DateTimeField(auto_now=True)
 
