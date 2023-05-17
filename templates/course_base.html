@@ -35,7 +35,7 @@
                 {% else %}
                     <td>{{ course.Course_Instructor }}</td>
                 {% endif %}
-                <td><a href="{% url 'coursesection' %}">
+                <td><a href="{% url 'coursesection' course.Course_Code %}">
                     <button>Info</button>
                 </a></td>
                 <td><a href="{% url 'courseedit' Course_Code=course.Course_Code %}">

@@ -247,8 +247,10 @@ class EditCourse(View):
 
 
 class viewSection(View):
-    def get(self, request):
-        return render(request, "coursesection.html")
+    def get(self, request,**kwargs):
+        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
+        section=Section.objects.filter(Sec_Course=course).all()
+        return render(request, "coursesection.html",{"sections": section})
 
 
 class createSection(View):

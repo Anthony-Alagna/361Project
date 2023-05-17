@@ -43,7 +43,7 @@ urlpatterns = [
     path("home/course_base/createcourse",
          CreateCourse.as_view(), name="createcourse"),
     path(
-        "home/course_base/coursesection.html",
+        "home/course_base/coursesection.html<str:Course_Code>",
         viewSection.as_view(),
         name="coursesection",
     ),
