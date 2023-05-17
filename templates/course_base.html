@@ -9,9 +9,8 @@
 
 </head>
 <body>
-
-<h1>Manage Courses</h1>
-<div class="center">
+    <h1>Manage Courses</h1>
+    <div class="center">
     <a href="{% url 'home' %}">
         <button class="backbutton">Home</button>
     </a><br><br>
@@ -27,7 +26,11 @@
             <tr>
                 <td>COMPSCI {{ course.Course_Code }}</td>
                 <td>{{ course.Course_Name }}</td>
-                <td>{{ course.Course_Instructor }}</td>
+                {% if course.Course_Instructor == "" %}
+                    <td>No Instructor</td>
+                {% else %}
+                    <td>{{ course.Course_Instructor }}</td>
+                {% endif %}
                 <td><a href="">
                     <button>Info</button>
                 </a></td>
