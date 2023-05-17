@@ -16,7 +16,7 @@
         <table style="border-spacing: 30px 0;">
             <tr>
                 <td>
-                    <select name="section_inst" >
+                    <select name="course" >
                     <option value="">No Courses</option>
                     {% for course in courses %}
                         <option>{{ course.Course_Code }} {{ course.Course_Name }}</option>
@@ -40,12 +40,12 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" name="course_desc" size="50" placeholder="Add Description...">
+                    <input type="text" name="sect" size="50" placeholder="Add Description...">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <select name="section_instrucor" placeholder="Professor">
+                    <select name="sect_instr" placeholder="teaching Assistantr">
                     {% for user in users %}
                         {% if user.User_Pos == "Teaching Assistant" %}
                         <option>{{ user.User_fName }} {{ user.User_lName }}</option>
@@ -53,6 +53,17 @@
                     {% endfor %}
                     </select>
                 </td>
+            </tr>
+        <tr>
+                <td>Instruction Method:</td>
+                <td>
+                    <select name="course_inst_method">
+                        <option>In Person</option>
+                        <option>Hybrid</option>
+                        <option>Online</option>
+                    </select>
+                </td>
+{#                <td><input type="text"  name="Course_Instruction_method" {% if course.Course_isOnline %} {% endif %}></td>#}
             </tr>
         </table><br>
         <input class="goldbutton" type="submit" value="Create"/>

@@ -235,26 +235,22 @@ class EditCourse(View):
                 request.POST.get("course_inst_method"),
             )
             if isinstance(result, TypeError):
+                courses = Course.objects.all()
                 users = UserUtility.get_all_users()
                 return render(
                     request,
-                    "courseedit.html",
-                    {"users": users, "message": result}
+                    "createsection.html.html",
+                    {"courses": courses, "users": users, "message": result}
                 )
 
         return render(request, "course_base.html", {"courses": courses})
 
-    class viewSection(View):
-        def get(self, request):
-            return render(request, "coursesection.html")
 
-    class createSection(View):
-        def get(self, request):
-            return render(request, "createsection.html")
 
 
 class viewSection(View):
     def get(self, request):
+
         return render(request, "coursesection.html")
 
 
@@ -262,7 +258,22 @@ class createSection(View):
     def get(self, request):
         course = Course.objects.all()
         users = UserUtility.get_all_users()
-        return render(request, "createsection.html", {"courses" :course })
+        return render(request, "createsection.html", {"courses" :course, "users": users })
+
+    def post(self, request):
+        course = Course.objects.all()
+        users = UserUtility.get_all_users()
+        result = createSection(request.POST.get("section_name"), request.POST.get("course"), request.POST.get("sect_instr"))
+        if isinstance(result,ValueError):
+            courses = Course.objects.all()
+            users = UserUtility.get_all_users()
+            return render(
+                    request,
+                    "createsection.html",
+                    {"courses": courses, "users": users, "message": result}
+                )
+
+        return render(request, "course_base.html", {"courses": course})
 
 
 class ViewPersonalInformation(View):
