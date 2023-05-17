@@ -84,21 +84,19 @@ class Supervisor(Users):
         course.save()
 
     @staticmethod
-    def create_section(self, sec_name, course, ta_instr=None, date_time=None):
+    def create_section( sec_name, course, ta_instr=None, date_time=None):
         sec = Section.objects
         if sec_name == "" or course == "":
-            return ValueError("cannot have a blank section name")
+            return TypeError("cannot have a blank section name")
         else:
-            if sec.filter(Sec_name=sec_name):
-                return ValueError("seciton with this name exists")
+            if sec.filter(Sec_Name=sec_name):
+                return TypeError("seciton with this name exists")
             return Section.objects.create(Sec_Name=sec_name, Sec_Course=course, Sec_Instructor=ta_instr,
                                           Sec_begin=date_time)
 
     @staticmethod
-    def delete_section(self, sec_id):
-        if not Section.objects.get(id=sec_id):
-            return ValueError("no such section")
-        Section.objects.filter(id=sec_id).delete()
+    def delete_section(section):
+        section.delete()
 
     @staticmethod
     def delete_course(course):

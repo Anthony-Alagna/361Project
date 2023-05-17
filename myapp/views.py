@@ -263,6 +263,7 @@ class createSection(View):
     def post(self, request):
         course = Course.objects.all()
         users = UserUtility.get_all_users()
+
         result = createSection(request.POST.get("section_name"), request.POST.get("course"), request.POST.get("sect_instr"))
         if isinstance(result,ValueError):
             courses = Course.objects.all()
