@@ -18,19 +18,21 @@
         <button class="backbutton">Home</button>
     </a>
     <br>
+ {% if current_user.User_Pos == "Supervisor" and current_user.isLoggedIn == True%}
     <a href="{% url 'createaccount' %}">
         <button id="button4" class="goldbutton">Create New Account</button>
     </a>
+{% endif %}
     <br>
     <br>
-    <form action="{% url 'accountbase' %}" method="post">
+    <form action="{% url 'accountbase'%}" method="post">
         {% csrf_token %}
         <input type="hidden" name="method" value="searchUser">
         <input type="text" placeholder="Search By Last Name" name="search">
         <input type="submit"/>
     </form>
     <br>
-    <form action="{% url 'accountbase' %}" method="post">
+    <form action="{% url 'accountbase'%}" method="post">
         {% csrf_token %}
         <input type="hidden" name="method" value="filterUser">
         <select name="position">
@@ -47,18 +49,18 @@
         <tr>
             <th>Name</th>
             <th>Role</th>
-            <th>Actions</th>
         </tr>
         {% for user in users %}
             <tr>
                 <td>{{ user.User_fName }} {{ user.User_lName }}</td>
                 <td>{{ user.User_Pos }}</td>
                 <div style="text-align: center;">
-                    <td id="table"><a href="{% url 'editaccount' email=user.email%}">
+                    {% if current_user.User_Pos == "Supervisor" and current_user.isLoggedIn == True%}
+                    <td id="table"><a href="{% url 'editaccount' id=user.id%}">
                         <button id="button1" class="goldbutton"><span class="material-symbols-outlined">edit</span>
                         </button>
                     </a>
-                        <form action="{% url 'accountbase' %}" method="post">
+                        <form action="{% url 'accountbase'%}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="method" value="deleteUser">
                             <input type="hidden" name="username" value="{{ user.email }}">
@@ -66,6 +68,9 @@
                                     class="material-symbols-outlined">delete</span></button>
                         </form>
                     </td>
+                        {% else %}
+                        <td></td>
+                    {% endif %}
                 </div>
             </tr>
         {% endfor %}
