@@ -87,7 +87,7 @@ class Supervisor(Users):
     def create_section(sec_name, course, ta_instr=None, date_time=None):
         sec = Section.objects
 
-        c=Course.objects.get(Course_Code=course.Course_Code)
+
         if sec_name == "" or course == "":
             raise ValueError("Cannot have a blank section name")
         else:
