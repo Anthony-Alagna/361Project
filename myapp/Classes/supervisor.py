@@ -85,18 +85,25 @@ class Supervisor(Users):
 
     @staticmethod
     def create_section(sec_name, course, ta_instr=None, date_time=None):
-        c=course.split()
-        ta=ta_instr.split()
-        inst=User.objects.get(id=ta[0])
+        inst = User.objects.create(User_fName="", User_lName="")
+        if ta_instr:
+            ta = ta_instr.split()
+            inst = User.objects.get(id=ta[0])
+
+
+
+        c = course.split()
         cs = Course.objects.get(Course_Code=c[0])
+
         sec = Section.objects
         if sec_name == "" or course == "":
             raise ValueError("Cannot have a blank section name")
         else:
             if sec.filter(Sec_Name=sec_name).exists():
                 raise ValueError("Section with this name already exists")
-            return Section.objects.create(Sec_Name=sec_name, Sec_Course=cs, Sec_Instructor=inst,
-                                          Sec_begin=date_time)
+            section = Section.objects.create(Sec_Name=sec_name, Sec_Course=cs, Sec_begin=date_time,
+                                             Sec_Instructor=inst)
+            return section
 
     @staticmethod
     def delete_section(section):
