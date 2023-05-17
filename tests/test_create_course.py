@@ -1,4 +1,3 @@
-import django.test
 from django.test import TestCase, Client
 from django.urls import reverse
 
@@ -22,7 +21,7 @@ class TestNewCourse(TestCase):
                 c = c + 1
         self.assertTrue(c == 0, "Expected 0 courses, found " + str(c))
         Supervisor.create_course(
-            "101", "Intro to Coding", "Learning how to code", "John Doe"
+            "101", "Intro to Coding", "Learning how to code", "John Doe", "In Person"
         )
         self.courseList = Course.objects.all()
         for course in self.courseList:
@@ -33,10 +32,10 @@ class TestNewCourse(TestCase):
     # tests that create_course cannot create two courses with same code
     def test_cant_create_duplicates(self):
         Supervisor.create_course(
-            "101", "Intro to Coding", "Learning how to code", "John Doe"
+            "101", "Intro to Coding", "Learning how to code", "John Doe", "In Person"
         )
         Supervisor.create_course(
-            "101", "Intro to Coding", "Learning how to code", "John Doe"
+            "101", "Intro to Coding", "Learning how to code", "John Doe", "In Person"
         )
         c = 0
         self.courseList = Course.objects.all()
@@ -48,20 +47,20 @@ class TestNewCourse(TestCase):
     # tests that create course returns a TypeError on null parameters
     def test_null_code(self):
         result = Supervisor.create_course(
-            "", "Intro to Coding", "Learning how to code", "John Doe"
+            "", "Intro to Coding", "Learning how to code", "John Doe", "In Person"
         )
         self.assertTrue(
             isinstance(result, TypeError), "Expected a type error from create_course"
         )
 
     def test_null_name(self):
-        result = Supervisor.create_course("101", "", "Learning how to code", "John Doe")
+        result = Supervisor.create_course("101", "", "Learning how to code", "John Doe", "In Person")
         self.assertTrue(
             isinstance(result, TypeError), "Expected a type error from create_course"
         )
 
     def test_null_description(self):
-        result = Supervisor.create_course("101", "Intro to Coding", "", "John Doe")
+        result = Supervisor.create_course("101", "Intro to Coding", "", "John Doe", "In Person")
         self.assertTrue(
             isinstance(result, TypeError), "Expected a type error from create_course"
         )

@@ -120,11 +120,48 @@ class CourseBase(View):
         return render(request, "course_base.html", {"courses": courses})
 
     def post(self, request):
+        # courses = Course.objects.all()
+        # if request.POST.get("course_code") in courses:
+        #     course = Course.objects.get(request.POST.get("course_inst"))
+        #     course.Course_Instructor = request.POST.get("course_inst")
+
+        # result = Supervisor.create_course(
+        #     request.POST.get("course_code"),
+        #     request.POST.get("course_name"),
+        #     request.POST.get("course_desc"),
+        #     request.POST.get("course_inst"),
+        #     request.POST.get("course_inst"),
+        # )
+        # if isinstance(result, TypeError):
+        #     courses = Course.objects.all()
+        #     users = UserUtility.get_all_users()
+        #     return render(
+        #         request,
+        #         "createcourse.html",
+        #         {"courses": courses, "users": users, "message": result}
+        #     )
+        # return render(request, "course_base.html", {"courses": courses})
+
+        # button = request.POST.get("submit")
+        #
+        # Course.objects.get(Course_Code=)
+
+        return render(request, "course_base.html")
+
+
+class CreateCourse(View):
+    def get(self, request):
+        users = UserUtility.get_all_users()
+        return render(request, "createcourse.html", {"users": users})
+
+    def post(self, request):
         courses = Course.objects.all()
+
         result = Supervisor.create_course(
             request.POST.get("course_code"),
             request.POST.get("course_name"),
             request.POST.get("course_desc"),
+            request.POST.get("course_inst"),
             request.POST.get("course_inst"),
         )
         if isinstance(result, TypeError):
@@ -133,94 +170,47 @@ class CourseBase(View):
             return render(
                 request,
                 "createcourse.html",
-                {"courses": courses, "users": users, "message": result},
+                {"courses": courses, "users": users, "message": result}
             )
         return render(request, "course_base.html", {"courses": courses})
 
-
-class CreateCourse(View):
-    TEMPLATE = "createcourse.html"
-
-    def get(self, request):
-        users = UserUtility.get_all_users()
-        return render(request, "createcourse.html", {"users": users})
-
-    def post(self, request):
-        return render(request, "createcourse.html", {"success": "course created"})
+        # return render(request, "createcourse.html", {"success": "course created"})
 
 
 class EditCourse(View):
-    def get(self, request, *args, **kwargs):
-        c_code = kwargs["Course_Code"]
-        course = Course.objects.get(Course_Code=c_code)
+    def get(self, request, **kwargs):
+        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
         users = UserUtility.get_all_users()
 
         return render(request, "courseedit.html", {"course": course, "users": users})
 
-    def post(self, request, *args, **kwargs):
-        course_code = kwargs["Course_Code"]
-        actCourse = Course.objects.get(Course_Code=course_code)
-        users = UserUtility.get_all_users()
-
+    def post(self, request, **kwargs):
+        button = request.POST.get("button")
         courses = Course.objects.all()
-        res = request.POST
-        made_instructor = request.POST.get("course_inst")
-        first_name = made_instructor.split()
-        inst = actCourse.Course_Instructor
+        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
 
-        if "delete_user" in res:
-            if inst == "":
+        # If the user clicks on Delete Course button
+        if button == "Delete Course":
+            Supervisor.delete_course(course)
+
+        else:
+            result = Supervisor.edit_course(
+                course,
+                request.POST.get("course_code"),
+                request.POST.get("course_name"),
+                request.POST.get("course_desc"),
+                request.POST.get("course_inst"),
+                request.POST.get("course_inst_method"),
+            )
+            if isinstance(result, TypeError):
+                users = UserUtility.get_all_users()
                 return render(
                     request,
                     "courseedit.html",
-                    {
-                        "message": "no instructor to remove",
-                        "courses": courses,
-                        "users": users,
-                    },
+                    {"users": users, "message": result}
                 )
-            else:
-                actCourse = Supervisor.removeInstructorFromClass(
-                    inst, course_code)
-                return render(
-                    request,
-                    "courseedit.html",
-                    {
-                        "message": "Instructor has been removed from the course",
-                        "course": actCourse,
-                        "users": users,
-                    },
-                )
-        elif "save_ch" in res:
-            if made_instructor == "":
-                actCourse.save()
-                courses = Course.objects.all()
-                return render(request, "course_base.html", {"courses": courses})
-            elif first_name == actCourse.Course_Instructor:
-                return render(
-                    request,
-                    "courseedit.html",
-                    {
-                        "message": "Instructor is already assigned to this course",
-                        "course": actCourse,
-                        "users": users,
-                    },
-                )
-            else:
-                prof = User.objects.get(User_fName=first_name[0])
-                # have to set act courses = to it becauuse it returned in addINstructor
-                actCourse = Supervisor.addInstructor(
-                    prof.User_fName, course_code)
-                user = User.objects.all()
-                return render(
-                    request,
-                    "course_base.html",
-                    {
-                        "message": "instructor has successfully changed",
-                        "courses": courses,
-                        "user": user,
-                    },
-                )
+
+        return render(request, "course_base.html", {"courses": courses})
 
 
 class ViewPersonalInformation(View):
