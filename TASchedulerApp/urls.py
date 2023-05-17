@@ -31,7 +31,7 @@ urlpatterns = [
     path("home/", Home.as_view(), name="home"),
     path("", Login.as_view(), name="login"),
     path("forgotpassword/", ForgotPassword.as_view(), name="forgotpassword"),
-    path("home/accountbase/<int:id>", AccountBase.as_view(), name="accountbase"),
+    path("home/accountbase/", AccountBase.as_view(), name="accountbase"),
     path(
         "home/accountbase/createaccount/", CreateAccount.as_view(), name="createaccount"
     ),

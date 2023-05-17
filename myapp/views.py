@@ -51,9 +51,8 @@ class Home(View):
 
 
 class AccountBase(View):
-    def get(self, request, **kwargs):
-        id_search = kwargs["id"]
-        current_user = User.objects.get(id=id_search)
+    def get(self, request):
+        current_user = User.objects.get(isLoggedIn=True)
         users = UserUtility.get_all_users()
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
@@ -106,7 +105,10 @@ class CreateAccount(View):
         if isinstance(result, ValueError):
             return render(request, "createaccount.html", {"message": result})
         users = UserUtility.get_all_users()
-        return render(request, "accountbase.html", {"users": users})
+        current_user = User.objects.get(isLoggedIn=True)
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
+
+
 
 
 class EditAccount(View):
@@ -139,9 +141,9 @@ class EditAccount(View):
             phone=phone,
             position=position,
         )
-
+        current_user = User.objects.get(isLoggedIn=True)
         users = UserUtility.get_all_users()
-        return render(request, "accountbase.html", {"users": users})
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
 
 class CourseBase(View):

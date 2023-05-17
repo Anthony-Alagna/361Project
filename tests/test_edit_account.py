@@ -186,6 +186,7 @@ class TestButtons(TestCase):
             User_LogPass="password14",
             User_begin="2022-01-01 00:00:00",
             User_Updated="2023-04-18 00:00:00",
+            isLoggedIn=True
         )
 
     def tearDown(self):
