@@ -31,7 +31,7 @@
                 {% else %}
                     <td>{{ course.Course_Instructor }}</td>
                 {% endif %}
-                <td><a href="">
+                <td><a href="{% url 'coursesection' %}">
                     <button>Info</button>
                 </a></td>
                 <td><a href="{% url 'courseedit' Course_Code=course.Course_Code %}">
@@ -43,6 +43,9 @@
     <br>
     <a href="{% url 'createcourse' %}">
         <button class="goldbutton">New Course</button>
+    </a>
+     <a href="{% url 'createsection' %}">
+        <button class="goldbutton">New Section</button>
     </a>
     <br>{{ success }}
 </div>

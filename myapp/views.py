@@ -212,6 +212,26 @@ class EditCourse(View):
 
         return render(request, "course_base.html", {"courses": courses})
 
+    class viewSection(View):
+        def get(self, request):
+            return render(request, "coursesection.html")
+
+    class createSection(View):
+        def get(self, request):
+            return render(request, "createsection.html")
+
+
+class viewSection(View):
+    def get(self, request):
+        return render(request, "coursesection.html")
+
+
+class createSection(View):
+    def get(self, request):
+        course = Course.objects.all()
+        users = UserUtility.get_all_users()
+        return render(request, "createsection.html", {"courses" :course })
+
 
 class ViewPersonalInformation(View):
     def get(self, request, **kwargs):

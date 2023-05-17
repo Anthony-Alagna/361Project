@@ -1,11 +1,11 @@
-from myapp.models import User, Course
+from myapp.models import User, Course, Section
 from myapp.Classes.users import Users
 
 
 class Supervisor(Users):
     @staticmethod
     def create_account(
-        fname, lname, email, password, address, city, phone, account_type
+            fname, lname, email, password, address, city, phone, account_type
     ):
         users = User.objects.all()
         for user in users:
@@ -15,14 +15,14 @@ class Supervisor(Users):
                 )
 
         if (
-            fname == ""
-            or lname == ""
-            or email == ""
-            or password == ""
-            or address == ""
-            or city == ""
-            or phone == ""
-            or account_type == ""
+                fname == ""
+                or lname == ""
+                or email == ""
+                or password == ""
+                or address == ""
+                or city == ""
+                or phone == ""
+                or account_type == ""
         ):
             return ValueError("You're missing a field - please fill in all fields")
 
@@ -82,6 +82,23 @@ class Supervisor(Users):
         course.Course_Instructor = inst
         course.Course_Instruction_Method = inst_method
         course.save()
+
+    @staticmethod
+    def create_section(self, sec_name, course, ta_instr=None, date_time=None):
+        sec = Section.objects
+        if sec_name == "" or course == "":
+            return ValueError("cannot have a blank section name")
+        else:
+            if sec.filter(Sec_name=sec_name):
+                return ValueError("seciton with this name exists")
+            return Section.objects.create(Sec_Name=sec_name, Sec_Course=course, Sec_Instructor=ta_instr,
+                                          Sec_begin=date_time)
+
+    @staticmethod
+    def delete_section(self, sec_id):
+        if not Section.objects.get(id=sec_id):
+            return ValueError("no such section")
+        Section.objects.filter(id=sec_id).delete()
 
     @staticmethod
     def delete_course(course):

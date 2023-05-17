@@ -1,0 +1,25 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sections for course.Course_Name</title>
+</head>
+<body>
+<table>
+   {% for section in sections %}
+            <tr>
+                <td>COMPSCI {{ section.id }}</td>
+                <td>{{ section.Sec_Name }}</td>
+                <td>{{ section.Instructor }}</td>
+
+                <td><a href="">
+                    <button>Edit</button>
+                </a></td>
+            </tr>
+   {% endfor %}
+</table>
+
+<a href="{% url 'course_base' %}">
+        <button class="goldbutton">Submit</button>
+</body>
+</html>

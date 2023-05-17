@@ -23,6 +23,8 @@ from myapp.views import (
     EditAccount,
     ViewPersonalInformation,
     ForgotPassword,
+    viewSection,
+    createSection,
 )
 from myapp.views import CourseBase, CreateCourse, EditCourse
 
@@ -40,6 +42,14 @@ urlpatterns = [
     path("home/course_base/", CourseBase.as_view(), name="course_base"),
     path("home/course_base/createcourse",
          CreateCourse.as_view(), name="createcourse"),
+    path(
+        "home/course_base/coursesection.html",
+        viewSection.as_view(),
+        name="coursesection",
+    ),
+    path("home/course_base/createsection.html",
+         createSection.as_view(), name="createsection"),
+
     path(
         "home/personal_information/<int:id>",
         ViewPersonalInformation.as_view(),
