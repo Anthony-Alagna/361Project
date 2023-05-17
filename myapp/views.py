@@ -261,7 +261,6 @@ class createSection(View):
         course = Course.objects.all()
         users = UserUtility.get_all_users()
 
-
         result = Supervisor.create_section(request.POST.get("section_name"), request.POST.get("course"),
                                            request.POST.get("section_inst"), datetime.datetime)
         if isinstance(result, ValueError):
