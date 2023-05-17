@@ -1,101 +1,84 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Edit Course Page</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+
   </head>
   <body>
     <h1>Edit Course</h1>
-    <a href="{% url 'course_base'%}"
-      ><button style="margin-right: 30px">Back</button></a
-    >
-    <form method="post">
-      {% csrf_token %}
-      <table>
-        <tr>
-          <td>Course Name:</td>
-          <td>
-            <input type="text" name="name" value="{{ course.name }}" />
-          </td>
-        </tr>
-        <tr>
-          <td>Course Code:</td>
-          <td>
-            <input
-              type="text"
-              name="Course_Code"
-              value="{{ course.Course_Code }}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Description:</td>
-          <td>
-            <input
-              type="text"
-              name="Course_Description"
-              value=" {{ course.Course_Description }}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Instructor:</td>
-          {#
-          <td>
-            <input
-              type="text"
-              name="Course_Instructor"
-              {%
-              if
-              course.Course_isOnline
-              %}
-              {%
-              endif
-              %}
-            />
-          </td>
-          #}
-          <td>
-            <option>{{""}}</option>
-            <select name="course_inst" placeholder="Professor">
-              <option>{{ user.first_name }} {{ user.last_name }}</option>
-              {% for user in users %} {% if user.positions == "Professor" %}
-
-              <option>{{ user.first_name }} {{ user.last_name }}</option>
-              {% endif %} {% endfor %}
-            </select>
-            #
-            <button name="delete_user" type="submit">Remove Instructor</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Online:</td>
-          <td>
-            <input
-              type="text"
-              name="Course_isOnline"
-              {%
-              if
-              course.Course_isOnline
-              %}
-              {%
-              endif
-              %}
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>Location:</td>
-          <td>
-            <input
-              type="text"
-              name="Course_Location"
-              value="{{ course.Course_Location }}"
-            />
-          </td>
-        </tr>
-      </table>
-      <button name="save_ch" type="submit">Save</button>
+    <a href="{% url 'course_base'%}">
+        <button class="backbutton">Back</button>
+    </a>
+{#    <form action="{% url 'course_base'%}" method="post">#}
+{##}
+{#    </form>#}
+{#    <a href="{% url 'course_base'%}"><button style="margin-right: 30px;">Back</button></a>#}
+{#    <form action="{% url 'course_base'%}" method="post">{% csrf_token %}#}
+    <form method="post">{% csrf_token %}
+        <input class="goldbutton" type="submit" name="button" value="Delete Course"/>
+        <table>
+            <tr>
+                <td>Course Code:</td>
+                <td><input type="text"  name="course_code" value="{{ course.Course_Code }}"></td>
+            </tr>
+            <tr>
+                <td>Course Name:</td>
+                <td><input type="text"  name="course_name" value="{{ course.Course_Name }}"></td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td><input type="text"  name="course_desc" value="{{ course.Course_Description }}"></td>
+            </tr>
+            <tr>
+                <td>Instructor:</td>
+                <td>
+                    <select name="course_inst">
+                    {% if course.Course_Instructor == "" %}
+                        <option value="">No Instructor</option>
+                    {% else %}
+                        <option value={{ course.Course_Instructor }}>{{ course.Course_Instructor }}</option>
+                        <option value="">No Instructor</option>
+                    {% endif %}
+{#                    <option value="">No Instructor</option>#}
+                    {% for user in users %}
+                        {% if user.User_Pos == "Professor" %}
+                            <option>{{ user.User_fName }} {{ user.User_lName }}</option>
+{#                            {% if course.Course_Instructor %}#}
+{#                                <option selected="selected">{{ user.User_fName }} {{ user.User_lName }}</option>#}
+{#                            {% else %}#}
+{#                                <option>{{ user.User_fName }} {{ user.User_lName }}</option>#}
+{#                            {% endif %}#}
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Instruction Method:</td>
+                <td>
+                    <select name="course_inst_method">
+                        <option>In Person</option>
+                        <option>Hybrid</option>
+                        <option>Online</option>
+                    </select>
+                </td>
+{#                <td><input type="text"  name="Course_Instruction_method" {% if course.Course_isOnline %} {% endif %}></td>#}
+            </tr>
+            <tr>
+                <td>Location:</td>
+                <td><input type="text" name="Course_Location" value="{{ course.Course_Location }}"></td>
+            </tr>
+        </table>
+{#        <button name = "save_ch" type="submit">Save</button>#}
+        <input class="goldbutton" type="submit" value="Save"/>
     </form>
     {{ message }}
   </body>

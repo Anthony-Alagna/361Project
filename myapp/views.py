@@ -63,8 +63,9 @@ class Home(View):
 
 class AccountBase(View):
     def get(self, request):
+        current_user = User.objects.get(isLoggedIn=True)
         users = UserUtility.get_all_users()
-        return render(request, "accountbase.html", {"users": users})
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
     def post(self, request):
         # get value of method from within request.POST
@@ -115,14 +116,43 @@ class CreateAccount(View):
         if isinstance(result, ValueError):
             return render(request, "createaccount.html", {"message": result})
         users = UserUtility.get_all_users()
-        return render(request, "accountbase.html", {"users": users})
+        current_user = User.objects.get(isLoggedIn=True)
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
 
 class EditAccount(View):
     def get(self, request, *args, **kwargs):
         id_search = kwargs["id"]
         user = User.objects.get(id=id_search)
-        return render(request, "editaccount.html", {"user": user})
+        users = UserUtility.get_all_users()
+        return render(request, "editaccount.html", {"user": user, "all_users": users})
+
+    def post(self, request, **kwargs):
+        firstname = request.POST.get("firstname")
+        lastname = request.POST.get("lastname")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        address = request.POST.get("address")
+        city = request.POST.get("city")
+        phone = request.POST.get("phone_number")
+        position = request.POST.get("position")
+        id_search = kwargs["id"]
+        userAccount = User.objects.get(id=id_search)
+
+        Users.edit_account(
+            userAccount,
+            fname=firstname,
+            lname=lastname,
+            email=email,
+            password=password,
+            address=address,
+            city=city,
+            phone=phone,
+            position=position,
+        )
+        current_user = User.objects.get(isLoggedIn=True)
+        users = UserUtility.get_all_users()
+        return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
 
 class CourseBase(View):
@@ -131,11 +161,48 @@ class CourseBase(View):
         return render(request, "course_base.html", {"courses": courses})
 
     def post(self, request):
+        # courses = Course.objects.all()
+        # if request.POST.get("course_code") in courses:
+        #     course = Course.objects.get(request.POST.get("course_inst"))
+        #     course.Course_Instructor = request.POST.get("course_inst")
+
+        # result = Supervisor.create_course(
+        #     request.POST.get("course_code"),
+        #     request.POST.get("course_name"),
+        #     request.POST.get("course_desc"),
+        #     request.POST.get("course_inst"),
+        #     request.POST.get("course_inst"),
+        # )
+        # if isinstance(result, TypeError):
+        #     courses = Course.objects.all()
+        #     users = UserUtility.get_all_users()
+        #     return render(
+        #         request,
+        #         "createcourse.html",
+        #         {"courses": courses, "users": users, "message": result}
+        #     )
+        # return render(request, "course_base.html", {"courses": courses})
+
+        # button = request.POST.get("submit")
+        #
+        # Course.objects.get(Course_Code=)
+
+        return render(request, "course_base.html")
+
+
+class CreateCourse(View):
+    def get(self, request):
+        users = UserUtility.get_all_users()
+        return render(request, "createcourse.html", {"users": users})
+
+    def post(self, request):
         courses = Course.objects.all()
+
         result = Supervisor.create_course(
             request.POST.get("course_code"),
             request.POST.get("name"),
             request.POST.get("course_desc"),
+            request.POST.get("course_inst"),
             request.POST.get("course_inst"),
         )
         if isinstance(result, TypeError):
@@ -144,94 +211,47 @@ class CourseBase(View):
             return render(
                 request,
                 "createcourse.html",
-                {"courses": courses, "users": users, "message": result},
+                {"courses": courses, "users": users, "message": result}
             )
         return render(request, "course_base.html", {"courses": courses})
 
-
-class CreateCourse(View):
-    TEMPLATE = "createcourse.html"
-
-    def get(self, request):
-        users = UserUtility.get_all_users()
-        return render(request, "createcourse.html", {"users": users})
-
-    def post(self, request):
-        return render(request, "createcourse.html", {"success": "course created"})
+        # return render(request, "createcourse.html", {"success": "course created"})
 
 
 class EditCourse(View):
-    def get(self, request, *args, **kwargs):
-        c_code = kwargs["Course_Code"]
-        course = Course.objects.get(Course_Code=c_code)
+    def get(self, request, **kwargs):
+        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
         users = UserUtility.get_all_users()
 
         return render(request, "courseedit.html", {"course": course, "users": users})
 
-    def post(self, request, *args, **kwargs):
-        course_code = kwargs["Course_Code"]
-        actCourse = Course.objects.get(Course_Code=course_code)
-        users = UserUtility.get_all_users()
-
+    def post(self, request, **kwargs):
+        button = request.POST.get("button")
         courses = Course.objects.all()
-        res = request.POST
-        made_instructor = request.POST.get("course_inst")
-        first_name = made_instructor.split()
-        inst = actCourse.Course_Instructor
+        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
 
-        if "delete_user" in res:
-            if inst == "":
+        # If the user clicks on Delete Course button
+        if button == "Delete Course":
+            Supervisor.delete_course(course)
+
+        else:
+            result = Supervisor.edit_course(
+                course,
+                request.POST.get("course_code"),
+                request.POST.get("course_name"),
+                request.POST.get("course_desc"),
+                request.POST.get("course_inst"),
+                request.POST.get("course_inst_method"),
+            )
+            if isinstance(result, TypeError):
+                users = UserUtility.get_all_users()
                 return render(
                     request,
                     "courseedit.html",
-                    {
-                        "message": "no instructor to remove",
-                        "courses": courses,
-                        "users": users,
-                    },
+                    {"users": users, "message": result}
                 )
-            else:
-                actCourse = Supervisor.removeInstructorFromClass(
-                    inst, course_code)
-                return render(
-                    request,
-                    "courseedit.html",
-                    {
-                        "message": "Instructor has been removed from the course",
-                        "course": actCourse,
-                        "users": users,
-                    },
-                )
-        elif "save_ch" in res:
-            if made_instructor == "":
-                actCourse.save()
-                courses = Course.objects.all()
-                return render(request, "course_base.html", {"courses": courses})
-            elif first_name == actCourse.Course_Instructor:
-                return render(
-                    request,
-                    "courseedit.html",
-                    {
-                        "message": "Instructor is already assigned to this course",
-                        "course": actCourse,
-                        "users": users,
-                    },
-                )
-            else:
-                prof = User.objects.get(first_name=first_name[0])
-                # have to set act courses = to it becauuse it returned in addINstructor
-                actCourse = Supervisor.addInstructor(
-                    prof.first_name, course_code)
-                user = User.objects.all()
-                return render(
-                    request,
-                    "course_base.html",
-                    {
-                        "message": "instructor has successfully changed",
-                        "courses": courses,
-                        "user": user,
-                    },
-                )
+
+        return render(request, "course_base.html", {"courses": courses})
 
 
 class ViewPersonalInformation(View):
@@ -239,26 +259,3 @@ class ViewPersonalInformation(View):
         id_search = kwargs["id"]
         user = User.objects.get(id=id_search)
         return render(request, "personal_information.html", {"user": user})
-
-    def post(self, request):
-        firstname = request.POST.get("first_name")
-        lastname = request.POST.get("last_name")
-        email = request.POST.get("email")
-        phone = request.POST.get("phone_number")
-        address = request.POST.get("address")
-        position = request.POST.get("position")
-        userAccount = Users.getUserByUsername(request.session["username"])
-
-        Users.editInfo(
-            userAccount,
-            fname=firstname,
-            lname=lastname,
-            email=email,
-            phone=phone,
-            address=address,
-            position=position,
-        )
-        return render(
-            request, "personal_information.html", {
-                "success": "information updated"}
-        )

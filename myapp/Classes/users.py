@@ -38,15 +38,6 @@ class Users(abc.ABC):
         self.username = username
         self.isgrader = isgrader
 
-    def getAccountInfo(username, id):
-        if username is None:
-            raise TypeError("Username cannot be blank")
-        if id is None:
-            raise TypeError("ID cannot be blank")
-
-        user = User.objects.get(email=username, id=id)
-        return user
-
     def get_user_id(self):
         if self.user_id == "":
             raise TypeError("ID cannot be blank")
@@ -54,31 +45,40 @@ class Users(abc.ABC):
 
     def edit_account(
         self,
-        phone=None,
-        address=None,
-        city=None,
         fname=None,
         lname=None,
-        position=None,
+        email=None,
+        password=None,
+        address=None,
+        city=None,
+        phone=None,
+        position=None
     ):
         if self is type(None) or type(self) is not User:
             raise TypeError("User object is not valid")
 
         if phone:
             self.phone_number = phone
+        if fname:
+            self.User_fName = fname
+        if lname:
+            self.User_lName = lname
+        if email:
+            self.email = email
+        if password:
+            self.User_LogPass = password
         if address:
             self.address = address
         if city:
-            self.city = city
+            self.User_City = city
         if fname:
-            self.first_name = fname
+            self.User_fName = fname
         if lname:
-            self.last_name = lname
+            self.User_lName = lname
         if position:
             self.positions = position
         if email:
             self.email = email
-
         self.save()
 
     def viewCourse(self, course_id):

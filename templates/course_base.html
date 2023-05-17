@@ -5,6 +5,14 @@
   <head>
     <meta charset="UTF-8" />
     <title>Manage Courses</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
   </head>
   <body>
@@ -25,7 +33,11 @@
         <tr>
           <td>COMPSCI {{ course.Course_Code }}</td>
           <td>{{ course.name }}</td>
+          {% if course.Course_Instructor == "" %}
+          <td>No Instructor</td>
+          {% else %}
           <td>{{ course.Course_Instructor }}</td>
+          {% endif %}
           <td>
             <a href="">
               <button>Info</button>

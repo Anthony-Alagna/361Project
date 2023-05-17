@@ -10,11 +10,13 @@ class UserManager(BaseUserManager):
 
 
 class Course(models.Model):
+    id = models.AutoField(("course_id"), primary_key=True, unique=True)
     Course_Code = models.CharField(max_length=3)
-    Course_Instructor = models.CharField(max_length=50, blank=True)
+    Course_Name = models.CharField(max_length=50)
     Course_Description = models.CharField(max_length=150, blank=True)
-    Course_isOnline = models.BooleanField(default=False)
-    Course_Location = models.CharField(max_length=50, blank=True)
+    # Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    Course_Instructor = models.CharField(max_length=50, blank=True)
+    Course_Instruction_Method = models.CharField(max_length=20, blank=True)
     Course_begin = models.DateTimeField(
         auto_now_add=True, blank=True, null=True)
     Course_Updated = models.DateTimeField(auto_now=True, blank=True, null=True)
