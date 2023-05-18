@@ -9,6 +9,7 @@ services:
       - gunicorn_logs:/gunicorn/logs
       - static:/code/static
       - media:/code/media
+      - db:/code/db
     env_file:
       - prod.env
 
@@ -59,3 +60,6 @@ volumes:
   certbot_www:
     external:
       name: certbot_www
+  db:
+    external:
+      name: db_data
