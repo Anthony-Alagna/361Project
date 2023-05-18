@@ -30,8 +30,6 @@ from myapp.views import (
     CreateCourse,
     EditCourse,
     ViewAccount,
-    LogoutView
-
 )
 
 
