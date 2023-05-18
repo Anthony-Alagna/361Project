@@ -1,9 +1,11 @@
+from django.contrib.auth.models import User
+from django.test import TestCase, RequestFactory
+from django.test import RequestFactory
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.core import mail
 from myapp.models import User
-from django.core.exceptions import ObjectDoesNotExist
-from myapp.Classes import login
+from myapp.Classes.login import ForgotPassword, Logout, ResetPassword
 import os
 
 """_summary_ contains unit tests for the login page
@@ -16,7 +18,7 @@ class LoginTest(TestCase):
         for i in range(10):
             User.objects.create(
                 email=(i),
-                User_LogPass=str(i),
+                password=str(i),
             )
 
     def tearDown(self):
@@ -67,7 +69,7 @@ class ForgotPasswordTest(TestCase):
         self.client = Client()
         User.objects.create(
             email=os.getenv("MAIL_USERNAME"),
-            User_LogPass=str(1),
+            password=str(1),
         )
 
     def test_forgot_password_accessible(self):
@@ -100,9 +102,9 @@ class TestMailClient(TestCase):
     def setUp(self):
         self.testUser = User.objects.create(
             email=os.getenv("MAIL_USERNAME"),
-            User_LogPass=str(1),
+            password=str(1),
         )
-        self.fp = login.ForgotPassword()
+        self.fp = ForgotPassword()
 
     def tearDown(self):
         self.fp = None
@@ -132,8 +134,8 @@ class TestResetPassword(TestCase):
     def setUp(self):
         # Create a test user with a password reset token
         self.user = User.objects.create(
-            email="exampleuser@example.com", pw_reset_token="exampleuser@example.com:auth_token", User_LogPass="old_password")
-        self.reset = login.ResetPassword()
+            email="exampleuser@example.com", pw_reset_token="exampleuser@example.com:auth_token", password="old_password")
+        self.reset = ResetPassword()
 
     def tearDown(self):
         self.user.delete()
@@ -146,7 +148,7 @@ class TestResetPassword(TestCase):
 
         # Check that the user's password is updated
         updated_user = User.objects.get(email="exampleuser@example.com")
-        self.assertEqual(updated_user.User_LogPass, new_password)
+        self.assertEqual(updated_user.password, new_password)
 
     def test_invalid_token(self):
         token = "invalid_token"
@@ -184,4 +186,30 @@ class TestResetPassword(TestCase):
 
         # Check that the user's password is updated
         updated_user = User.objects.get(email="exampleuser@example.com")
-        self.assertEqual(updated_user.User_LogPass, new_password)
+        self.assertEqual(updated_user.password, new_password)
+
+
+""" class LogoutTestCase(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = User.objects.create(username='testuser')
+
+    def test_logout(self):
+        self.user.set_password('testpass')
+        self.user.save()
+        path = reverse('logout')
+        request = self.factory.get(path)
+        login_successful = self.client.login(
+            username='testuser', password='testpass')
+
+        if login_successful:
+            request.user = self.user
+            response = Logout(request).redirect
+            self.assertNotIn('user_id', request.session)
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(response.url, reverse('login'))
+            self.assertEqual(response.cookies.get('sessionid').value, '')
+        else:
+            # Handle the case where login was unsuccessful
+            self.fail('Login was unsuccessful')
+ """

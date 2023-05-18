@@ -22,42 +22,42 @@ from django.urls import reverse
 #     def setUp(self):
 #         self.user1 = User.objects.create(
 #             id="1",
-#             User_fName="Cricket",
-#             User_lName="ROCKET",
+#             first_name="Cricket",
+#             last_name="ROCKET",
 #             email="user1@example.com",
-#             User_Pos="instructor",
-#             User_Phone="1234567890",
-#             User_Address="123 Main St",
-#             User_LogPass="password",
+#             positions="instructor",
+#             phone="1234567890",
+#             address="123 Main St",
+#             password="password",
 #             User_isGrader="True",
-#             User_begin="2022-01-01 00:00:00",
-#             User_Updated="2023-04-18 00:00:00",
+#             created_at="2022-01-01 00:00:00",
+#             updated_at="2023-04-18 00:00:00",
 #         )
 #         self.user2 = User.objects.create(
 #             id="2",
-#             User_fName="taco",
-#             User_lName="roco",
+#             first_name="taco",
+#             last_name="roco",
 #             email="user2@example.com",
-#             User_Pos="insturctor",
-#             User_Phone="0987654321",
-#             User_Address="456 Elm St",
-#             User_LogPass="password2",
+#             positions="insturctor",
+#             phone="0987654321",
+#             address="456 Elm St",
+#             password="password2",
 #             User_isGrader="True",
-#             User_begin="2022-01-01 00:00:00",
-#             User_Updated="2023-04-17 00:00:00",
+#             created_at="2022-01-01 00:00:00",
+#             updated_at="2023-04-17 00:00:00",
 #         )
 #         self.user3 = User.objects.create(
 #             id="3",
-#             User_fName="Noodle",
-#             User_lName="String",
+#             first_name="Noodle",
+#             last_name="String",
 #             email="user3@example.com",
-#             User_Pos="Teaching Assistant",
-#             User_Phone="034567921",
-#             User_Address="22 blanco Dr",
-#             User_LogPass="password3",
+#             positions="Teaching Assistant",
+#             phone="034567921",
+#             address="22 blanco Dr",
+#             password="password3",
 #             User_isGrader="False",
-#             User_begin="2022-01-01 00:00:00",
-#             User_Updated="2023-04-17 00:00:00",
+#             created_at="2022-01-01 00:00:00",
+#             updated_at="2023-04-17 00:00:00",
 #         )
 #         self.course1 = Course.objects.create(
 #             id="1",
@@ -73,7 +73,7 @@ from django.urls import reverse
 #             id="2",
 #             Course_Name="Computer Architecture",
 #             Course_Code="48201",
-#             Course_Instructor=self.user2.User_fName,
+#             Course_Instructor=self.user2.first_name,
 #             Course_isOnline="False",
 #             Course_Location="123 Main St",
 #             Course_begin="2022-01-01 00:00:00",
@@ -94,10 +94,10 @@ from django.urls import reverse
 #     def test_add_teacher_to_class_with_no_instructor(self):
 #         teacher = self.user1
 #         Supervisor.addInstructor(
-#             self.user1.User_fName, self.course3.Course_Code)
+#             self.user1.first_name, self.course3.Course_Code)
 #         course = Course.objects.get(id="3")
 #         self.assertEqual(
-#             teacher.User_fName,
+#             teacher.first_name,
 #             course.Course_Instructor,
 #             "teacher should be added because it was blank",
 #         )
@@ -119,7 +119,7 @@ from django.urls import reverse
 #             course.Course_Instructor, course_code=course.Course_Code
 #         )
 #         Supervisor.addInstructor(
-#             self.user3.User_fName, self.course3.Course_Code)
+#             self.user3.first_name, self.course3.Course_Code)
 #
 #         self.assertEqual(
 #             "",
@@ -154,7 +154,7 @@ from django.urls import reverse
 #     # tests that only one instructor can be added at a time
 #     def test_add_multiple_instructors(self):
 #         Supervisor.addInstructor(
-#             self.user2.User_fName, self.course3.Course_Code)
+#             self.user2.first_name, self.course3.Course_Code)
 #         course = Course.objects.get(id="2")
 #         self.assertEqual(
 #             1,
@@ -168,7 +168,7 @@ from django.urls import reverse
 #     # removing instructor
 #     def test_remove_instructor(self):
 #         course = Course.objects.get(id="2")
-#         user = User.objects.get(User_fName=course.Course_Instructor)
+#         user = User.objects.get(first_name=course.Course_Instructor)
 #         Supervisor.removeInstructorFromClass(
 #             course.Course_Instructor, course_code=course.Course_Code
 #         )
@@ -183,7 +183,7 @@ from django.urls import reverse
 #     def test_remove_blank_instructor(self):
 #         course = Course.objects.get(id="3")
 #         Supervisor.addInstructor(
-#             self.user2.User_fName, self.course3.Course_Code)
+#             self.user2.first_name, self.course3.Course_Code)
 #         rest1 = Supervisor.removeInstructorFromClass(
 #             self.course3.Course_Instructor, self.course3.Course_Code
 #         )
@@ -207,29 +207,29 @@ from django.urls import reverse
 #         )
 #         self.user1 = User.objects.create(
 #             id="1",
-#             User_fName="Cricket",
-#             User_lName="ROCKET",
+#             first_name="Cricket",
+#             last_name="ROCKET",
 #             email="user1@example.com",
-#             User_Pos="instructor",
-#             User_Phone="1234567890",
-#             User_Address="123 Main St",
-#             User_LogPass="password",
+#             positions="instructor",
+#             phone="1234567890",
+#             address="123 Main St",
+#             password="password",
 #             User_isGrader="True",
-#             User_begin="2022-01-01 00:00:00",
-#             User_Updated="2023-04-18 00:00:00",
+#             created_at="2022-01-01 00:00:00",
+#             updated_at="2023-04-18 00:00:00",
 #         )
 #         self.user2 = User.objects.create(
 #             id="2",
-#             User_fName="taco",
-#             User_lName="roco",
+#             first_name="taco",
+#             last_name="roco",
 #             email="user2@example.com",
-#             User_Pos="insturctor",
-#             User_Phone="0987654321",
-#             User_Address="456 Elm St",
-#             User_LogPass="password2",
+#             positions="insturctor",
+#             phone="0987654321",
+#             address="456 Elm St",
+#             password="password2",
 #             User_isGrader="True",
-#             User_begin="2022-01-01 00:00:00",
-#             User_Updated="2023-04-17 00:00:00",
+#             created_at="2022-01-01 00:00:00",
+#             updated_at="2023-04-17 00:00:00",
 #         )
 #
 #     # click on edit button from course_base page
@@ -249,7 +249,7 @@ from django.urls import reverse
 #         url = reverse("courseedit", kwargs={"Course_Code": ext})
 #
 #         response = self.client.post(
-#             url, data={"course_inst": self.user2.User_fName,
+#             url, data={"course_inst": self.user2.first_name,
 #                        "save_ch": "submit"}
 #         )
 #         self.assertEqual(response.status_code, 200)
@@ -265,7 +265,7 @@ from django.urls import reverse
 #         ext = Course.objects.get(id="3")
 #         url = reverse("courseedit", kwargs={"Course_Code": ext.Course_Code})
 #         res = self.client.post(
-#             url, data={"course_inst": self.user2.User_fName,
+#             url, data={"course_inst": self.user2.first_name,
 #                        "save_ch": "submit"}
 #         )
 #         # Check if the response is a redirect

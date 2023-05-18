@@ -1,8 +1,11 @@
+from django.views.generic import View
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.views import View
+from myapp.Classes.login import ForgotPassword, Logout, ResetPassword
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
-from myapp.models import User, Course, Section, CourseToUser
+from myapp.models import User, Course, Section, CourseEnrollment
 
 
 # Create your views here.
@@ -15,16 +18,23 @@ class Login(View):
     def post(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = User.objects.get(email=username, User_LogPass=password)
+        user = User.objects.filter(email=username, password=password)
         if user:
             # used to store the username in the session, so that it can be used later
             request.session["username"] = username
             user.isLoggedIn = True
-            user.save()
             return redirect("home")
         else:
             # return status code 302
             return redirect("login")
+
+
+class LogoutView(View):
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        redirect = Logout(request).redirect
+        return redirect
 
 
 class ForgotPassword(View):
@@ -109,8 +119,6 @@ class CreateAccount(View):
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
 
-
-
 class EditAccount(View):
     def get(self, request, *args, **kwargs):
         id_search = kwargs["id"]
@@ -132,18 +140,19 @@ class EditAccount(View):
 
         Users.edit_account(
             userAccount,
-            fname=firstname,
-            lname=lastname,
+            first_name=firstname,
+            last_name=lastname,
             email=email,
             password=password,
             address=address,
             city=city,
-            phone=phone,
-            position=position,
+            phone_number=phone,
+            positions=position,
         )
         current_user = User.objects.get(isLoggedIn=True)
         users = UserUtility.get_all_users()
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
+
 
 class ViewAccount(View):
     def get(self, request, **kwargs):
@@ -151,6 +160,7 @@ class ViewAccount(View):
         user = User.objects.get(id=id_search)
         viewing_user = User.objects.get(isLoggedIn=True)
         return render(request, "viewaccount.html", {"user": user, "viewing_user": viewing_user})
+
 
 class CourseBase(View):
     def get(self, request):
@@ -197,7 +207,7 @@ class CreateCourse(View):
 
         result = Supervisor.create_course(
             request.POST.get("course_code"),
-            request.POST.get("course_name"),
+            request.POST.get("name"),
             request.POST.get("course_desc"),
             request.POST.get("course_inst"),
             request.POST.get("course_inst"),

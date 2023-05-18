@@ -8,7 +8,7 @@ from myapp.Classes.supervisor import Supervisor
 # basic unit test for create account page
 
 
-# Method: Supervisor.create_account(fName: str, lName: str, email: str, username: str, password: str, address: str, city: str, phone: str, account_type: str)
+# Method: Supervisor.create_account(first_name: str, last_name: str, email: str, username: str, password: str, address: str, city: str, phone: str, account_type: str)
 class TestCreateAccount(TestCase):
     def setUp(self):
         self.client = Client()
@@ -34,16 +34,16 @@ class TestCreateAccount(TestCase):
     # doesn't add user to the database if username already exists
     def test_create_account_username_exists(self):
         self.user1 = User.objects.create(
-            User_fName="Michael",
-            User_lName="Scott",
+            first_name="Michael",
+            last_name="Scott",
             email="mscott@uwm.edu",
-            User_Pos="Instructor",
-            User_Phone="1234567890",
-            User_Address="123 Main St",
-            User_City="Milwaukee",
-            User_LogPass="password",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-18 00:00:00",
+            positions="Instructor",
+            phone_number="1234567890",
+            address="123 Main St",
+            city="Milwaukee",
+            password="password",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-18 00:00:00",
         )
 
         result = Supervisor.create_account(
