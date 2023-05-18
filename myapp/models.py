@@ -46,7 +46,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=200)
     username = models.CharField(
         max_length=50, blank=True, null=True, unique=True)
-    email = models.EmailField(('email address'), unique=True, blank=True)
+    email = models.EmailField(('email address'), blank=True)
     password = models.CharField(max_length=200, blank=True)
     # positions_choices = [('SA', 'Supervisor'),
     # ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
