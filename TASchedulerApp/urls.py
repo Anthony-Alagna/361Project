@@ -63,7 +63,6 @@ urlpatterns = [
     ),
     path("home/accountbase/viewaccount/<int:id>", ViewAccount.as_view(),
          name="viewaccount"),
-    path('logout/', LogoutView.as_view(), name='logout'),
     path(
         "home/course_base/coursesection.html<str:Course_Code>",
         viewSection.as_view(),
