@@ -23,10 +23,17 @@ from myapp.views import (
     EditAccount,
     ViewPersonalInformation,
     ForgotPassword,
+  omar-tests-and-funct
     viewSection,
     createSection,
+
+    CourseBase,
+    CreateCourse,
+    EditCourse,
+    ViewAccount
+    main
 )
-from myapp.views import CourseBase, CreateCourse, EditCourse
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -61,4 +68,6 @@ urlpatterns = [
         EditCourse.as_view(),
         name="courseedit",
     ),
+    path("home/accountbase/viewaccount/<int:id>", ViewAccount.as_view(),
+        name="viewaccount")
 ]

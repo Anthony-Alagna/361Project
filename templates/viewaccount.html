@@ -1,0 +1,62 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Personal Information</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<header>
+    <a href="{% url "accountbase" %}">
+    <button>Back</button></a><button>Log Out</button>
+</header>
+<h1>{{user.User_fName}} {{user.User_lName}}'s Contact Information</h1>
+<div class="center">
+         <table>
+            <tr>
+                <td>First Name</td>
+                <td>{{user.User_fName}}</td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>{{user.User_lName}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{user.email}}</td>
+            </tr>
+              {% if viewing_user.User_Pos == "Supervisor" and viewing_user.isLoggedIn == True%}
+            <tr>
+                <td>Password</td>
+                <td>{{user.User_LogPass}}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{user.User_Address}}</td>
+            </tr>
+            </tr>
+            <tr>
+                <td>City</td>
+                <td>{{user.User_City}}</td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td>{{user.User_Phone}}</td>
+            </tr>
+            </tr>
+             {%  endif %}
+            <tr>
+                <td>Position</td>
+                <td>{{user.User_Pos}}</td>
+            </tr>
+
+        </table>
+</div>
+</body>
+</html>
