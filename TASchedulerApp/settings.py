@@ -174,9 +174,11 @@ if env == "production":
             "NAME": "/code/db/db.sqlite3",
         }
     }
-    CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = ["http://tascheduler.aalagna.com",
-                                            "https://tascheduler.aalagna.com"]  # is this bad syntax?
+    CSRF_TRUSTED_ORIGINS = ["http://tascheduler.aalagna.com",
+                            "https://tascheduler.aalagna.com"]
 
+    ALLOWED_HOSTS = ["tascheduler.aalagna.com",
+                     "http://tascheduler.aalagna.com", "https://tascheduler.aalagna.com"]
     # Use secure HTTPS connections for cookies and sessions
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
