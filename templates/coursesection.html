@@ -1,0 +1,31 @@
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sections for course.Course_Name</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<table>
+   {% for section in sections %}
+            <tr>
+                <td>COMPSCI {{ section.id }}</td>
+                <td>{{ section.Sec_Name }}</td>
+                <td>{{ section.Sec_Course }}</td>
+                <td>{{ section.Instructor }}</td>
+
+                <td><a href="">
+                    <button>Edit</button>
+                </a></td>
+            </tr>
+   {% endfor %}
+</table>
+
+{#<a href="{% url 'course_base' %}">#}
+{#        <button class="goldbutton">Submit</button>#}
+</body>
+</html>

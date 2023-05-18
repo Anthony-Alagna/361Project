@@ -266,3 +266,33 @@ class ViewPersonalInformation(View):
         id_search = kwargs["id"]
         user = User.objects.get(id=id_search)
         return render(request, "personal_information.html", {"user": user})
+
+class viewSection(View):
+    def get(self, request,**kwargs):
+        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
+        section=Section.objects.filter(Sec_Course=course).all()
+        return render(request, "coursesection.html",{"sections": section})
+
+
+class createSection(View):
+    def get(self, request):
+        course = Course.objects.all()
+        users = UserUtility.get_all_users()
+        return render(request, "createsection.html", {"courses": course, "users": users})
+
+    def post(self, request):
+        course = Course.objects.all()
+        users = UserUtility.get_all_users()
+
+        result = Supervisor.create_section(request.POST.get("section_name"), request.POST.get("course"),
+                                           request.POST.get("section_inst"), datetime.datetime)
+        if isinstance(result, ValueError):
+            courses = Course.objects.all()
+            users = UserUtility.get_all_users()
+            return render(
+                request,
+                "createsection.html",
+                {"courses": courses, "users": users, "message": result}
+            )
+
+        return render(request, "course_base.html", {"courses": course})

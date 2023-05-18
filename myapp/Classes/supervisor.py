@@ -90,3 +90,27 @@ class Supervisor(Users):
     def deleteUser(username):
         user = User.objects.filter(email=username)
         user.delete()
+
+    @staticmethod
+    def create_section(sec_name, course, ta_instr=None, date_time=None):
+        inst = User.objects.create(User_fName="", User_lName="")
+        inst = User.objects.create(User_fName="", User_lName="")
+        if ta_instr:
+            ta = ta_instr.split()
+            inst = User.objects.get(id=ta[0])
+        c = course.split()
+        cs = Course.objects.get(Course_Code=c[0])
+
+        sec = Section.objects
+        if sec_name == "" or course == "" or course is None:
+            raise ValueError("Cannot have a blank section name")
+        else:
+            if sec.filter(Sec_Name=sec_name).exists():
+                raise ValueError("Section with this name already exists")
+            section = Section.objects.create(Sec_Name=sec_name, Sec_Course=cs, Sec_begin=date_time,
+                                             Sec_Instructor=inst)
+            return section
+
+    @staticmethod
+    def delete_section(section):
+        section.delete()
