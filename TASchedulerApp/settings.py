@@ -171,7 +171,7 @@ if env == "production":
     DATABASES = {
         'default': {
             "ENGINE": os.getenv("DB_ENGINE"),
-            "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
+            "NAME": "/code/db/db.sqlite3",
         }
     }
     CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = ["http://tascheduler.aalagna.com",
