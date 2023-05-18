@@ -42,6 +42,8 @@ class ForgotPasswordView(View):
 
     def post(self, request):
         username = request.POST.get("username")
+        if username is None:
+            return render(request, "forgotpassword.html", {"message": "Please enter a username"})
         try:
             user = User.objects.get(username__icontains=username)
             if user:
@@ -50,11 +52,8 @@ class ForgotPasswordView(View):
                 fp.send_reset_email(user.username)
                 return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
         except User.DoesNotExist:
-            if username is None:
-                return render(request, "forgotpassword.html", {"message": "Please enter a username"})
-            else:
-                return render(request, "forgotpassword.html",
-                              {"message": "User does not exist, please enter a valid username"})
+            return render(request, "forgotpassword.html",
+                          {"message": "User does not exist, please enter a valid username"})
 
 
 class Home(View):
