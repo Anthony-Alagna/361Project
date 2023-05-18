@@ -237,7 +237,6 @@ class TestButtons(TestCase):
         self.client = Client()
 
         self.user1 = User.objects.create(
-            id=1,
             first_name="tester",
             last_name="Smith",
             email="user1@example.com",

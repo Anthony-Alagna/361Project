@@ -22,7 +22,7 @@ from myapp.views import (
     CreateAccount,
     EditAccount,
     ViewPersonalInformation,
-    ForgotPassword,
+    ForgotPasswordView,
     CourseBase,
     CreateCourse,
     EditCourse,
@@ -35,7 +35,7 @@ urlpatterns = [
     path("home/", Home.as_view(), name="home"),
     path('', LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path("forgotpassword/", ForgotPassword.as_view(), name="forgotpassword"),
+    path("forgotpassword/", ForgotPasswordView.as_view(), name="forgotpassword"),
     path("home/accountbase/", AccountBase.as_view(), name="accountbase"),
     path(
         "home/accountbase/createaccount/", CreateAccount.as_view(), name="createaccount"

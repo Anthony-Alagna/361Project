@@ -67,9 +67,13 @@ class ForgotPasswordTest(TestCase):
     def setUp(self):
         self.client = Client()
         User.objects.create(
-            email=os.getenv("MAIL_USERNAME"),
+            username=os.getenv("MAIL_USERNAME"),
             password=str(1),
+            email=os.getenv("MAIL_USERNAME")
         )
+
+    def tearDown(self):
+        User.objects.get(email=os.getenv("MAIL_USERNAME")).delete()
 
     def test_forgot_password_accessible(self):
         """_summary_ tests that the forgot password page is accessible"""

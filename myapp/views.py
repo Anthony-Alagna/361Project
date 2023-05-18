@@ -35,21 +35,23 @@ class LogoutView(View):
         logout(request)
 
 
-class ForgotPassword(View):
+class ForgotPasswordView(View):
     def get(self, request):
         return render(request, "forgotpassword.html")
 
     def post(self, request):
         username = request.POST.get("username")
-        user = User.objects.filter(username=username)
-        if user:
-            # send email to user
-            return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
-        if username is None:
-            return render(request, "forgotpassword.html", {"message": "Please enter a username"})
-        else:
-            return render(request, "forgotpassword.html",
-                          {"message": "User does not exist, please enter a valid username"})
+        try:
+            user = User.objects.get(username=username)
+            if user:
+                # send email to user
+                return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
+        except User.DoesNotExist:
+            if username is None:
+                return render(request, "forgotpassword.html", {"message": "Please enter a username"})
+            else:
+                return render(request, "forgotpassword.html",
+                              {"message": "User does not exist, please enter a valid username"})
 
 
 class Home(View):
@@ -153,7 +155,7 @@ class EditAccount(View):
             phone_number=phone,
             positions=position,
         )
-        current_user = User.objects.get(isLoggedIn=True)
+        current_user = User.objects.get(id=id_search)
         users = UserUtility.get_all_users()
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
@@ -162,7 +164,7 @@ class ViewAccount(View):
     def get(self, request, **kwargs):
         id_search = kwargs["id"]
         user = User.objects.get(id=id_search)
-        viewing_user = User.objects.get(isLoggedIn=True)
+        viewing_user = User.objects.get(id=request.user.id)
         return render(request, "viewaccount.html", {"user": user, "viewing_user": viewing_user})
 
 
