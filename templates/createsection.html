@@ -1,3 +1,4 @@
+{%load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,8 +40,8 @@
                     <select name="section_inst">
                     <option value="">No Instructor</option>
                     {% for user in users %}
-                        {% if user.User_Pos == "Teaching Assistant" %}
-                        <option>{{ user.id }} {{ user.User_fName }} {{ user.User_lName }}</option>
+                        {% if user.positions == "Teaching Assistant" %}
+                        <option>{{ user.id }} {{ user.first_name }} {{ user.last_name }}</option>
                         {% endif %}
                     {% endfor %}
                     </select>

@@ -1,4 +1,4 @@
-from myapp.models import User, Course
+from myapp.models import Section, User, Course
 from myapp.Classes.users import Users
 
 
@@ -93,8 +93,7 @@ class Supervisor(Users):
 
     @staticmethod
     def create_section(sec_name, course, ta_instr=None, date_time=None):
-        inst = User.objects.create(User_fName="", User_lName="")
-        inst = User.objects.create(User_fName="", User_lName="")
+        inst = User.objects.create(first_name="", last_name="")
         if ta_instr:
             ta = ta_instr.split()
             inst = User.objects.get(id=ta[0])

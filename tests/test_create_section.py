@@ -8,9 +8,9 @@
 #
 # class SectionTestCase(TestCase):
 #     def setUp(self):
-#         self.u1 = User.objects.create(id='1', User_fName="John", User_lName="Doe", email="john.doe@example.com",
+#         self.u1 = User.objects.create(id='1', User_first_name="John", User_last_name="Doe", email="john.doe@example.com",
 #                                       User_Pos="Supervisor")
-#         self.u2 = User.objects.create(id='2', User_fName="help", User_lName="us", email="us.doe@example.com",
+#         self.u2 = User.objects.create(id='2', User_first_name="help", User_last_name="us", email="us.doe@example.com",
 #                                       User_Pos="Teaching Assistant")
 #         self.course = Course.objects.create(Course_Code="CS101", Course_Name="Introduction to Computer Science")
 #

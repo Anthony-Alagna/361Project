@@ -63,7 +63,7 @@ class TestCreateAccount(TestCase):
         )
 
     # doesn't add user to the database if one of the form field parameters is missing
-    def test_create_account_field_fname_missing(self):
+    def test_create_account_field_first_name_missing(self):
         result = Supervisor.create_account(
             "",
             "Scott",
@@ -80,7 +80,7 @@ class TestCreateAccount(TestCase):
             "Account should not have been created, first name missing",
         )
 
-    def test_create_account_field_lname_missing(self):
+    def test_create_account_field_last_name_missing(self):
         result = Supervisor.create_account(
             "Michael",
             "",

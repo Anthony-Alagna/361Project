@@ -1,3 +1,4 @@
+import datetime
 from django.views.generic import View
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
@@ -267,11 +268,12 @@ class ViewPersonalInformation(View):
         user = User.objects.get(id=id_search)
         return render(request, "personal_information.html", {"user": user})
 
+
 class viewSection(View):
-    def get(self, request,**kwargs):
+    def get(self, request, **kwargs):
         course = Course.objects.get(Course_Code=kwargs["Course_Code"])
-        section=Section.objects.filter(Sec_Course=course).all()
-        return render(request, "coursesection.html",{"sections": section})
+        section = Section.objects.filter(Sec_Course=course).all()
+        return render(request, "coursesection.html", {"sections": section})
 
 
 class createSection(View):
