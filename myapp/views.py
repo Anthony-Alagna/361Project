@@ -154,6 +154,12 @@ class EditAccount(View):
         users = UserUtility.get_all_users()
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
+class ViewAccount(View):
+    def get(self, request, **kwargs):
+        id_search = kwargs["id"]
+        user = User.objects.get(id=id_search)
+        viewing_user = User.objects.get(isLoggedIn=True)
+        return render(request, "viewaccount.html", {"user": user, "viewing_user": viewing_user})
 
 class CourseBase(View):
     def get(self, request):
