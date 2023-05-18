@@ -2,60 +2,56 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <title>Manage Courses</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-    />
-    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
-  </head>
-  <body>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
     <h1>Manage Courses</h1>
     <div class="center">
-      <a href="{% url 'home' %}">
-        <button class="backbutton">Home</button> </a
-      ><br /><br />
-      <table style="border-spacing: 10px 0">
-        <tr style="font-size: 25px">
-          <td>Course</td>
-          <td>Name</td>
-          <td>Instructor</td>
+    <a href="{% url 'home' %}">
+        <button class="backbutton">Home</button>
+    </a><br><br>
+    <table style="border-spacing: 10px 0;">
+        <tr style="font-size:25px">
+            <td>Course</td>
+            <td>Name</td>
+            <td>Instructor</td>
         </tr>
-        <br />
+        <br>
 
         {% for course in courses %}
-        <tr>
-          <td>COMPSCI {{ course.Course_Code }}</td>
-          <td>{{ course.name }}</td>
-          {% if course.Course_Instructor == "" %}
-          <td>No Instructor</td>
-          {% else %}
-          <td>{{ course.Course_Instructor }}</td>
-          {% endif %}
-          <td>
-            <a href="">
-              <button>Info</button>
-            </a>
-          </td>
-          <td>
-            <a href="{% url 'courseedit' Course_Code=course.Course_Code %}">
-              <button>Edit</button>
-            </a>
-          </td>
-        </tr>
+            <tr>
+                <td>COMPSCI {{ course.Course_Code }}</td>
+                <td>{{ course.Course_Name }}</td>
+                {% if course.Course_Instructor == "" %}
+                    <td>No Instructor</td>
+                {% else %}
+                    <td>{{ course.Course_Instructor }}</td>
+                {% endif %}
+                <td><a href="{% url 'coursesection' course.Course_Code %}">
+                    <button>Info</button>
+                </a></td>
+                <td><a href="{% url 'courseedit' Course_Code=course.Course_Code %}">
+                    <button>Edit</button>
+                </a></td>
+            </tr>
         {% endfor %}
-      </table>
-      <br />
-      <a href="{% url 'createcourse' %}">
+    </table>
+    <br>
+    <a href="{% url 'createcourse' %}">
         <button class="goldbutton">New Course</button>
-      </a>
-      <br />{{ success }}
-    </div>
-  </body>
+    </a>
+     <a href="{% url 'createsection' %}">
+        <button class="goldbutton">New Section</button>
+    </a>
+    <br>{{ success }}
+</div>
+</body>
 </html>

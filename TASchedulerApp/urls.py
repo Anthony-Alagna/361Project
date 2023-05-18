@@ -23,10 +23,13 @@ from myapp.views import (
     EditAccount,
     ViewPersonalInformation,
     ForgotPasswordView,
+    ForgotPassword,
+    viewSection,
+    createSection,
     CourseBase,
     CreateCourse,
     EditCourse,
-    ViewAccount
+    ViewAccount,
 )
 
 
@@ -58,4 +61,11 @@ urlpatterns = [
     ),
     path("home/accountbase/viewaccount/<int:id>", ViewAccount.as_view(),
          name="viewaccount"),
+    path(
+        "home/course_base/coursesection.html<str:Course_Code>",
+        viewSection.as_view(),
+        name="coursesection",
+    ),
+    path("home/course_base/createsection.html",
+         createSection.as_view(), name="createsection")
 ]
