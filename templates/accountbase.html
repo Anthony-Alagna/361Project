@@ -52,7 +52,7 @@
         </tr>
         {% for user in users %}
             <tr>
-                <td>{{ user.User_fName }} {{ user.User_lName }}</td>
+                <td><a href="{% url 'viewaccount' id=user.id%}">{{ user.User_fName }} {{ user.User_lName }}</a></td>
                 <td>{{ user.User_Pos }}</td>
                 <div style="text-align: center;">
                     {% if current_user.User_Pos == "Supervisor" and current_user.isLoggedIn == True%}
