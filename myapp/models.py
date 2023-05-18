@@ -12,7 +12,7 @@ class UserManager(BaseUserManager):
 class Course(models.Model):
     id = models.AutoField(("course_id"), primary_key=True, unique=True)
     Course_Code = models.CharField(max_length=3)
-    Course_Name = models.CharField(max_length=50)
+    Course_Name = models.CharField(max_length=50, blank=True, null=True)
     Course_Description = models.CharField(max_length=150, blank=True)
     # Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
     Course_Instructor = models.CharField(max_length=50, blank=True)
