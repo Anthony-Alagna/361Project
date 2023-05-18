@@ -5,7 +5,7 @@ from myapp.Classes.users import Users
 class Supervisor(Users):
     @staticmethod
     def create_account(
-        fname, lname, email, password, address, city, phone, account_type
+        first_name, last_name, email, password, address, city, phone, account_type
     ):
         users = User.objects.all()
         for user in users:
@@ -15,8 +15,8 @@ class Supervisor(Users):
                 )
 
         if (
-            fname == ""
-            or lname == ""
+            first_name == ""
+            or last_name == ""
             or email == ""
             or password == ""
             or address == ""
@@ -28,8 +28,8 @@ class Supervisor(Users):
 
         else:
             user = User.objects.create(
-                first_name=fname,
-                last_name=lname,
+                first_name=first_name,
+                last_name=last_name,
                 email=email,
                 password=password,
                 address=address,

@@ -8,7 +8,7 @@ from myapp.Classes.supervisor import Supervisor
 # basic unit test for create account page
 
 
-# Method: Supervisor.create_account(fName: str, lName: str, email: str, username: str, password: str, address: str, city: str, phone: str, account_type: str)
+# Method: Supervisor.create_account(first_name: str, last_name: str, email: str, username: str, password: str, address: str, city: str, phone: str, account_type: str)
 class TestCreateAccount(TestCase):
     def setUp(self):
         self.client = Client()

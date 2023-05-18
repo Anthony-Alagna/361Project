@@ -49,12 +49,12 @@
                     {% endif %}
 {#                    <option value="">No Instructor</option>#}
                     {% for user in users %}
-                        {% if user.User_Pos == "Professor" %}
-                            <option>{{ user.User_fName }} {{ user.User_lName }}</option>
+                        {% if user.positions == "Professor" %}
+                            <option>{{ user.first_name }} {{ user.last_name }}</option>
 {#                            {% if course.Course_Instructor %}#}
-{#                                <option selected="selected">{{ user.User_fName }} {{ user.User_lName }}</option>#}
+{#                                <option selected="selected">{{ user.first_name }} {{ user.last_name }}</option>#}
 {#                            {% else %}#}
-{#                                <option>{{ user.User_fName }} {{ user.User_lName }}</option>#}
+{#                                <option>{{ user.first_name }} {{ user.last_name }}</option>#}
 {#                            {% endif %}#}
                         {% endif %}
                     {% endfor %}
