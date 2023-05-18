@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import LoginView
 from myapp.views import (
     AccountBase,
     Login,
@@ -34,7 +35,7 @@ from myapp.views import (
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("home/", Home.as_view(), name="home"),
-    path("", Login.as_view(), name="login"),
+    path('', LoginView.as_view(template_name='login.html'), name='login'),
     path("forgotpassword/", ForgotPassword.as_view(), name="forgotpassword"),
     path("home/accountbase/", AccountBase.as_view(), name="accountbase"),
     path(

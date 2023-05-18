@@ -6,6 +6,7 @@ from myapp.Classes.login import ForgotPassword, Logout, ResetPassword
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
 from myapp.models import User, Course, Section, CourseEnrollment
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -18,11 +19,9 @@ class Login(View):
     def post(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = User.objects.filter(email=username, password=password)
+        user = authenticate(request, username=username, password=password)
         if user:
-            # used to store the username in the session, so that it can be used later
-            request.session["username"] = username
-            user.isLoggedIn = True
+            login(request, user)
             return redirect("home")
         else:
             # return status code 302

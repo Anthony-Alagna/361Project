@@ -14,7 +14,7 @@
 <div class="center">
     <body>
     <h1>Home Page</h1>
-    <form action="/" method="post">
+    <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <table>
             <tr>
