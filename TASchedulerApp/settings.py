@@ -174,8 +174,8 @@ if env == "production":
             "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
         }
     }
-    CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = ["http://204.48.17.50", "204.48.17.50", "http://tascheduler.aalagna.com",
-                                            "https://tascheduler.aalagna.com", "tascheduler.aalagna.com"]  # is this bad syntax?
+    CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = ["http://tascheduler.aalagna.com",
+                                            "https://tascheduler.aalagna.com"]  # is this bad syntax?
 
     # Use secure HTTPS connections for cookies and sessions
     SESSION_COOKIE_SECURE = True
