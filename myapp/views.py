@@ -41,7 +41,7 @@ class ForgotPassword(View):
 
     def post(self, request):
         username = request.POST.get("username")
-        user = User.objects.filter(email=username)
+        user = User.objects.filter(username=username)
         if user:
             # send email to user
             return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
@@ -119,7 +119,7 @@ class CreateAccount(View):
         if isinstance(result, ValueError):
             return render(request, "createaccount.html", {"message": result})
         users = UserUtility.get_all_users()
-        current_user = User.objects.get(isLoggedIn=True)
+        current_user = User.objects.get(id=request.user.id)
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
 
