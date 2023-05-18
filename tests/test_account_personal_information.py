@@ -36,6 +36,5 @@ class PersonalInformationPageTests(TestCase):
     def test_go_edit_account(self):
         id = self.user1.id
         url = reverse("editaccount", kwargs={"id": id})
-        print(url)
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)

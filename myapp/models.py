@@ -12,7 +12,7 @@ class UserManager(BaseUserManager):
 class Course(models.Model):
     id = models.AutoField(("course_id"), primary_key=True, unique=True)
     Course_Code = models.CharField(max_length=3)
-    Course_Name = models.CharField(max_length=50)
+    Course_Name = models.CharField(max_length=50, blank=True, null=True)
     Course_Description = models.CharField(max_length=150, blank=True)
     # Course_Instructor = models.ForeignKey(User, on_delete=models.CASCADE)
     Course_Instructor = models.CharField(max_length=50, blank=True)
@@ -46,12 +46,12 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=200)
     username = models.CharField(
         max_length=50, blank=True, null=True, unique=True)
-    email = models.EmailField(('email address'), unique=True)
+    email = models.EmailField(('email address'), unique=True, blank=True)
     password = models.CharField(max_length=200, blank=True)
-    positions_choices = [('SA', 'Supervisor'),
-                         ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
+    # positions_choices = [('SA', 'Supervisor'),
+    # ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
     positions = models.CharField(
-        max_length=25, blank=True, choices=positions_choices)
+        max_length=25, default='Supervisor')
     phone_number = models.CharField(max_length=200, blank=True)
     address = models.TextField(max_length=500, blank=True)
     city = models.CharField(max_length=200, blank=True)

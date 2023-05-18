@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import LoginView, LogoutView
 from myapp.views import (
     AccountBase,
-    Login,
     Home,
     CreateAccount,
     EditAccount,
     ViewPersonalInformation,
+    ForgotPasswordView,
     ForgotPassword,
     viewSection,
     createSection,
@@ -37,8 +38,9 @@ from myapp.views import (
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("home/", Home.as_view(), name="home"),
-    path("", Login.as_view(), name="login"),
-    path("forgotpassword/", ForgotPassword.as_view(), name="forgotpassword"),
+    path('', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path("forgotpassword/", ForgotPasswordView.as_view(), name="forgotpassword"),
     path("home/accountbase/", AccountBase.as_view(), name="accountbase"),
     path(
         "home/accountbase/createaccount/", CreateAccount.as_view(), name="createaccount"

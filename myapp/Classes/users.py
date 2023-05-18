@@ -58,16 +58,16 @@ class Users(ABC):
         if last_name == "":
             return ValueError("You didn't write a last name!")
         # converts parameter to standard case and strips any whitespace before and after characters
-        last_name_cleaned = last_name.title().strip()
+        last_name_cleaned = last_name.strip()
         # users = User.objects.all()
-        if not User.objects.filter(last_name=last_name_cleaned).exists():
+        if not User.objects.filter(last_name__icontains=last_name_cleaned).exists():
             return ValueError("There are no users with this last name")
-        user = User.objects.filter(last_name=last_name_cleaned)
+        user = User.objects.filter(last_name__icontains=last_name_cleaned)
         return user
 
     def viewCourseAssigned(self):
         # how does this retrieve stuff from db?
-        courses = CourseToUser.objects.get(user=self)
+        courses = CourseEnrollment.objects.get(user=self)
         return courses
 
     def getUserByUsername(username):

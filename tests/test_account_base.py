@@ -361,24 +361,12 @@ class TestDeleteUser(TestCase):
 class TestButtons(TestCase):
     def setUp(self):
         self.client = Client()
-
-        self.user1 = User.objects.create(
-            id=1,
-            first_name="tester",
-            last_name="Smith",
-            email="user1@example.com",
-            positions="TA",
-            phone_number="1234567890",
-            address="123 Main St",
-            city="Milwaukee",
-            password="password14",
-            created_at="2022-01-01 00:00:00",
-            updated_at="2023-04-18 00:00:00",
-            isLoggedIn=True
-        )
+        self.user = User.objects.create_user(
+            username='testuser', password='secret123')
+        self.client.login(username='testuser', password='secret123')
 
     def tearDown(self):
-        self.user1.delete()
+        self.user.delete()
 
     # click create new account button
     def test_create_new_account_view(self):
@@ -407,7 +395,7 @@ class TestButtons(TestCase):
 
     # click on the edit button
     def test_edit_account_view(self):
-        id = self.user1.id
+        id = self.user.id
         url = reverse("editaccount", kwargs={"id": id})
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)

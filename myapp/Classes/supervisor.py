@@ -53,7 +53,7 @@ class Supervisor(Users):
             return TypeError("Course description cannot be blank!")
         return Course.objects.create(
             Course_Code=code,
-            name=name,
+            Course_Name=name,
             Course_Description=desc,
             Course_Instructor=inst,
             Course_Instruction_Method=inst_method,
