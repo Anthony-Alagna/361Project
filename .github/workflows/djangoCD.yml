@@ -1,34 +1,43 @@
-name: Django Deploy CD
+name: Continuous Deployment
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+
+env:
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+  LIVE_SERVER_IP: ${{ secrets.LIVE_SERVER_IP }}
+  SERVER_USERNAME: ${{ secrets.SERVER_USERNAME }}
+  DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+  PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
+
 jobs:
   deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Create SSH key
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure SSH
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ../private.key
-          sudo chmod 600 ../private.key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-        shell: bash
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-          SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
-      - name: Deploy to server
-        # don't run locally
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa $LIVE_SERVER_IP >> ~/.ssh/known_hosts
+          ssh-keygen -R $LIVE_SERVER_IP
+      - name: Connect to server
         uses: appleboy/ssh-action@master
-        env:
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
         with:
-          host: ${{ secrets.LIVE_SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ env.SSH_KEY_PATH }}
-          port: ${{ secrets.DEPLOY_PORT }}
+          host: ${{ env.LIVE_SERVER_IP }}
+          username: ${{ env.SERVER_USERNAME }}
+          port: ${{ env.DEPLOY_PORT }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
           script: |
-            cd ${{ secrets.PROJECT_PATH }}
-            git pull ${{secrets.REPO_URL}}
-            docker-compose down -v
-            docker-compose up --build -d --remove-orphans --renew-anon-volumes --force-recreate
-            sudo ufw-docker allow 361_project_django_nginx
+            cd ${{ env.PROJECT_PATH }}
+            git pull https://github.com/Anthony-Alagna/361Project.git main
+            chmod +777 entrypoint.sh
+            docker compose down -v
+            docker compose up --build -d --remove-orphans --renew-anon-volumes --force-recreate
+            ufw-docker allow 361_project_django_nginx
