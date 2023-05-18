@@ -111,7 +111,9 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
+LOGIN_REDIRECT_URL = 'home/'
+# LOGOUT_REDIRECT_URL = ''
+AUTH_USER_MODEL = 'myapp.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -139,12 +141,12 @@ if env == "development":
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    os.path.join(BASE_DIR, 'styles'),
 ]
 
 STATIC_URL = "static/"
 
-# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -169,12 +171,14 @@ if env == "production":
     DATABASES = {
         'default': {
             "ENGINE": os.getenv("DB_ENGINE"),
-            "NAME": os.path.join(BASE_DIR, os.getenv("DB_NAME")),
+            "NAME": "/code/db/db.sqlite3",
         }
     }
-    CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS = ["http://204.48.17.50", "204.48.17.50", "http://tascheduler.aalagna.com",
-                                            "https://tascheduler.aalagna.com", "tascheduler.aalagna.com"]  # is this bad syntax?
+    CSRF_TRUSTED_ORIGINS = ["http://tascheduler.aalagna.com",
+                            "https://tascheduler.aalagna.com"]
 
+    ALLOWED_HOSTS = ["tascheduler.aalagna.com",
+                     "http://tascheduler.aalagna.com", "https://tascheduler.aalagna.com"]
     # Use secure HTTPS connections for cookies and sessions
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True

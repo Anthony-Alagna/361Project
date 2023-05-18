@@ -13,42 +13,42 @@ class TestGetUsers(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(
             id="1",
-            User_fName="Cricket",
-            User_lName="Maule",
+            first_name="Cricket",
+            last_name="Maule",
             email="user1@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="1234567890",
-            User_Address="123 Main St",
-            User_City="Milwaukee",
-            User_LogPass="password",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-18 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="1234567890",
+            address="123 Main St",
+            city="Milwaukee",
+            password="password",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-18 00:00:00",
         )
         self.user2 = User.objects.create(
             id="2",
-            User_fName="Noodle",
-            User_lName="Bannish",
+            first_name="Noodle",
+            last_name="Bannish",
             email="user2@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="0987654321",
-            User_Address="456 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password1",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="0987654321",
+            address="456 Elm St",
+            city="Milwaukee",
+            password="password1",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
         self.user3 = User.objects.create(
             id="3",
-            User_fName="Toby",
-            User_lName="Smith",
+            first_name="Toby",
+            last_name="Smith",
             email="user3@example.com",
-            User_Pos="Instructor",
-            User_Phone="0987654322",
-            User_Address="457 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password2",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Instructor",
+            phone_number="0987654322",
+            address="457 Elm St",
+            city="Milwaukee",
+            password="password2",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
 
     def tearDown(self):
@@ -62,42 +62,42 @@ class TestGetAllUsers(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(
             id="1",
-            User_fName="Cricket",
-            User_lName="Maule",
+            first_name="Cricket",
+            last_name="Maule",
             email="user1@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="1234567890",
-            User_Address="123 Main St",
-            User_City="Milwaukee",
-            User_LogPass="password",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-18 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="1234567890",
+            address="123 Main St",
+            city="Milwaukee",
+            password="password",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-18 00:00:00",
         )
         self.user2 = User.objects.create(
             id="2",
-            User_fName="Noodle",
-            User_lName="Bannish",
+            first_name="Noodle",
+            last_name="Bannish",
             email="user2@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="0987654321",
-            User_Address="456 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password1",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="0987654321",
+            address="456 Elm St",
+            city="Milwaukee",
+            password="password1",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
         self.user3 = User.objects.create(
             id="3",
-            User_fName="Toby",
-            User_lName="Smith",
+            first_name="Toby",
+            last_name="Smith",
             email="user3@example.com",
-            User_Pos="Instructor",
-            User_Phone="0987654322",
-            User_Address="457 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password2",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Instructor",
+            phone_number="0987654322",
+            address="457 Elm St",
+            city="Milwaukee",
+            password="password2",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
 
     def tearDown(self):
@@ -119,42 +119,42 @@ class TestSearchUser(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(
             id="1",
-            User_fName="Cricket",
-            User_lName="Maule",
+            first_name="Cricket",
+            last_name="Maule",
             email="user1@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="1234567890",
-            User_Address="123 Main St",
-            User_City="Milwaukee",
-            User_LogPass="password",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-18 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="1234567890",
+            address="123 Main St",
+            city="Milwaukee",
+            password="password",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-18 00:00:00",
         )
         self.user2 = User.objects.create(
             id="2",
-            User_fName="Noodle",
-            User_lName="Bannish",
+            first_name="Noodle",
+            last_name="Bannish",
             email="user2@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="0987654321",
-            User_Address="456 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password1",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="0987654321",
+            address="456 Elm St",
+            city="Milwaukee",
+            password="password1",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
         self.user3 = User.objects.create(
             id="3",
-            User_fName="Toby",
-            User_lName="Smith",
+            first_name="Toby",
+            last_name="Smith",
             email="user3@example.com",
-            User_Pos="Instructor",
-            User_Phone="0987654322",
-            User_Address="457 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password2",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Instructor",
+            phone_number="0987654322",
+            address="457 Elm St",
+            city="Milwaukee",
+            password="password2",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
 
     def tearDown(self):
@@ -168,7 +168,7 @@ class TestSearchUser(TestCase):
         result = Users.searchUser(last_name)
         self.assertEqual(
             list(result),
-            list(User.objects.filter(User_lName="Maule")),
+            list(User.objects.filter(last_name="Maule")),
             "searchUser has returned the incorrect user",
         )
 
@@ -199,7 +199,7 @@ class TestSearchUser(TestCase):
         result = Users.searchUser(last_name)
         self.assertEqual(
             list(result),
-            list(User.objects.filter(User_lName="Maule")),
+            list(User.objects.filter(last_name="Maule")),
             "searchUser should have returned the username that matches the uppercase parameter",
         )
 
@@ -209,7 +209,7 @@ class TestSearchUser(TestCase):
         result = Users.searchUser(last_name)
         self.assertEqual(
             list(result),
-            list(User.objects.filter(User_lName="Maule")),
+            list(User.objects.filter(last_name="Maule")),
             "searchUser should have returned the username that matches the parameter",
         )
 
@@ -219,42 +219,42 @@ class TestFilterUser(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(
             id="1",
-            User_fName="Cricket",
-            User_lName="Maule",
+            first_name="Cricket",
+            last_name="Maule",
             email="user1@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="1234567890",
-            User_Address="123 Main St",
-            User_City="Milwaukee",
-            User_LogPass="password",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-18 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="1234567890",
+            address="123 Main St",
+            city="Milwaukee",
+            password="password",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-18 00:00:00",
         )
         self.user2 = User.objects.create(
             id="2",
-            User_fName="Noodle",
-            User_lName="Bannish",
+            first_name="Noodle",
+            last_name="Bannish",
             email="user2@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="0987654321",
-            User_Address="456 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password1",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="0987654321",
+            address="456 Elm St",
+            city="Milwaukee",
+            password="password1",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
         self.user3 = User.objects.create(
             id="3",
-            User_fName="Toby",
-            User_lName="Smith",
+            first_name="Toby",
+            last_name="Smith",
             email="user3@example.com",
-            User_Pos="Instructor",
-            User_Phone="0987654322",
-            User_Address="457 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password2",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Instructor",
+            phone_number="0987654322",
+            address="457 Elm St",
+            city="Milwaukee",
+            password="password2",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
 
     def tearDown(self):
@@ -267,7 +267,7 @@ class TestFilterUser(TestCase):
         result = Users.filterUser(usertype)
         self.assertEqual(
             list(result),
-            list(User.objects.filter(User_Pos="Teaching Assistant")),
+            list(User.objects.filter(positions="Teaching Assistant")),
             "filterUser didn't return all of the TA users",
         )
 
@@ -276,7 +276,7 @@ class TestFilterUser(TestCase):
         result = Users.filterUser(usertype)
         self.assertEqual(
             list(result),
-            list(User.objects.filter(User_Pos="Instructor")),
+            list(User.objects.filter(positions="Instructor")),
             "filterUser didn't return all of the Instructor users",
         )
 
@@ -293,7 +293,8 @@ class TestFilterUser(TestCase):
         usertype = None
         result = Users.filterUser(usertype)
         self.assertEqual(
-            isinstance(result, ValueError), True, "filterUser should have returned None"
+            isinstance(
+                result, ValueError), True, "filterUser should have returned None"
         )
 
 
@@ -302,42 +303,42 @@ class TestDeleteUser(TestCase):
     def setUp(self):
         self.user1 = User.objects.create(
             id="1",
-            User_fName="Cricket",
-            User_lName="Maule",
+            first_name="Cricket",
+            last_name="Maule",
             email="user1@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="1234567890",
-            User_Address="123 Main St",
-            User_City="Milwaukee",
-            User_LogPass="password",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-18 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="1234567890",
+            address="123 Main St",
+            city="Milwaukee",
+            password="password",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-18 00:00:00",
         )
         self.user2 = User.objects.create(
             id="2",
-            User_fName="Noodle",
-            User_lName="Bannish",
+            first_name="Noodle",
+            last_name="Bannish",
             email="user2@example.com",
-            User_Pos="Teaching Assistant",
-            User_Phone="0987654321",
-            User_Address="456 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password1",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Teaching Assistant",
+            phone_number="0987654321",
+            address="456 Elm St",
+            city="Milwaukee",
+            password="password1",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
         self.user3 = User.objects.create(
             id="3",
-            User_fName="Toby",
-            User_lName="Smith",
+            first_name="Toby",
+            last_name="Smith",
             email="user3@example.com",
-            User_Pos="Instructor",
-            User_Phone="0987654322",
-            User_Address="457 Elm St",
-            User_City="Milwaukee",
-            User_LogPass="password2",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-17 00:00:00",
+            positions="Instructor",
+            phone_number="0987654322",
+            address="457 Elm St",
+            city="Milwaukee",
+            password="password2",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-17 00:00:00",
         )
 
     def tearDown(self):
@@ -360,24 +361,12 @@ class TestDeleteUser(TestCase):
 class TestButtons(TestCase):
     def setUp(self):
         self.client = Client()
-
-        self.user1 = User.objects.create(
-            id=1,
-            User_fName="tester",
-            User_lName="Smith",
-            email="user1@example.com",
-            User_Pos="TA",
-            User_Phone="1234567890",
-            User_Address="123 Main St",
-            User_City="Milwaukee",
-            User_LogPass="password14",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-18 00:00:00",
-            isLoggedIn=True
-        )
+        self.user = User.objects.create_user(
+            username='testuser', password='secret123')
+        self.client.login(username='testuser', password='secret123')
 
     def tearDown(self):
-        self.user1.delete()
+        self.user.delete()
 
     # click create new account button
     def test_create_new_account_view(self):
@@ -406,7 +395,7 @@ class TestButtons(TestCase):
 
     # click on the edit button
     def test_edit_account_view(self):
-        id = self.user1.id
+        id = self.user.id
         url = reverse("editaccount", kwargs={"id": id})
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)

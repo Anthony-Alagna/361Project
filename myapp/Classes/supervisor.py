@@ -1,11 +1,11 @@
-from myapp.models import User, Course
+from myapp.models import Section, User, Course
 from myapp.Classes.users import Users
 
 
 class Supervisor(Users):
     @staticmethod
     def create_account(
-        fname, lname, email, password, address, city, phone, account_type
+        first_name, last_name, email, password, address, city, phone, account_type
     ):
         users = User.objects.all()
         for user in users:
@@ -15,8 +15,8 @@ class Supervisor(Users):
                 )
 
         if (
-            fname == ""
-            or lname == ""
+            first_name == ""
+            or last_name == ""
             or email == ""
             or password == ""
             or address == ""
@@ -28,14 +28,14 @@ class Supervisor(Users):
 
         else:
             user = User.objects.create(
-                User_fName=fname,
-                User_lName=lname,
+                first_name=first_name,
+                last_name=last_name,
                 email=email,
-                User_LogPass=password,
-                User_Address=address,
-                User_City=city,
-                User_Phone=phone,
-                User_Pos=account_type,
+                password=password,
+                address=address,
+                city=city,
+                phone_number=phone,
+                positions=account_type,
             )
             return user
 
@@ -90,3 +90,26 @@ class Supervisor(Users):
     def deleteUser(username):
         user = User.objects.filter(email=username)
         user.delete()
+
+    @staticmethod
+    def create_section(sec_name, course, ta_instr=None, date_time=None):
+        inst = User.objects.create(first_name="", last_name="")
+        if ta_instr:
+            ta = ta_instr.split()
+            inst = User.objects.get(id=ta[0])
+        c = course.split()
+        cs = Course.objects.get(Course_Code=c[0])
+
+        sec = Section.objects
+        if sec_name == "" or course == "" or course is None:
+            raise ValueError("Cannot have a blank section name")
+        else:
+            if sec.filter(Sec_Name=sec_name).exists():
+                raise ValueError("Section with this name already exists")
+            section = Section.objects.create(Sec_Name=sec_name, Sec_Course=cs, Sec_begin=date_time,
+                                             Sec_Instructor=inst)
+            return section
+
+    @staticmethod
+    def delete_section(section):
+        section.delete()

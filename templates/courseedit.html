@@ -2,8 +2,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
+  <head>
+    <meta charset="UTF-8" />
     <title>Edit Course Page</title>
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
@@ -11,9 +11,8 @@
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
 
-</head>
-<body>
-
+  </head>
+  <body>
     <h1>Edit Course</h1>
     <a href="{% url 'course_base'%}">
         <button class="backbutton">Back</button>
@@ -50,12 +49,12 @@
                     {% endif %}
 {#                    <option value="">No Instructor</option>#}
                     {% for user in users %}
-                        {% if user.User_Pos == "Professor" %}
-                            <option>{{ user.User_fName }} {{ user.User_lName }}</option>
+                        {% if user.positions == "Professor" %}
+                            <option>{{ user.first_name }} {{ user.last_name }}</option>
 {#                            {% if course.Course_Instructor %}#}
-{#                                <option selected="selected">{{ user.User_fName }} {{ user.User_lName }}</option>#}
+{#                                <option selected="selected">{{ user.first_name }} {{ user.last_name }}</option>#}
 {#                            {% else %}#}
-{#                                <option>{{ user.User_fName }} {{ user.User_lName }}</option>#}
+{#                                <option>{{ user.first_name }} {{ user.last_name }}</option>#}
 {#                            {% endif %}#}
                         {% endif %}
                     {% endfor %}
@@ -82,5 +81,5 @@
         <input class="goldbutton" type="submit" value="Save"/>
     </form>
     {{ message }}
-</body>
+  </body>
 </html>

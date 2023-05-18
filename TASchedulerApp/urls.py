@@ -15,22 +15,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import LoginView, LogoutView
 from myapp.views import (
     AccountBase,
-    Login,
     Home,
     CreateAccount,
     EditAccount,
     ViewPersonalInformation,
+    ForgotPasswordView,
     ForgotPassword,
+    viewSection,
+    createSection,
+    CourseBase,
+    CreateCourse,
+    EditCourse,
+    ViewAccount,
 )
-from myapp.views import CourseBase, CreateCourse, EditCourse
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("home/", Home.as_view(), name="home"),
-    path("", Login.as_view(), name="login"),
-    path("forgotpassword/", ForgotPassword.as_view(), name="forgotpassword"),
+    path('', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path("forgotpassword/", ForgotPasswordView.as_view(), name="forgotpassword"),
     path("home/accountbase/", AccountBase.as_view(), name="accountbase"),
     path(
         "home/accountbase/createaccount/", CreateAccount.as_view(), name="createaccount"
@@ -51,4 +59,13 @@ urlpatterns = [
         EditCourse.as_view(),
         name="courseedit",
     ),
+    path("home/accountbase/viewaccount/<int:id>", ViewAccount.as_view(),
+         name="viewaccount"),
+    path(
+        "home/course_base/coursesection.html<str:Course_Code>",
+        viewSection.as_view(),
+        name="coursesection",
+    ),
+    path("home/course_base/createsection.html",
+         createSection.as_view(), name="createsection")
 ]

@@ -1,8 +1,13 @@
+import datetime
+from django.views.generic import View
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.views import View
+from myapp.Classes.login import ForgotPassword, Logout, ResetPassword
 from myapp.Classes.supervisor import Supervisor
 from myapp.Classes.users import Users, UserUtility
-from myapp.models import User, Course, Section, CourseToUser
+from myapp.models import User, Course, Section, CourseEnrollment
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -15,44 +20,57 @@ class Login(View):
     def post(self, request):
         username = request.POST.get("username")
         password = request.POST.get("password")
-        user = User.objects.get(email=username, User_LogPass=password)
+        user = authenticate(request, username=username, password=password)
         if user:
-            # used to store the username in the session, so that it can be used later
-            request.session["username"] = username
-            user.isLoggedIn = True
-            user.save()
+            login(request, user)
             return redirect("home")
         else:
             # return status code 302
             return redirect("login")
 
 
-class ForgotPassword(View):
+class LogoutView(View):
+    def post(self, request):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        logout(request)
+
+
+class ForgotPasswordView(View):
     def get(self, request):
         return render(request, "forgotpassword.html")
 
     def post(self, request):
         username = request.POST.get("username")
-        user = User.objects.filter(email=username)
-        if user:
-            # send email to user
-            return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
         if username is None:
             return render(request, "forgotpassword.html", {"message": "Please enter a username"})
-        else:
+        try:
+            user = User.objects.get(username__icontains=username)
+            if user:
+                # send email to user
+                fp = ForgotPassword()
+                fp.send_reset_email(user.username)
+                return render(request, "forgotpassword.html", {"message": "Password reset email sent"})
+        except User.DoesNotExist:
             return render(request, "forgotpassword.html",
                           {"message": "User does not exist, please enter a valid username"})
 
 
 class Home(View):
     def get(self, request, **kwargs):
-        users = UserUtility.get_all_users()
-        return render(request, "home.html", {"users": users})
+        user = request.user
+        if not user.is_authenticated:
+            return HttpResponseForbidden()
+        try:
+            user = User.objects.get(id=user.id)
+        except User.DoesNotExist:
+            pass
+        return render(request, "home.html", {"user": user})
 
 
 class AccountBase(View):
     def get(self, request):
-        current_user = User.objects.get(isLoggedIn=True)
+        current_user = User.objects.get(id=request.user.id)
         users = UserUtility.get_all_users()
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
@@ -105,10 +123,8 @@ class CreateAccount(View):
         if isinstance(result, ValueError):
             return render(request, "createaccount.html", {"message": result})
         users = UserUtility.get_all_users()
-        current_user = User.objects.get(isLoggedIn=True)
+        current_user = User.objects.get(id=request.user.id)
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
-
-
 
 
 class EditAccount(View):
@@ -132,18 +148,26 @@ class EditAccount(View):
 
         Users.edit_account(
             userAccount,
-            fname=firstname,
-            lname=lastname,
+            first_name=firstname,
+            last_name=lastname,
             email=email,
             password=password,
             address=address,
             city=city,
-            phone=phone,
-            position=position,
+            phone_number=phone,
+            positions=position,
         )
-        current_user = User.objects.get(isLoggedIn=True)
+        current_user = User.objects.get(id=id_search)
         users = UserUtility.get_all_users()
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
+
+
+class ViewAccount(View):
+    def get(self, request, **kwargs):
+        id_search = kwargs["id"]
+        user = User.objects.get(id=id_search)
+        viewing_user = User.objects.get(id=request.user.id)
+        return render(request, "viewaccount.html", {"user": user, "viewing_user": viewing_user})
 
 
 class CourseBase(View):
@@ -152,33 +176,27 @@ class CourseBase(View):
         return render(request, "course_base.html", {"courses": courses})
 
     def post(self, request):
-        # courses = Course.objects.all()
-        # if request.POST.get("course_code") in courses:
-        #     course = Course.objects.get(request.POST.get("course_inst"))
-        #     course.Course_Instructor = request.POST.get("course_inst")
+        courses = Course.objects.all()
+        if request.POST.get("course_code") in courses:
+            course = Course.objects.get(request.POST.get("course_inst"))
+            course.Course_Instructor = request.POST.get("course_inst")
 
-        # result = Supervisor.create_course(
-        #     request.POST.get("course_code"),
-        #     request.POST.get("course_name"),
-        #     request.POST.get("course_desc"),
-        #     request.POST.get("course_inst"),
-        #     request.POST.get("course_inst"),
-        # )
-        # if isinstance(result, TypeError):
-        #     courses = Course.objects.all()
-        #     users = UserUtility.get_all_users()
-        #     return render(
-        #         request,
-        #         "createcourse.html",
-        #         {"courses": courses, "users": users, "message": result}
-        #     )
-        # return render(request, "course_base.html", {"courses": courses})
-
-        # button = request.POST.get("submit")
-        #
-        # Course.objects.get(Course_Code=)
-
-        return render(request, "course_base.html")
+        result = Supervisor.create_course(
+            request.POST.get("course_code"),
+            request.POST.get("course_name"),
+            request.POST.get("course_desc"),
+            request.POST.get("course_inst"),
+            request.POST.get("course_inst"),
+        )
+        if isinstance(result, TypeError):
+            courses = Course.objects.all()
+            users = UserUtility.get_all_users()
+            return render(
+                request,
+                "createcourse.html",
+                {"courses": courses, "users": users, "message": result}
+            )
+        return render(request, "course_base.html", {"courses": courses})
 
 
 class CreateCourse(View):
@@ -191,7 +209,7 @@ class CreateCourse(View):
 
         result = Supervisor.create_course(
             request.POST.get("course_code"),
-            request.POST.get("course_name"),
+            request.POST.get("name"),
             request.POST.get("course_desc"),
             request.POST.get("course_inst"),
             request.POST.get("course_inst"),
@@ -250,3 +268,34 @@ class ViewPersonalInformation(View):
         id_search = kwargs["id"]
         user = User.objects.get(id=id_search)
         return render(request, "personal_information.html", {"user": user})
+
+
+class viewSection(View):
+    def get(self, request, **kwargs):
+        course = Course.objects.get(Course_Code=kwargs["Course_Code"])
+        section = Section.objects.filter(Sec_Course=course).all()
+        return render(request, "coursesection.html", {"sections": section})
+
+
+class createSection(View):
+    def get(self, request):
+        course = Course.objects.all()
+        users = UserUtility.get_all_users()
+        return render(request, "createsection.html", {"courses": course, "users": users})
+
+    def post(self, request):
+        course = Course.objects.all()
+        users = UserUtility.get_all_users()
+
+        result = Supervisor.create_section(request.POST.get("section_name"), request.POST.get("course"),
+                                           request.POST.get("section_inst"), datetime.datetime)
+        if isinstance(result, ValueError):
+            courses = Course.objects.all()
+            users = UserUtility.get_all_users()
+            return render(
+                request,
+                "createsection.html",
+                {"courses": courses, "users": users, "message": result}
+            )
+
+        return render(request, "course_base.html", {"courses": course})

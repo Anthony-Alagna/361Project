@@ -13,13 +13,11 @@
 </head>
 <body>
 <header>
-    <a href="{% url 'home' %}"><button>Home</button></a>{%include 'base.html'%}
+    <a href="{% url "accountbase" %}">
+    <button>Back</button></a><button>Log Out</button>
 </header>
-<h1>Personal Information</h1>
+<h1>{{user.first_name}} {{user.last_name}}'s Contact Information</h1>
 <div class="center">
-    <form action="/EditPersonalInformation/" method="post">
-
-
          <table>
             <tr>
                 <td>First Name</td>
@@ -33,6 +31,7 @@
                 <td>Email</td>
                 <td>{{user.email}}</td>
             </tr>
+              {% if viewing_user.positions == "Supervisor" and viewing_user.isLoggedIn == True%}
             <tr>
                 <td>Password</td>
                 <td>{{user.password}}</td>
@@ -51,13 +50,13 @@
                 <td>{{user.phone}}</td>
             </tr>
             </tr>
+             {%  endif %}
             <tr>
                 <td>Position</td>
                 <td>{{user.positions}}</td>
             </tr>
+
         </table>
-    </form>
-          <a href="{% url 'editaccount' id=user.id%}"><button class="goldbutton">Edit</button></a>
 </div>
 </body>
 </html>

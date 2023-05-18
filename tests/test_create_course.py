@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from myapp.models import Course
+from myapp.models import Course, User
 from myapp.views import CreateCourse
 from myapp.Classes.supervisor import Supervisor
 
@@ -50,23 +50,36 @@ class TestNewCourse(TestCase):
             "", "Intro to Coding", "Learning how to code", "John Doe", "In Person"
         )
         self.assertTrue(
-            isinstance(result, TypeError), "Expected a type error from create_course"
+            isinstance(
+                result, TypeError), "Expected a type error from create_course"
         )
 
     def test_null_name(self):
-        result = Supervisor.create_course("101", "", "Learning how to code", "John Doe", "In Person")
+        result = Supervisor.create_course(
+            "101", "", "Learning how to code", "John Doe", "In Person")
         self.assertTrue(
-            isinstance(result, TypeError), "Expected a type error from create_course"
+            isinstance(
+                result, TypeError), "Expected a type error from create_course"
         )
 
     def test_null_description(self):
-        result = Supervisor.create_course("101", "Intro to Coding", "", "John Doe", "In Person")
+        result = Supervisor.create_course(
+            "101", "Intro to Coding", "", "John Doe", "In Person")
         self.assertTrue(
-            isinstance(result, TypeError), "Expected a type error from create_course"
+            isinstance(
+                result, TypeError), "Expected a type error from create_course"
         )
 
 
 class TestButtons(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser', password='testpass'
+        )
+
+    def tearDown(self):
+        self.user.delete()
+
     def test_course_list_page_accessible(self):
         response = self.client.get(reverse("course_base"))
         self.assertEqual(
@@ -76,7 +89,8 @@ class TestButtons(TestCase):
         )
 
     def test_new_course_page_accessible(self):
-        response = self.client.get(reverse("home"))
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(reverse("createcourse"))
         self.assertEqual(
             response.status_code,
             200,

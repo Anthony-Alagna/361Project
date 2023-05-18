@@ -10,17 +10,17 @@ class PersonalInformationPageTests(TestCase):
         self.client = Client()
 
         self.user1 = User.objects.create(
-            id = 1,
-            User_fName="tester",
-            User_lName="Smith",
+            id=1,
+            first_name="tester",
+            last_name="Smith",
             email="user1@example.com",
-            User_Pos="TA",
-            User_Phone="1234567890",
-            User_Address="123 Main St",
-            User_City="Milwaukee",
-            User_LogPass="password14",
-            User_begin="2022-01-01 00:00:00",
-            User_Updated="2023-04-18 00:00:00",
+            positions="TA",
+            phone_number="1234567890",
+            address="123 Main St",
+            city="Milwaukee",
+            password="password14",
+            created_at="2022-01-01 00:00:00",
+            updated_at="2023-04-18 00:00:00",
         )
 
     def tearDown(self):
@@ -32,11 +32,9 @@ class PersonalInformationPageTests(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    #click edit button
+    # click edit button
     def test_go_edit_account(self):
         id = self.user1.id
         url = reverse("editaccount", kwargs={"id": id})
-        print(url)
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)
-

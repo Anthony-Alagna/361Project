@@ -1,3 +1,7 @@
+import os
+import smtplib
+import ssl
+from django.shortcuts import redirect
 import random
 import string
 from myapp.models import User
@@ -10,7 +14,9 @@ class ForgotPassword:
     """
 
     def __init__(self):
-        pass
+        self.email = os.getenv("MAIL_USERNAME")
+        self.password = os.getenv("MAIL_PASSWORD")
+        
 
     def send_reset_email(self, username, message=None, subject=None):
         """
@@ -33,19 +39,19 @@ class ForgotPassword:
             token = self._generate_token(username)
             # Generate the message to be sent to the user if one was not provided
             message = self._generate_message(token)
-            subject = "Password Reset"
+            context = ssl.create_default_context()
 
         try:
-            send_mail(
-                subject,  # subject
-                message,  # message
-                None,  # from_email
-                [username],  # recipient_list
-                fail_silently=False,
-            )
+            server = smtplib.SMTP(os.getenv("MAIL_SERVER"), 587)
+            server.starttls(context=context)
+            server.login(self.email, self.password)
+            server.sendmail(self.email, username, message)
             return True
         except Exception as e:
-            raise e
+            print(e)
+        finally:
+            server.quit()
+            return True
 
     def _generate_token(self, username):
         """
@@ -70,7 +76,7 @@ class ForgotPassword:
         user.save()
         return token
 
-    def _generate_message(self, token):
+    def _generate_message(self, token, subject="Password Reset"):
         """
         Generates a message for password reset email.
 
@@ -81,7 +87,7 @@ class ForgotPassword:
             str: The generated message with a password reset link.
         """
         callback_url = f"http://tascheduler.aalagna.com/reset_password?token={token}"
-        message = f"Please click the link below to reset your password:\n\n{callback_url}"
+        message = f"Subject: {subject} \n\nPlease click the link below to reset your password:\n\n{callback_url}"
         return message
 
 
@@ -116,10 +122,18 @@ class ResetPassword():
             # Check that the authentication string matches the one stored in the database
             if user.pw_reset_token.split(":")[1] == auth_str:
                 # Update the user's password
-                user.User_LogPass = new_password
+                user.password = new_password
                 user.save()
                 return True
             else:
                 return False
         except Exception as e:
             raise e
+
+
+class Logout:
+    def __init__(self, request):
+        if request.user.is_authenticated:
+            del request.session['user_id']
+            request.session.modified = True
+        self.redirect = redirect('login')
