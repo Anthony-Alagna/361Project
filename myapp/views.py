@@ -32,8 +32,7 @@ class LogoutView(View):
     def post(self, request):
         if not request.user.is_authenticated:
             return HttpResponseForbidden()
-        redirect = Logout(request).redirect
-        return redirect
+        logout(request)
 
 
 class ForgotPassword(View):
@@ -55,13 +54,19 @@ class ForgotPassword(View):
 
 class Home(View):
     def get(self, request, **kwargs):
-        users = UserUtility.get_all_users()
-        return render(request, "home.html", {"users": users})
+        user = request.user
+        if not user.is_authenticated:
+            return HttpResponseForbidden()
+        try:
+            user = User.objects.get(id=user.id)
+        except User.DoesNotExist:
+            pass
+        return render(request, "home.html", {"user": user})
 
 
 class AccountBase(View):
     def get(self, request):
-        current_user = User.objects.get(isLoggedIn=True)
+        current_user = User.objects.get(id=request.user.id)
         users = UserUtility.get_all_users()
         return render(request, "accountbase.html", {"users": users, "current_user": current_user})
 
