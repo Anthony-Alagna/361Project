@@ -10,7 +10,7 @@ services:
       - static:/code/static
       - media:/code/media
     env_file:
-      - prod..env
+      - prod.env
 
   nginx:
     restart: always
@@ -31,7 +31,7 @@ services:
     links:
       - web
     env_file:
-      - prod..env
+      - prod.env
 
   certbot:
     image: certbot/certbot
@@ -43,7 +43,7 @@ services:
     depends_on:
       - nginx
     env_file:
-      - prod..env
+      - prod.env
 
 
 volumes:
