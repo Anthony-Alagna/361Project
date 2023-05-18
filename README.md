@@ -66,12 +66,12 @@ git clone https://github.com/Anthony-Alagna/361Project.git
 3. For the local environment, create a copy of the `template.env` file and name it `.env`. This file will contain your environment variables for the local development setup:
 
 ```shell
-cp template..env ..env
+cp template....env ....env
 ```
 
 4. For the remote environment, rename the `template.env` file to `prod.env`:
 ```shell
-mv template..env prod..env
+mv template....env prod....env
 ```
 Now, your .env file will be used for your local environment, and your prod.env file will be used for your remote environment. These files contain the respective environment variables, which will be used by Docker Compose to set up the containers.
 
