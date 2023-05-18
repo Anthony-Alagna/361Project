@@ -23,15 +23,13 @@ from myapp.views import (
     EditAccount,
     ViewPersonalInformation,
     ForgotPassword,
-  omar-tests-and-funct
     viewSection,
     createSection,
-
     CourseBase,
     CreateCourse,
     EditCourse,
-    ViewAccount
-    main
+    ViewAccount,
+
 )
 
 
