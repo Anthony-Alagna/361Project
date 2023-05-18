@@ -51,7 +51,7 @@ class User(AbstractUser):
     positions_choices = [('SA', 'Supervisor'),
                          ('TA', 'Teaching Assistant'), ('IN', 'Instructor')]
     positions = models.CharField(
-        max_length=25, blank=True, choices=positions_choices)
+        max_length=2, blank=True, choices=positions_choices, default='SA')
     phone_number = models.CharField(max_length=200, blank=True)
     address = models.TextField(max_length=500, blank=True)
     city = models.CharField(max_length=200, blank=True)
