@@ -5,7 +5,7 @@ from myapp.Classes.users import Users
 class Supervisor(Users):
     @staticmethod
     def create_account(
-            fname, lname, email, password, address, city, phone, account_type
+        first_name, last_name, email, password, address, city, phone, account_type
     ):
         users = User.objects.all()
         for user in users:
@@ -15,27 +15,27 @@ class Supervisor(Users):
                 )
 
         if (
-                fname == ""
-                or lname == ""
-                or email == ""
-                or password == ""
-                or address == ""
-                or city == ""
-                or phone == ""
-                or account_type == ""
+            first_name == ""
+            or last_name == ""
+            or email == ""
+            or password == ""
+            or address == ""
+            or city == ""
+            or phone == ""
+            or account_type == ""
         ):
             return ValueError("You're missing a field - please fill in all fields")
 
         else:
             user = User.objects.create(
-                User_fName=fname,
-                User_lName=lname,
+                first_name=first_name,
+                last_name=last_name,
                 email=email,
-                User_LogPass=password,
-                User_Address=address,
-                User_City=city,
-                User_Phone=phone,
-                User_Pos=account_type,
+                password=password,
+                address=address,
+                city=city,
+                phone_number=phone,
+                positions=account_type,
             )
             return user
 
@@ -53,7 +53,7 @@ class Supervisor(Users):
             return TypeError("Course description cannot be blank!")
         return Course.objects.create(
             Course_Code=code,
-            Course_Name=name,
+            name=name,
             Course_Description=desc,
             Course_Instructor=inst,
             Course_Instruction_Method=inst_method,

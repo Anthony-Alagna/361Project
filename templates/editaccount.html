@@ -20,49 +20,49 @@
         <table>
             <tr>
                 <td>First Name</td>
-                <td><input type="text" name="firstname" value="{{user.User_fName}}"/></td>
+                <td><input type="text" name="firstname" value="{{user.first_name}}"/></td>
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td><input type="text" name="lastname" value="{{user.User_lName}}"/></td>
+                <td><input type="text" name="lastname" value="{{user.last_name}}"/></td>
             </tr>
         {% for this_user in all_users %}
-        {% if this_user.User_Pos == "Supervisor" and this_user.isLoggedIn == True%}
+        {% if this_user.positions == "Supervisor" and this_user.isLoggedIn == True%}
             <tr>
                 <td>Email</td>
 
                 <td><input type="text" name="email" value="{{user.email}}"/></td>
 
             </tr>
-                        {%  endif %}
+            {% endif %}
         {% endfor %}
             <tr>
                 <td>Password</td>
-                <td><input type="text" name="password" value="{{user.User_LogPass}}"/></td>
+                <td><input type="text" name="password" value="{{user.password}}"/></td>
             </tr>
             <tr>
                 <td>Address</td>
-                <td><input type="text" name="address" value="{{user.User_Address}}"/></td>
+                <td><input type="text" name="address" value="{{user.address}}"/></td>
             </tr>
             </tr>
             <tr>
                 <td>City</td>
-                <td><input type="text" name="city" value="{{user.User_City}}"/></td>
+                <td><input type="text" name="city" value="{{user.city}}"/></td>
             </tr>
             <tr>
                 <td>Phone Number</td>
-                <td><input type="text" name="number" value="{{user.User_Phone}}"/></td>
+                <td><input type="text" name="number" value="{{user.phone_number}}"/></td>
             </tr>
             </tr>
         {% for this_user in all_users %}
-        {% if this_user.User_Pos == "Supervisor" and this_user.isLoggedIn == True%}
+        {% if this_user.positions == "Supervisor" and this_user.isLoggedIn == True%}
             <tr>
                 <td>Position</td>
                 <td>
-                    <select name="position">
-                        <option {% if user.User_Pos == "Supervisor" %}selected{% endif %} disabled>Supervisor</option>
-                        <option {% if user.User_Pos == "Teaching Assistant" %}selected{% endif %}>Teaching Assistant</option>
-                        <option {% if user.User_Pos == "Professor" %}selected{% endif %}>Professor</option>
+                    <select name="positions">
+                        <option {% if user.positions == "Supervisor" %}selected{% endif %} disabled>Supervisor</option>
+                        <option {% if user.positions == "Teaching Assistant" %}selected{% endif %}>Teaching Assistant</option>
+                        <option {% if user.positions == "Professor" %}selected{% endif %}>Professor</option>
                     </select>
                 </td>
             </tr>

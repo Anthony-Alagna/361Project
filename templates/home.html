@@ -2,25 +2,31 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset
-    ="UTF-8"/>
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
-
-</head>
-<body style="text-align: center">
-{%  for user in users %}
-    {% if user.isLoggedIn == True %}
-<h1>Welcome {{ user.User_fName}}!</h1>
-<a href="{% url 'course_base' %}"><button class="goldbutton">View All Courses</button></a>
-    <a href="{% url 'accountbase'%}"><button class="goldbutton">View All Accounts</button></a>
-    <a href="{% url 'personal_information' id=user.id%}"><button class="goldbutton">View Your Personal Information</button></a>
-    {%  endif %}
-{% endfor %}
-</body>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" />
+  </head>
+  <body style="text-align: center">
+    {% for user in users %} {% if user.isLoggedIn == True %}
+    <h1>Welcome {{ user.first_name}}!</h1>
+    <a href="{% url 'course_base' %}"
+      ><button class="goldbutton">View All Courses</button></a
+    >
+    <a href="{% url 'accountbase'%}"
+      ><button class="goldbutton">View All Accounts</button></a
+    >
+    <a href="{% url 'personal_information' id=user.id%}"
+      ><button class="goldbutton">View Your Personal Information</button></a
+    >
+    {% endif %} {% endfor %}
+  </body>
 </html>

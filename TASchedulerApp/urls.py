@@ -25,6 +25,7 @@ from myapp.views import (
     ForgotPassword,
     viewSection,
     createSection,
+    LogoutView,
     CourseBase,
     CreateCourse,
     EditCourse,
@@ -67,5 +68,6 @@ urlpatterns = [
         name="courseedit",
     ),
     path("home/accountbase/viewaccount/<int:id>", ViewAccount.as_view(),
-        name="viewaccount")
+         name="viewaccount"),
+    path('logout/', LogoutView.as_view(), name='logout')
 ]
