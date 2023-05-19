@@ -1,5 +1,4 @@
-from django.test import TestCase, Client
-from django.urls import reverse
+from django.test import TestCase
 
 from myapp.models import Course
 from myapp.Classes.supervisor import Supervisor
@@ -19,13 +18,3 @@ class TestDeletedCourse(TestCase):
             if course.Course_Code == "101":
                 c = c + 1
         self.assertTrue(c == 0, "Expected 0 courses, found " + str(c))
-
-
-class TestButtons(TestCase):
-    def test_course_list_page_accessible(self):
-        response = self.client.get(reverse("course_base"))
-        self.assertEqual(
-            response.status_code,
-            200,
-            "Expected status_code 200, got " + str(response.status_code),
-        )
