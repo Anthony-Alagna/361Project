@@ -1,7 +1,5 @@
-from django.test import TestCase, Client
-from django.urls import reverse
+from django.test import TestCase
 
-from myapp.models import Course
 from myapp.Classes.supervisor import Supervisor
 
 
@@ -42,7 +40,3 @@ class TestEditedCourse(TestCase):
                                "Learning how to code", "John Doe", "Hybrid")
         self.assertEqual(self.course.Course_Instruction_Method, "Hybrid",
                          "Expected instruction method: Hybrid, got: " + str(self.course.Course_Instruction_Method))
-
-
-# class TestButtons(TestCase):
-    
